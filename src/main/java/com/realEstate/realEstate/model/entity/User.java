@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,10 +19,10 @@ public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer user_id;
+    private Integer id;
 
     @Column(nullable = false)
-    private String userName;
+    private String name;
 
     @Column(nullable = false)
     private String password;
@@ -40,7 +41,7 @@ public class User extends BaseEntity {
 
     public static User of(String userName, String password, String email, Gender gender, int age, UserRole userRole) {
         User entity = new User();
-        entity.setUserName(userName);
+        entity.setName(userName);
         entity.setPassword(password);
         entity.setEmail(email);
         entity.setGender(gender);
@@ -48,4 +49,16 @@ public class User extends BaseEntity {
         entity.setRole(userRole);
         return entity;
     }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
+
 }

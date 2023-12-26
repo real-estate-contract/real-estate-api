@@ -5,6 +5,7 @@ import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.UserRole;
 import com.realEstate.realEstate.model.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,10 +15,11 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class UserDto implements UserDetails {
 
-    private Integer user_id;
-    private String userName;
+    private Integer id;
+    private String name;
     private String password;
     private String email;
     private Gender gender;
@@ -28,8 +30,8 @@ public class UserDto implements UserDetails {
 
     public static UserDto from(User entity) {
         return new UserDto(
-                entity.getUser_id(),
-                entity.getUserName(),
+                entity.getId(),
+                entity.getName(),
                 entity.getPassword(),
                 entity.getEmail(),
                 entity.getGender(),
