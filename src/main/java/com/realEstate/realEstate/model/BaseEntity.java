@@ -27,7 +27,7 @@ public abstract class BaseEntity {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column
     protected LocalDateTime updatedAt; // 수정일시
 }
 
