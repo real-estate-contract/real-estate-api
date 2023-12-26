@@ -15,9 +15,10 @@ public class UserService {
     private final UserRepository userRepository;
 
 
-//    @Transactional
-//    public UserDto join(String userName, String password, String email, Gender gender, int age, UserRole userRole) {
-//        //회원가입 하려는 userName으로 회원가입된 user가 있는지
-//
-//    }
+    @Transactional
+    public UserDto join(String userName, String password, String email, Gender gender, int age, UserRole userRole) {
+
+        return UserDto//
+
+    }; // 안녕하세요 이것은 시험을 하기 위한 코드입니다.
 }
