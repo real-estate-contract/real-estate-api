@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.Controller.response;
+package com.realEstate.realEstate.controller.response;
 
 import com.realEstate.realEstate.model.dto.UserDto;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,7 @@
-package com.realEstate.realEstate.Config.filter;
+package com.realEstate.realEstate.config.filter;
 
 
 import com.realEstate.realEstate.model.dto.UserDto;
-import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.service.UserService;
 import com.realEstate.realEstate.util.JwtTokenUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
