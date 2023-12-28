@@ -1,7 +1,7 @@
 package com.realEstate.exception;
 
 
-import com.realEstate.realEstate.Controller.response.Response;
+import com.realEstate.realEstate.controller.response.Response;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 

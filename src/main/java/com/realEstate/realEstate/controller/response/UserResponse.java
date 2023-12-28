@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.Controller.response;
+package com.realEstate.realEstate.controller.response;
 
 
 import com.realEstate.realEstate.model.constant.Gender;
@@ -6,8 +6,6 @@ import com.realEstate.realEstate.model.constant.UserRole;
 import com.realEstate.realEstate.model.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import javax.persistence.Column;
 
 @Getter
 @AllArgsConstructor

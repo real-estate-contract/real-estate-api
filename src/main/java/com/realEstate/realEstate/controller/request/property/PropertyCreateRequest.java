@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.Controller.request.Property;
+package com.realEstate.realEstate.controller.request.property;
 
 import com.realEstate.realEstate.model.constant.HType;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
-public class propertyCreateRequest {
+public class PropertyCreateRequest {
 
     private HType type;
     private BigDecimal price;

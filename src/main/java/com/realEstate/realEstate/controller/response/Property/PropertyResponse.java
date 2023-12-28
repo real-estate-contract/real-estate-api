@@ -1,7 +1,7 @@
-package com.realEstate.realEstate.Controller.response.Property;
+package com.realEstate.realEstate.controller.response.Property;
 
 
-import com.realEstate.realEstate.Controller.response.UserResponse;
+import com.realEstate.realEstate.controller.response.UserResponse;
 import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import lombok.AllArgsConstructor;

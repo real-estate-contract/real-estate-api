@@ -1,10 +1,10 @@
-package com.realEstate.realEstate.Controller;
+package com.realEstate.realEstate.controller;
 
-import com.realEstate.realEstate.Controller.request.userJoinRequest;
-import com.realEstate.realEstate.Controller.request.userLoginRequest;
-import com.realEstate.realEstate.Controller.response.Response;
-import com.realEstate.realEstate.Controller.response.userJoinResponse;
-import com.realEstate.realEstate.Controller.response.userLoginResponse;
+import com.realEstate.realEstate.controller.request.UserJoinRequest;
+import com.realEstate.realEstate.controller.request.UserLoginRequest;
+import com.realEstate.realEstate.controller.response.Response;
+import com.realEstate.realEstate.controller.response.userJoinResponse;
+import com.realEstate.realEstate.controller.response.userLoginResponse;
 import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +23,14 @@ public class UserController {
 
 
     @PostMapping("/join")
-    public Response<userJoinResponse> join(@RequestBody userJoinRequest request) {
+    public Response<userJoinResponse> join(@RequestBody UserJoinRequest request) {
         UserDto dto = userService.join(request.getName(), request.getPassword(), request.getEmail(), request.getGender(), request.getAge(), request.getRole());
 
         return Response.success(userJoinResponse.fromDTO(dto));
     }
 
     @PostMapping("/login")
-    public Response<userLoginResponse> login(@RequestBody userLoginRequest request) {
+    public Response<userLoginResponse> login(@RequestBody UserLoginRequest request) {
         String token = userService.login(request.getName(), request.getPassword());
         log.info(token);
         return Response.success(new userLoginResponse(token));

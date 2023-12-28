@@ -1,12 +1,11 @@
-package com.realEstate.realEstate.Controller;
+package com.realEstate.realEstate.controller;
 
 
-import com.realEstate.realEstate.Controller.request.Property.propertyCreateRequest;
-import com.realEstate.realEstate.Controller.request.Property.propertyModifyRequest;
-import com.realEstate.realEstate.Controller.response.Property.PropertyResponse;
-import com.realEstate.realEstate.Controller.response.Response;
+import com.realEstate.realEstate.controller.request.property.PropertyCreateRequest;
+import com.realEstate.realEstate.controller.request.property.PropertyModifyRequest;
+import com.realEstate.realEstate.controller.response.Property.PropertyResponse;
+import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.model.dto.PropertyDto;
-import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.service.PropertyService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class PropertyController {
     private final UserRepository userRepository;
 
     @PostMapping("/create")
-    public Response<Void> create(@RequestBody propertyCreateRequest request, Authentication authentication) {
+    public Response<Void> create(@RequestBody PropertyCreateRequest request, Authentication authentication) {
         propertyService.create(request.getType(), request.getPrice(), request.getAddress(), request.getArea(), authentication.getName());
 
         return Response.success();
@@ -44,7 +43,7 @@ public class PropertyController {
     }
 
     @PutMapping("/{propertyId}")
-    public Response<PropertyResponse> modify(@PathVariable Integer propertyId, @RequestBody propertyModifyRequest request, Authentication authentication) {
+    public Response<PropertyResponse> modify(@PathVariable Integer propertyId, @RequestBody PropertyModifyRequest request, Authentication authentication) {
 
         PropertyDto propertyDto = propertyService.modify(request.getType(), request.getPrice(), request.getAddress(), request.getArea(), authentication.getName(), propertyId);
 
