@@ -12,6 +12,8 @@ public enum ErrorCode {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER not founded"),
     INVALID_PASSWORD(HttpStatus.NOT_FOUND, "Invalid password"),
     Duplicated_USER_NAME(HttpStatus.CONFLICT, "Duplicated UserName"),
+    Property_NOT_FOUND(HttpStatus.NOT_FOUND,"Property not founded"),
+    Invalid_Permission(HttpStatus.UNAUTHORIZED, "User has invalid permission")
 
     ;
 
