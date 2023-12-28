@@ -1,16 +1,14 @@
-package com.realEstate.realEstate.Controller.request;
+package com.realEstate.realEstate.controller.request;
 
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 
 @Getter
 @AllArgsConstructor
-public class userJoinRequest {
+public class UserJoinRequest {
 
     private String name;
     private String password;

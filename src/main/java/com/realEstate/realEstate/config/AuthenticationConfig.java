@@ -1,8 +1,8 @@
-package com.realEstate.realEstate.Config;
+package com.realEstate.realEstate.config;
 
 
 import com.realEstate.exception.CustomAuthenticationEntryPoint;
-import com.realEstate.realEstate.Config.filter.JwtTokenFilter;
+import com.realEstate.realEstate.config.filter.JwtTokenFilter;
 import com.realEstate.realEstate.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

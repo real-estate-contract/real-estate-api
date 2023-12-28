@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.Config;
+package com.realEstate.realEstate.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
