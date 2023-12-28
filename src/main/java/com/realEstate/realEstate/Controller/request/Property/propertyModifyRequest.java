@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
-public class propertyCreateRequest {
+public class propertyModifyRequest {
 
     private HType type;
     private BigDecimal price;

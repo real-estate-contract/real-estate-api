@@ -19,6 +19,10 @@ public class Response<T>{
         return new Response<>("SUCCESS", null);
     }
 
+    public static Response<Void> success() {
+        return new Response<>("Success", null);
+    }
+
     public String toStream() {
         if (result == null) {
             return "{" +
