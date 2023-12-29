@@ -2,15 +2,15 @@ package com.realEstate.realEstate.model.entity;
 
 
 import com.realEstate.realEstate.model.BaseEntity;
-import com.realEstate.realEstate.model.constant.Gender;
-import com.realEstate.realEstate.model.constant.HType;
-import com.realEstate.realEstate.model.constant.UserRole;
+import com.realEstate.realEstate.model.constant.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -21,32 +21,50 @@ public class Property extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long propertyId;
 
-    @Column(nullable = false)
-    private HType type; // 매물형태
+    @Enumerated(EnumType.STRING)
+    private CType transactionType; // 매매, 전세, 월세 유형
 
-    @Column(nullable = false)
-    private BigDecimal price;
-
-    @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false)
-    private int area; // 면적
+    private int price; //매매가
+    private int deposit;  // 보증금
+    private int monthlyRent;  // 월세
+    private int area; // 평형
+    private int floor; // 층수
+    private boolean parkingAvailable;
+    private boolean hasElevator;
+    private LocalDate moveInDate; // 입주 가능 날짜
+    @Enumerated(EnumType.STRING)
+    private Structure structure;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "adressId")
+    private Address address;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
     private User user;
 
-    public static Property of(HType type, BigDecimal price, String address, int area, User user) {
-        Property entity = new Property();
-        entity.setType(type);
-        entity.setPrice(price);
-        entity.setAddress(address);
-        entity.setArea(area);
-        entity.setUser(user);
-        return entity;
+
+    public static Property of(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, Address address, User user) {
+        Property property = new Property();
+        property.setTransactionType(transactionType);
+        property.setPrice(price);
+        property.setDeposit(deposit);
+        property.setMonthlyRent(monthlyRent);
+        property.setArea(area);
+        property.setFloor(floor);
+        property.setParkingAvailable(parkingAvailable);
+        property.setHasElevator(hasElevator);
+        property.setMoveInDate(moveInDate);
+        property.setStructure(structure);
+        property.setAddress(address);
+        property.setUser(user);
+        return property;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

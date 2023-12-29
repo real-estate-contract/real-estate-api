@@ -13,7 +13,7 @@ public class userJoinResponse {
 
     public static userJoinResponse fromDTO(UserDto dto) {
         return new userJoinResponse(
-                dto.getId(),
+                dto.getUserId(),
                 dto.getUsername()
         );
     }

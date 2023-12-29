@@ -2,36 +2,56 @@ package com.realEstate.realEstate.controller.response.Property;
 
 
 import com.realEstate.realEstate.controller.response.UserResponse;
+import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.HType;
+import com.realEstate.realEstate.model.constant.Structure;
+import com.realEstate.realEstate.model.dto.AddressDto;
 import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
 public class PropertyResponse {
-    private Integer id;
-    private HType type;
-    private BigDecimal price;
-    private String address;
-    private int area;
-    private UserResponse user;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
+    Long propertyId;
+    CType transactionType;
+    int price;
+    int deposit;
+    int monthlyRent;
+    int area;
+    int floor;
+    boolean parkingAvailable;
+    boolean hasElevator;
+    LocalDate moveInDate;
+    Structure structure;
+    AddressResponse address;
+    UserResponse user;
 
     public static PropertyResponse fromDto(PropertyDto dto) {
         return new PropertyResponse(
-                dto.getId(),
-                dto.getType(),
-                dto.getPrice(),
-                dto.getAddress(),
-                dto.getArea(),
-                UserResponse.fromDto(dto.getUser()),
                 dto.getCreatedAt(),
-                dto.getUpdatedAt()
+                dto.getUpdatedAt(),
+                dto.getPropertyId(),
+                dto.getTransactionType(),
+                dto.getPrice(),
+                dto.getDeposit(),
+                dto.getMonthlyRent(),
+                dto.getArea(),
+                dto.getFloor(),
+                dto.isParkingAvailable(),
+                dto.isHasElevator(),
+                dto.getMoveInDate(),
+                dto.getStructure(),
+                AddressResponse.fromDto(dto.getAddress()),
+                UserResponse.fromDto(dto.getUser())
+
         );
     }
 
