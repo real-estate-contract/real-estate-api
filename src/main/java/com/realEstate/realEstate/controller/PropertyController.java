@@ -3,7 +3,7 @@ package com.realEstate.realEstate.controller;
 
 import com.realEstate.realEstate.controller.request.property.PropertyCreateRequest;
 import com.realEstate.realEstate.controller.request.property.PropertyModifyRequest;
-import com.realEstate.realEstate.controller.response.Property.PropertyResponse;
+import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.repository.UserRepository;
