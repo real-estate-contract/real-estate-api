@@ -18,7 +18,7 @@ import java.util.Collection;
 @Getter
 public class UserDto implements UserDetails {
 
-    private Integer id;
+    private Integer userId;
     private String name;
     private String password;
     private String email;
@@ -30,7 +30,7 @@ public class UserDto implements UserDetails {
 
     public static UserDto from(User entity) {
         return new UserDto(
-                entity.getId(),
+                entity.getUserId(),
                 entity.getName(),
                 entity.getPassword(),
                 entity.getEmail(),

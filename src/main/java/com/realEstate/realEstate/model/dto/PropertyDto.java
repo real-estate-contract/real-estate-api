@@ -1,41 +1,57 @@
 package com.realEstate.realEstate.model.dto;
 
-
-import com.realEstate.realEstate.model.constant.HType;
+import com.realEstate.realEstate.model.constant.CType;
+import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.entity.Property;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * DTO for {@link com.realEstate.realEstate.model.entity.Property}
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class PropertyDto {
-    private Integer id;
-    private HType type;
-    private BigDecimal price;
-    private String address;
-    private int area;
-    private UserDto user;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
+public class PropertyDto implements Serializable {
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
+    Long propertyId;
+    CType transactionType;
+    int price;
+    int deposit;
+    int monthlyRent;
+    int area;
+    int floor;
+    boolean parkingAvailable;
+    boolean hasElevator;
+    LocalDate moveInDate;
+    Structure structure;
+    AddressDto address;
+    UserDto user;
 
     public static PropertyDto from(Property entity) {
         return new PropertyDto(
-                entity.getId(),
-                entity.getType(),
-                entity.getPrice(),
-                entity.getAddress(),
-                entity.getArea(),
-                UserDto.from(entity.getUser()),
                 entity.getCreatedAt(),
-                entity.getUpdatedAt()
+                entity.getUpdatedAt(),
+                entity.getPropertyId(),
+                entity.getTransactionType(),
+                entity.getPrice(),
+                entity.getDeposit(),
+                entity.getMonthlyRent(),
+                entity.getArea(),
+                entity.getFloor(),
+                entity.isParkingAvailable(),
+                entity.isHasElevator(),
+                entity.getMoveInDate(),
+                entity.getStructure(),
+                AddressDto.from(entity.getAddress()),
+                UserDto.from(entity.getUser())
         );
     }
-
-
 }
