@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.controller.response.Property;
+package com.realEstate.realEstate.controller.response.property;
 
 
 import com.realEstate.realEstate.controller.response.UserResponse;
