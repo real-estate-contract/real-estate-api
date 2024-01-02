@@ -17,7 +17,7 @@
     <div class="chat-messages" id="chatMessages">
         <!-- Display chat messages here -->
         <div th:each="message : ${room.messages}">
-            <p th:text="${message.sender.name + ': ' + message.content}"></p>
+            <p th:text="${message.sender.getName + ': ' + message.content}"></p>
         </div>
     </div>
 </div>
