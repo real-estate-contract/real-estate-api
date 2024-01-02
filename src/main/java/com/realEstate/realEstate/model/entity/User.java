@@ -3,12 +3,15 @@ package com.realEstate.realEstate.model.entity;
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.UserRole;
+import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,6 +41,12 @@ public class User extends BaseEntity {
 
     @Column
     private UserRole role;
+
+    @OneToMany(mappedBy = "buyer")
+    private List<ChatRoom> chatRoomsAsBuyer = new ArrayList<>();
+
+    @OneToMany(mappedBy = "seller")
+    private List<ChatRoom> chatRoomsAsSeller = new ArrayList<>();
 
     public static User of(String userName, String password, String email, Gender gender, int age, UserRole userRole) {
         User entity = new User();
