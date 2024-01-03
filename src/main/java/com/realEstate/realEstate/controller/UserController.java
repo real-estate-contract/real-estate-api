@@ -3,8 +3,6 @@ package com.realEstate.realEstate.controller;
 import com.realEstate.realEstate.controller.request.UserJoinRequest;
 import com.realEstate.realEstate.controller.request.UserLoginRequest;
 import com.realEstate.realEstate.controller.response.Response;
-import com.realEstate.realEstate.controller.response.UserJoinResponse;
-import com.realEstate.realEstate.controller.response.UserLoginResponse;
 import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.service.UserService;
 import lombok.RequiredArgsConstructor;
