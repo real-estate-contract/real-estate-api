@@ -5,6 +5,7 @@ import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.constant.UserRole;
+import com.realEstate.realEstate.model.dto.PropertyDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -49,4 +50,9 @@ public class Property extends BaseEntity {
         return entity;
     }
 
+    public static Property toEntity(PropertyDto property) {
+        Property property1 = new Property();
+        property1.setId(property1.getId());
+        return property1;
+    }
 }

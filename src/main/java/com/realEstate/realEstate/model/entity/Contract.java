@@ -2,8 +2,9 @@ package com.realEstate.realEstate.model.entity;
 
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.constant.Term;
+import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.dto.UserDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -52,6 +53,25 @@ public class Contract extends BaseEntity {
     @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
     @JoinColumn(name = "buyer_id", nullable = false)
     private User buyer;
+
+    public static Contract of(Integer id, CType type, BigDecimal contractAmount, Date contractDate,
+                              Term termUnit, int termLength, String conditions, PropertyDto property, UserDto buyer) {
+        Contract entity = new Contract();
+        entity.setId(id);
+        entity.setType(type);
+        entity.setContractAmount(contractAmount);
+        entity.setContractDate(contractDate);
+        entity.setTermUnit(termUnit);
+        entity.setTermLength(termLength);
+        entity.setConditions(conditions);
+        entity.setProperty(Property.toEntity(property));
+        entity.setBuyer(User.toEntity(buyer));
+
+        return entity;
+    }
+
+
+
 
     // 판매자 정보는 Property에서 가져올 수 있으므로 sellerID 필드는 제거
 
