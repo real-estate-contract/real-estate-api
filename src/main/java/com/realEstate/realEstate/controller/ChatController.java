@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/realEstate")
 @RequiredArgsConstructor
 public class ChatController {
 
@@ -42,11 +43,11 @@ public class ChatController {
 
     }
 
-    @PostMapping("/chat/{userId}/create/{user}")
-    public String createRoom(@PathVariable Integer userId, @PathVariable Integer user) {
+    @PostMapping("/chat/{userId}/create")
+    public String createRoom(@PathVariable Integer userId, Authentication authentication) {
 //        User user1 = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
 //        });
-        User user1 = userRepository.findById(user).orElseThrow(() -> new RuntimeException("User not found"));
+        User user1 = userRepository.findByName(authentication.getName()).orElseThrow(() -> new RuntimeException("User not found"));
         User user2 = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         ChatRoom room = chatService.createRoom(user1, user2);

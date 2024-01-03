@@ -32,7 +32,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     FilterChain chain)
             throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (!header.startsWith("Bearer ")) {
+        // header가 null이거나 "Bearer "로 시작하지 않는 경우 처리
+        if (header == null || !header.startsWith("Bearer ")) {
             log.warn("Authorization Header does not start with Bearer");
             chain.doFilter(request, response);
             return;
@@ -112,7 +113,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 //            String userName = JwtTokenUtils.getUsername(token, secretKey);
 //            UserDto userDetails = userService.loadUserByUsername(userName);
 //
-//            if (!JwtTokenUtils.validate(token, userDetails.getUsername(), secretKey)) {
+//            if (!JwtTokenUtils.validate(token, userDetails, secretKey)) {
 //                chain.doFilter(request, response);
 //                return;
 //            }

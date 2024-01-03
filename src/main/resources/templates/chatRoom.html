@@ -17,7 +17,7 @@
     <div class="chat-messages" id="chatMessages">
         <!-- Display chat messages here -->
         <div th:each="message : ${room.messages}">
-            <p th:text="${message.sender.getName + ': ' + message.content}"></p>
+            <p th:text="${message.sender.name + ': ' + message.content}"></p>
         </div>
     </div>
 </div>
@@ -33,6 +33,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script>
     var stompClient = null;
+    var roomId = [[${room.roomId}]]/* 동적으로 얻어온 roomId 값 */;
 
     function connect() {
         var socket = new SockJS('/ws');
@@ -58,7 +59,7 @@
     function sendMessage() {
         var content = $('#messageInput').val();
         if (content.trim() !== "") {
-            stompClient.send("/app/chat/" + /* roomId */ + "/send", {}, JSON.stringify({
+            stompClient.send("/app/chat/" + roomId + "/send", {}, JSON.stringify({
                 content: content
             }));
             $('#messageInput').val('');
