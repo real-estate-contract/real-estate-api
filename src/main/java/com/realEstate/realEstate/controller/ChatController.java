@@ -34,12 +34,16 @@ public class ChatController {
     private final UserService userService;
     private final ChatRoomRepository chatRoomRepository;
 
+
+    //TODO : Authentication을 통한 인증
     @MessageMapping("/chat/{roomId}/send")
-    public void sendMessage(@DestinationVariable Long roomId, @Payload String content, Authentication authentication) {
-        User sender = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
+    public void sendMessage(@DestinationVariable Long roomId, @Payload String content) {
+//        User sender = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
+        User sender = userRepository.findById(2).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
         ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
         chatService.sendMessage(sender,room,content);
+        System.out.println("Received message for room " + roomId + ": " + content);
 
     }
 

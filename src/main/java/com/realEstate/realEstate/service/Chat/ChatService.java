@@ -2,14 +2,19 @@
 
 package com.realEstate.realEstate.service.Chat;
 
+import com.realEstate.realEstate.model.dto.ChatMessageDTO;
+import com.realEstate.realEstate.model.dto.ChatRoomDTO;
 import com.realEstate.realEstate.model.entity.Chat.ChatMessage;
 import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.ChatMessageRepository;
 import com.realEstate.realEstate.repository.ChatRoomRepository;
+import com.realEstate.realEstate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +23,7 @@ public class ChatService {
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final UserRepository userRepository;
 
     public ChatRoom createRoom(User buyer, User seller) {
         ChatRoom room = new ChatRoom();
@@ -25,6 +31,13 @@ public class ChatService {
         room.setSeller(seller);
         room.getUsers().add(buyer);
         room.getUsers().add(seller);
+        User s = userRepository.findById(room.getSeller().getUserId()).orElseThrow();
+        User b = userRepository.findById(room.getBuyer().getUserId()).orElseThrow();
+        s.getChatRoomsAsSeller().add(room);
+        b.getChatRoomsAsBuyer().add(room);
+        userRepository.save(s);
+        userRepository.save(b);
+
         return chatRoomRepository.save(room);
     }
 
@@ -35,10 +48,15 @@ public class ChatService {
         message.setContent(content);
         chatMessageRepository.save(message);
 
+        // Convert to DTO
+        ChatMessageDTO messageDTO = new ChatMessageDTO(sender, content);
+        ChatRoomDTO roomDTO = new ChatRoomDTO(room);
+
+//
         messagingTemplate.convertAndSendToUser(
                 sender.getName(),
                 "/queue/messages",
-                message
+                messageDTO
         );
 
         for (User user : room.getUsers()) {
@@ -46,9 +64,16 @@ public class ChatService {
                 messagingTemplate.convertAndSendToUser(
                         user.getName(),
                         "/queue/messages",
-                        message
+                        messageDTO
                 );
             }
         }
+        messagingTemplate.convertAndSendToUser(
+                roomDTO.getUserNames().get(0), // Update with the correct field
+                "/queue/messages",
+                messageDTO
+        );
+
+
     }
 }
