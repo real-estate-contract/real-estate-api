@@ -47,8 +47,8 @@ public class PropertyController {
 
     //TODO : 유저 불러오는 부분 다시 확인
     @PostMapping("/step2/{addressId}")
-    public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId) {
-        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
+    public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
+        User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
         propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),addressId, user.getName());
         return Response.success();

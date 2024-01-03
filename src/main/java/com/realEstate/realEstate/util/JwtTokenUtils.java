@@ -15,9 +15,9 @@ public class JwtTokenUtils {
 
     //JSON Web Token(JWT)을 생성하고 검증하는 유틸리티 클래스
 
-    public static Boolean validate(String token, String userName, String key) {
-        String usernameByToken = getUsername(token, key);
-        return usernameByToken.equals(userName) && !isTokenExpired(token, key);
+    public static Boolean validate(String token, UserDetails userDetails, String key) {
+        String username = getUsername(token, key);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token, key);
     }
 
 

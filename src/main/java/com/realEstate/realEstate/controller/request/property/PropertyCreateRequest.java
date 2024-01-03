@@ -28,6 +28,6 @@ public class PropertyCreateRequest {
     boolean hasElevator;
     LocalDate moveInDate;
     Structure structure;
-    Integer userId; // TODO: 없애주고 Authentication으로
+//    Integer userId; // TODO: 없애주고 Authentication으로
 
 }
