@@ -59,6 +59,7 @@ public class User extends BaseEntity {
         return entity;
     }
 
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

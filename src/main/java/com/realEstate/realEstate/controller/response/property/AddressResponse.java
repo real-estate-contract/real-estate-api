@@ -1,7 +1,6 @@
-package com.realEstate.realEstate.controller.response.Property;
+package com.realEstate.realEstate.controller.response.property;
 
 import com.realEstate.realEstate.model.dto.AddressDto;
-import com.realEstate.realEstate.model.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
