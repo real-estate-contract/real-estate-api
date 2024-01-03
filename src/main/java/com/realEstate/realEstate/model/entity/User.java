@@ -3,6 +3,7 @@ package com.realEstate.realEstate.model.entity;
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.UserRole;
+import com.realEstate.realEstate.model.dto.UserDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -48,6 +49,12 @@ public class User extends BaseEntity {
         entity.setAge(age);
         entity.setRole(userRole);
         return entity;
+    }
+
+    public static User toEntity(UserDto buyer) {
+        User user1 = new User();
+        user1.setId(user1.getId());
+        return user1;
     }
 
     @PrePersist
