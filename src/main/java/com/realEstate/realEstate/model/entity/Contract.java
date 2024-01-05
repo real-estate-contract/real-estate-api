@@ -2,14 +2,16 @@ package com.realEstate.realEstate.model.entity;
 
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.constant.Term;
+import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.dto.UserDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
 
 
 @Entity
@@ -21,32 +23,54 @@ public class Contract extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contract_id")
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "contract_type", nullable = false)
     private CType type;
 
-    @Column(nullable = false)
-    private BigDecimal contractPrice;
+    @Column(name = "contract_amount", nullable = false)
+    private BigDecimal contractAmount;
 
-    @Column(nullable = false)
+    @Column(name = "contract_date", nullable = false)
+    private Date contractDate;
+
+    @Column(name = "term_unit", nullable = false)
     private Term termUnit;
 
-    @Column(nullable = false)
+    @Column(name = "term_length", nullable = false)
     private int termLength;
 
-    @Column
-    private String conditions; //계약 조건
+    @Column(name = "conditions")
+    private String conditions;
 
-    //TODO : 밑에 세개는 다시 고민을 좀 해봐야할 것 같음
+    // TODO: Property와의 관계 매핑은 On3eToOne 또는 ManyToOne으로 변경해야 함
 
-//    @OneToOne
-//    private Property property;
-//
-//    @Column(nullable = false)
-//    private Integer buyerID; //매물 구매자 id
-//
-//    @Column(nullable = false)
-//    private Integer sellerID; // 이건 property안에 있으니깐 굳이 안해줘도 될 거 같은 느낌
+    @ManyToOne // Contract는 여러 개의 계약이 하나의 부동산과 연결될 수 있음
+    @JoinColumn(name = "property_id", nullable = false)
+    private Property property;
+
+    @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
+    @JoinColumn(name = "buyer_id", nullable = false)
+    private User buyer;
+
+    public static Contract of(Integer id, CType type, BigDecimal contractAmount, Date contractDate,
+                              Term termUnit, int termLength, String conditions, PropertyDto property, UserDto buyer) {
+        Contract entity = new Contract();
+        entity.setId(id);
+        entity.setType(type);
+        entity.setContractAmount(contractAmount);
+        entity.setContractDate(contractDate);
+        entity.setTermUnit(termUnit);
+        entity.setTermLength(termLength);
+        entity.setConditions(conditions);
+
+        return entity;
+    }
+
+
+
+
+    // 판매자 정보는 Property에서 가져올 수 있으므로 sellerID 필드는 제거
 
 }

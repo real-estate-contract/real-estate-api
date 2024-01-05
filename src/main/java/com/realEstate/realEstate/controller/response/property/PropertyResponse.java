@@ -1,17 +1,13 @@
-package com.realEstate.realEstate.controller.response.Property;
+package com.realEstate.realEstate.controller.response.property;
 
 
 import com.realEstate.realEstate.controller.response.UserResponse;
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.constant.Structure;
-import com.realEstate.realEstate.model.dto.AddressDto;
 import com.realEstate.realEstate.model.dto.PropertyDto;
-import com.realEstate.realEstate.model.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
