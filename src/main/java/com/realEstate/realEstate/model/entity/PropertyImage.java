@@ -22,19 +22,14 @@ public class PropertyImage extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
-//    private String originalName;
     private String imageUrl;
-
-
-//    private int size;
 
     @ManyToOne
     private Property property;
 
 
     public PropertyImage(Property property, String imageUrl) {
+        this.property = property;
         this.imageUrl = imageUrl;
     }
 

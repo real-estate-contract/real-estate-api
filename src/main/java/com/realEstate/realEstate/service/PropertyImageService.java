@@ -7,6 +7,7 @@ import com.realEstate.realEstate.model.entity.PropertyImage;
 import com.realEstate.realEstate.repository.PropertyImageRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,9 @@ public class PropertyImageService {
 
     private PropertyRepository propertyRepository;
     private PropertyImageRepository propertyImageRepository;
+
+    @Value("${image.save-path}")
+    private String savePath;
 
     public void uploadImage(Long propertyID, List<MultipartFile> images) {
         Property property = propertyRepository.findById(propertyID).orElseThrow(() ->
@@ -41,16 +45,21 @@ public class PropertyImageService {
         // 저장 경로, 파일명 생성 등은 프로젝트의 환경에 따라 다를 수 있습니다.
 
         //디렉터리에 저장하는 코드
-        String savePath = "/path/to/save/images";
-        String fileName = "image_" + System.currentTimeMillis() + "./jpg";
+        String fileName = "image_" + System.currentTimeMillis() + "." + getFileExtension(image.getOriginalFilename());
+
 
         try {
             Files.copy(image.getInputStream(), Paths.get(savePath).resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new ApplicationException(ErrorCode.IMAGE_SAVE_ERROR, "이미지 저장 실패");
         }
 
         return savePath + fileName;
+    }
+
+    private String getFileExtension(String filename) {
+        return filename.substring(filename.lastIndexOf(".")+1);
     }
 
 
