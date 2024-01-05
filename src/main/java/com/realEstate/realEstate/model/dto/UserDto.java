@@ -20,7 +20,7 @@ import java.util.List;
 @Getter
 public class UserDto implements UserDetails {
 
-    private Integer userId;
+    private Long userId;
     private String name;
     private String password;
     private String email;

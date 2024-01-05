@@ -1,7 +1,7 @@
 package com.realEstate.realEstate.controller.response.contract;
 
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.Term;
+import com.realEstate.realEstate.model.constant.TermUnit;
 import com.realEstate.realEstate.model.dto.ContractDto;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.model.dto.UserDto;
@@ -14,11 +14,11 @@ import java.sql.Date;
 @Getter
 @AllArgsConstructor
 public class ContractResponse {
-    private Integer id;
+    private Long contractId;
     private CType type;
     private BigDecimal contractAmount;
     private Date contractDate;
-    private Term termUnit;
+    private TermUnit termUnit;
     private int termLength;
     private String conditions;
     private PropertyDto property;
@@ -26,7 +26,7 @@ public class ContractResponse {
 
     public static ContractResponse fromDto(ContractDto dto){
         return new ContractResponse(
-                dto.getId(),
+                dto.getContractId(),
                 dto.getType(),
                 dto.getContractAmount(),
                 dto.getContractDate(),

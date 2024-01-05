@@ -1,7 +1,7 @@
 package com.realEstate.realEstate.model.dto;
 
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.Term;
+import com.realEstate.realEstate.model.constant.TermUnit;
 import com.realEstate.realEstate.model.entity.Contract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,19 +15,19 @@ import java.sql.Date;
 @Setter
 public class ContractDto {
 
-    private Integer id;
+    private Long contractId;
     private CType type;
     private BigDecimal contractAmount;
     private Date contractDate;
-    private Term termUnit;
+    private TermUnit termUnit;
     private int termLength;
     private String conditions;
     private PropertyDto property;
     private UserDto buyer;
 
-    public ContractDto(Integer id, CType type, BigDecimal contractAmount, Date contractDate,
-                       Term termUnit, int termLength, String conditions, PropertyDto property, UserDto buyer) {
-        this.id = id;
+    public ContractDto(Long contractId, CType type, BigDecimal contractAmount, Date contractDate,
+                       TermUnit termUnit, int termLength, String conditions, PropertyDto property, UserDto buyer) {
+        this.contractId = contractId;
         this.type = type;
         this.contractAmount = contractAmount;
         this.contractDate = contractDate;
@@ -40,7 +40,7 @@ public class ContractDto {
 
     public static ContractDto from(Contract entity) {
         return new ContractDto(
-                entity.getId(),
+                entity.getContractId(),
                 entity.getType(),
                 entity.getContractAmount(),
                 entity.getContractDate(),

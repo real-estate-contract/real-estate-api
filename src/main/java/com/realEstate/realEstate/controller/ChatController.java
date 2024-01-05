@@ -44,7 +44,7 @@ public class ChatController {
     }
 
     @PostMapping("/chat/{userId}/create")
-    public String createRoom(@PathVariable Integer userId, Authentication authentication) {
+    public String createRoom(@PathVariable Long userId, Authentication authentication) {
 //        User user1 = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
 //        });
         User user1 = userRepository.findByName(authentication.getName()).orElseThrow(() -> new RuntimeException("User not found"));

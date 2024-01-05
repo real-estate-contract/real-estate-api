@@ -1,9 +1,7 @@
 package com.realEstate.realEstate.controller.request.contract;
 
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.Term;
-import com.realEstate.realEstate.model.dto.PropertyDto;
-import com.realEstate.realEstate.model.dto.UserDto;
+import com.realEstate.realEstate.model.constant.TermUnit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,13 +12,10 @@ import java.sql.Date;
 @AllArgsConstructor
 public class ContractCreateRequest {
 
-    private Integer id;
-    private CType type;
+    CType transactionType;
     private BigDecimal contractAmount;
     private Date contractDate;
-    private Term termUnit;
+    TermUnit termUnit;
     private int termLength;
     private String conditions;
-    private PropertyDto property;
-    private UserDto buyer;
 }

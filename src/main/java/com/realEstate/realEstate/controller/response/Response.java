@@ -1,5 +1,6 @@
 package com.realEstate.realEstate.controller.response;
 
+import com.realEstate.realEstate.controller.response.contract.ContractResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,6 +9,7 @@ import lombok.Getter;
 public class Response<T>{
     private String resultCode;
     private T result;
+
 
     // 실패했을 경우
     public static Response<Void> error(String errorCode) {

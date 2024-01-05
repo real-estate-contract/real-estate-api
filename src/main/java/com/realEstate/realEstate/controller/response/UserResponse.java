@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserResponse {
-    private Integer userId;
+    private Long userId;
     private String name;
     private String email; // 명세서에서 추가된 부분
     private Gender gender;
