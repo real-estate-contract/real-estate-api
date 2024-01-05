@@ -18,7 +18,7 @@ public class Response<T>{
 
     // 성공했을 경우
     public static <T> Response<T> success(T result) {
-        return new Response<>("SUCCESS", null);
+        return new Response<>("SUCCESS", result);
     }
 
     public static Response<Void> success() {

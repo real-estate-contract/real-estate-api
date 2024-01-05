@@ -45,8 +45,9 @@ public class ContractController {
     @GetMapping("/{contractId}")
     public Response<ContractResponse> getContractById(@PathVariable Long contractId, Pageable pageable, Authentication authentication) {
         ContractResponse contractResponse = ContractResponse.fromDto(contractService.findmyContract(contractId, pageable));
-        return new Response<>(HttpStatus.OK.value(), "Success", contractResponse);
+        return Response.success(contractResponse);
     }
+
 
 
 
