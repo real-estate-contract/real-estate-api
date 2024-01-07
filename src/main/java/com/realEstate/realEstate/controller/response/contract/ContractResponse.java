@@ -15,7 +15,7 @@ import java.sql.Date;
 @AllArgsConstructor
 public class ContractResponse {
     private Long contractId;
-    private CType type;
+    private CType transactionType;
     private BigDecimal contractAmount;
     private Date contractDate;
     private TermUnit termUnit;
@@ -27,7 +27,7 @@ public class ContractResponse {
     public static ContractResponse fromDto(ContractDto dto){
         return new ContractResponse(
                 dto.getContractId(),
-                dto.getType(),
+                dto.getTransactionType(),
                 dto.getContractAmount(),
                 dto.getContractDate(),
                 dto.getTermUnit(),

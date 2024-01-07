@@ -58,28 +58,26 @@ public class ContractService {
 
     // 계약 modify
     @Transactional
-    public ContractDto modifyContract(CType type, BigDecimal contractAmount, Date contractDate, TermUnit termUnit, int termLength,
-                                      String conditions, Long buyerId, Long contractId) {
+    public ContractDto modifyContract(Long contractId, ContractDto updateParam, Pageable pageable) {
 
-        User buyer = userRepository.findById(buyerId).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", buyerId)));
-        // contract exit
-        Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", contractId)));
+        // User buyer = userRepository.findById(buyerId).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", buyerId)));
 
         // 해당 유저가 적은게 맞는지
-        if (contract.getBuyer() != buyer) {
-            throw new ApplicationException(ErrorCode.Invalid_Permission, String.format("%s has no permission", buyer));
-        }
+        //if (findContract.getBuyer() != buyer) {
+        //    throw new ApplicationException(ErrorCode.Invalid_Permission, String.format("%s has no permission", buyer));
+        //}
 
-        contract.setType(type);
-        contract.setContractAmount(contractAmount);
-        contract.setContractDate(contractDate);
-        contract.setTermUnit(termUnit);
-        contract.setTermLength(termLength);
-        contract.setConditions(conditions);
+        // contract exit
+        Contract findContract = contractRepository.findById(contractId).orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", contractId)));
 
-        return ContractDto.from(contractRepository.saveAndFlush(contract));
+        findContract.setTransactionType(updateParam.getTransactionType());
+        findContract.setContractAmount(updateParam.getContractAmount());
+        findContract.setContractDate(updateParam.getContractDate());
+        findContract.setTermUnit(updateParam.getTermUnit());
+        findContract.setTermLength(updateParam.getTermLength());
+        findContract.setConditions(updateParam.getConditions());
+
+        return ContractDto.from(contractRepository.saveAndFlush(findContract));
     }
-
-
 
 }
