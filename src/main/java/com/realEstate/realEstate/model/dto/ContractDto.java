@@ -16,7 +16,7 @@ import java.sql.Date;
 public class ContractDto {
 
     private Long contractId;
-    private CType type;
+    private CType transactionType;
     private BigDecimal contractAmount;
     private Date contractDate;
     private TermUnit termUnit;
@@ -25,10 +25,10 @@ public class ContractDto {
     private PropertyDto property;
     private UserDto buyer;
 
-    public ContractDto(Long contractId, CType type, BigDecimal contractAmount, Date contractDate,
+    public ContractDto(Long contractId, CType transactionType, BigDecimal contractAmount, Date contractDate,
                        TermUnit termUnit, int termLength, String conditions, PropertyDto property, UserDto buyer) {
         this.contractId = contractId;
-        this.type = type;
+        this.transactionType = transactionType;
         this.contractAmount = contractAmount;
         this.contractDate = contractDate;
         this.termUnit = termUnit;
@@ -41,7 +41,7 @@ public class ContractDto {
     public static ContractDto from(Contract entity) {
         return new ContractDto(
                 entity.getContractId(),
-                entity.getType(),
+                entity.getTransactionType(),
                 entity.getContractAmount(),
                 entity.getContractDate(),
                 entity.getTermUnit(),
