@@ -52,9 +52,4 @@ public class ContractController {
         ContractDto contractResponse = contractService.modifyContract(contractId, request, pageable);
         return Response.success(contractResponse);
     }
-
-
-
-
-
 }
