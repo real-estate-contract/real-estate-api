@@ -25,7 +25,7 @@ public class Contract extends BaseEntity {
     private Long contractId;
 
     @Enumerated(EnumType.STRING)
-    private CType type;
+    private CType transactionType;
 
     private BigDecimal contractAmount;
 
@@ -51,10 +51,10 @@ public class Contract extends BaseEntity {
         createdAt = LocalDateTime.now();
     }
 
-    public static Contract of(CType type, BigDecimal contractAmount, Date contractDate,
+    public static Contract of(CType transactionType, BigDecimal contractAmount, Date contractDate,
                               TermUnit termUnit, int termLength, String conditions, Property property, User buyer) {
         Contract contract = new Contract();
-        contract.setType(type);
+        contract.setTransactionType(transactionType);
         contract.setContractAmount(contractAmount);
         contract.setContractDate(contractDate);
         contract.setTermUnit(termUnit);
