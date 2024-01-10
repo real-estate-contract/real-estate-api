@@ -1,7 +1,6 @@
 package com.realEstate.realEstate.repository;
 
-import com.realEstate.realEstate.model.entity.Chat.ChatMessage;
-import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
+import com.realEstate.realEstate.model.entity.chat.ChatMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

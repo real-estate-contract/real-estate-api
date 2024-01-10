@@ -1,6 +1,6 @@
 // ChatRoom.java
 
-package com.realEstate.realEstate.model.entity.Chat;
+package com.realEstate.realEstate.model.entity.chat;
 
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.entity.User;

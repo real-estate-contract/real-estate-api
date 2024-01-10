@@ -3,7 +3,7 @@ package com.realEstate.realEstate.model.entity;
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.UserRole;
-import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
+import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

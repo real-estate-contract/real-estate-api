@@ -2,7 +2,7 @@ package com.realEstate.realEstate.model.dto;
 
 // ChatRoomDTO.java
 
-import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
+import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import com.realEstate.realEstate.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
