@@ -26,14 +26,16 @@ public class Description {
     @Column(nullable = false)
     private boolean petFriendly; // 반려 동물 가능 여부
 
+    @ToString.Exclude
     @OneToOne
-    @JoinColumn(name = "propertyId")
+    @JoinColumn(name = "propertyId", unique = true)
     private Property property;
 
     public static Description of(String memo, boolean loanAvailable, boolean petFriendly, Property property) {
         Description description = new Description();
         description.setMemo(memo);
         description.setLoanAvailable(loanAvailable);
+        description.setPetFriendly(petFriendly);
         description.setProperty(property);
         return description;
     }

@@ -31,6 +31,12 @@ public class PropertyService {
     private final AddressRepository addressRepository;
     private final AddressService addressService;
 
+    public PropertyDto detail(Long propertyId) {
+        return propertyRepository.findById(propertyId)
+                .map(PropertyDto::from)
+                .orElseThrow(() -> {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "없음"); });
+    }
+
     @Transactional
     // Create
     public void create(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, Long addressId, String userName) {

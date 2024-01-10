@@ -31,8 +31,9 @@ public class PropertyOption {
     private boolean microwave;
     private boolean bookshelf;
 
-    @ManyToOne
-    @JoinColumn(name = "propertyId")
+    @ToString.Exclude
+    @OneToOne
+    @JoinColumn(name = "propertyId", unique = true)
     private Property property;
 
     public static PropertyOption of(boolean sink, boolean airConditioner, boolean shoeRack, boolean washingMachine, boolean refrigerator, boolean wardrobe, boolean gasRange, boolean induction, boolean bed, boolean desk, boolean microwave, boolean bookshelf, Property property) {

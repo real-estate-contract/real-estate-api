@@ -45,6 +45,14 @@ public class Property extends BaseEntity {
     @JoinColumn(name = "userId")
     private User user;
 
+    @ToString.Exclude
+    @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
+    private PropertyOption option;
+
+    @ToString.Exclude
+    @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
+    private Description description;
+
 
     public static Property of(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, Address address, User user) {
         Property property = new Property();

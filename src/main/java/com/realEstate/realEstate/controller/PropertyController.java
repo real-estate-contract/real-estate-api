@@ -7,7 +7,9 @@ import com.realEstate.realEstate.controller.request.property.*;
 import com.realEstate.realEstate.controller.response.property.AddressResponse;
 import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
+import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
+import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.service.*;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ import java.util.Arrays;
 @RequestMapping("/realEstate/property")
 @RequiredArgsConstructor
 public class PropertyController {
+    private final PropertyRepository propertyRepository;
 
     private final PropertyService propertyService;
     private final UserRepository userRepository;
@@ -34,19 +37,18 @@ public class PropertyController {
     private final PropertyOptionService optionService;
     private final PropertyImageService propertyImageService;
 
-//    @PostMapping("/create")
-//    public Response<Void> create(@RequestBody PropertyCreateRequest request, Authentication authentication) {
-//        propertyService.create(request.getType(), request.getPrice(), request.getAddress(), request.getArea(), authentication.getName());
-//
-//        return Response.success();
-//    }
+
+    @GetMapping({"/{propertyId}"})
+    public Response<PropertyResponse> detail(@PathVariable Long propertyId) {
+        return Response.success(PropertyResponse.fromDto(propertyService.detail(propertyId)));
+
+    }
 
     @PostMapping("/step1")
     public Response<AddressResponse> registerAddress(@RequestBody AddressCreateRequest request) {
         return Response.success(AddressResponse.fromDto(addressService.registerAddress(request.getStreetAddress(),request.getCity(), request.isOwner())));
     }
 
-    //TODO : 유저 불러오는 부분 다시 확인
     @PostMapping("/step2/{addressId}")
     public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
@@ -67,7 +69,6 @@ public class PropertyController {
         return Response.success();
     }
 
-    //TODO : step5 파일 업로
     @PostMapping("step5/{propertyId}")
     public Response<Void> uploadPropertyImages(@PathVariable Long propertyId, MultipartFile[] images){
         propertyImageService.uploadImage(propertyId, Arrays.asList(images));
@@ -84,17 +85,5 @@ public class PropertyController {
         return Response.success(propertyService.myList(authentication.getName(), pageable).map(PropertyResponse::fromDto));
     }
 
-//    @PutMapping("/{propertyId}")
-//    public Response<PropertyResponse> modify(@PathVariable Integer propertyId, @RequestBody PropertyModifyRequest request, Authentication authentication) {
-//
-//        PropertyDto propertyDto = propertyService.modify(request.getType(), request.getPrice(), request.getAddress(), request.getArea(), authentication.getName(), propertyId);
-//
-//        return Response.success(PropertyResponse.fromDto(propertyDto));
-//    }
 
-//    @DeleteMapping("/{propertyId}")
-//    public Response<Void> delete(@PathVariable Integer propertyId, Authentication authentication) {
-//        propertyService.delete(authentication.getName(), propertyId);
-//        return Response.success();
-//    }
 }

@@ -34,6 +34,8 @@ public class PropertyDto implements Serializable {
     Structure structure;
     AddressDto address;
     UserDto user;
+    OptionDto option;
+    DescriptionDto description;
 
     public static PropertyDto from(Property entity) {
         return new PropertyDto(
@@ -51,7 +53,9 @@ public class PropertyDto implements Serializable {
                 entity.getMoveInDate(),
                 entity.getStructure(),
                 AddressDto.from(entity.getAddress()),
-                UserDto.from(entity.getUser())
+                UserDto.from(entity.getUser()),
+                OptionDto.from(entity.getOption()),
+                DescriptionDto.from(entity.getDescription())
         );
     }
 }

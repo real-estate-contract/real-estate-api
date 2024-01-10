@@ -5,6 +5,7 @@ import com.realEstate.realEstate.controller.response.UserResponse;
 import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.entity.PropertyOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -29,6 +30,8 @@ public class PropertyResponse {
     Structure structure;
     AddressResponse address;
     UserResponse user;
+    OptionResponse option;
+    DescriptionResponse description;
 
     public static PropertyResponse fromDto(PropertyDto dto) {
         return new PropertyResponse(
@@ -46,7 +49,9 @@ public class PropertyResponse {
                 dto.getMoveInDate(),
                 dto.getStructure(),
                 AddressResponse.fromDto(dto.getAddress()),
-                UserResponse.fromDto(dto.getUser())
+                UserResponse.fromDto(dto.getUser()),
+                OptionResponse.from(dto.getOption()),
+                DescriptionResponse.fromDto(dto.getDescription())
 
         );
     }

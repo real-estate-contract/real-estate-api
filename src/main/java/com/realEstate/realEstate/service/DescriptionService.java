@@ -22,6 +22,7 @@ public class DescriptionService {
     public void registerDescription(String memo, boolean loanAvailable, boolean petFriendly, Long propertyId) {
         Property property = propertyRepository.findById(propertyId).orElseThrow(() -> {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", propertyId));
         });
+        property.setDescription(Description.of(memo, loanAvailable, petFriendly,property));
 
         descriptionRepository.save(Description.of(memo, loanAvailable, petFriendly,property));
     }

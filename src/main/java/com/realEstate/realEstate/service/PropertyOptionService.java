@@ -25,6 +25,8 @@ public class PropertyOptionService {
         Property property = propertyRepository.findById(propertyId).orElseThrow(() -> {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", propertyId));
         });
 
+        property.setOption(PropertyOption.of(sink, airConditioner, shoeRack, washingMachine, refrigerator, wardrobe, gasRange, induction,  bed, desk, microwave, bookshelf, property));
+
         optionRepository.save(PropertyOption.of(sink, airConditioner, shoeRack, washingMachine, refrigerator, wardrobe, gasRange, induction,  bed, desk, microwave, bookshelf, property));
     }
 
