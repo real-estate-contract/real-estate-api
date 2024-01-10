@@ -1,16 +1,15 @@
 package com.realEstate.realEstate;
 
 import com.realEstate.realEstate.controller.ChatController;
-import com.realEstate.realEstate.model.entity.Chat.ChatMessage;
-import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
+import com.realEstate.realEstate.model.entity.chat.ChatMessage;
+import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import com.realEstate.realEstate.model.entity.User;
-import com.realEstate.realEstate.service.Chat.ChatService;
+import com.realEstate.realEstate.service.chat.ChatService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;

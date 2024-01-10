@@ -1,11 +1,11 @@
 // ChatService.java
 
-package com.realEstate.realEstate.service.Chat;
+package com.realEstate.realEstate.service.chat;
 
 import com.realEstate.realEstate.model.dto.ChatMessageDTO;
 import com.realEstate.realEstate.model.dto.ChatRoomDTO;
-import com.realEstate.realEstate.model.entity.Chat.ChatMessage;
-import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
+import com.realEstate.realEstate.model.entity.chat.ChatMessage;
+import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.ChatMessageRepository;
 import com.realEstate.realEstate.repository.ChatRoomRepository;
@@ -13,8 +13,6 @@ import com.realEstate.realEstate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor

@@ -3,14 +3,11 @@ package com.realEstate.realEstate.controller;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
-import com.realEstate.realEstate.controller.request.ChatRequest;
-import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
-import com.realEstate.realEstate.model.entity.Property;
+import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.ChatRoomRepository;
-import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
-import com.realEstate.realEstate.service.Chat.ChatService;
+import com.realEstate.realEstate.service.chat.ChatService;
 import com.realEstate.realEstate.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -37,9 +34,9 @@ public class ChatController {
 
     //TODO : Authentication을 통한 인증
     @MessageMapping("/chat/{roomId}/send")
-    public void sendMessage(@DestinationVariable Long roomId, @Payload String content) {
-//        User sender = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
-        User sender = userRepository.findById(2).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
+    public void sendMessage(@DestinationVariable Long roomId, @Payload String content, Authentication authentication) {
+        User sender = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
+        //User sender = userRepository.findById(2).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
         ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
         chatService.sendMessage(sender,room,content);
