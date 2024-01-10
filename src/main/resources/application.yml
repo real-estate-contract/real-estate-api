@@ -15,3 +15,6 @@ jwt:
   secret-key: fast-campus.simple_sns_2022_secret_key
   # 30 days
   token.expired-time-ms: 2592000000
+
+image:
+  save_path : ./images
