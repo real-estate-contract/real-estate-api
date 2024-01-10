@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: 'jdbc:mysql://localhost:3306/realEstate'
     username: root
-    password: 1234
+    password: 1107jkk!
   jpa:
     hibernate:
       ddl-auto: create
@@ -15,3 +15,6 @@ jwt:
   secret-key: fast-campus.simple_sns_2022_secret_key
   # 30 days
   token.expired-time-ms: 2592000000
+
+image:
+  save_path : ./images

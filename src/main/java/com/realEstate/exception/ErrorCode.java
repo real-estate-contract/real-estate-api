@@ -13,7 +13,9 @@ public enum ErrorCode {
     INVALID_PASSWORD(HttpStatus.NOT_FOUND, "Invalid password"),
     Duplicated_USER_NAME(HttpStatus.CONFLICT, "Duplicated UserName"),
     Property_NOT_FOUND(HttpStatus.NOT_FOUND,"Property not founded"),
-    Invalid_Permission(HttpStatus.UNAUTHORIZED, "User has invalid permission")
+    Invalid_Permission(HttpStatus.UNAUTHORIZED, "User has invalid permission"),
+    Address_NOT_FOUND(HttpStatus.NOT_FOUND, "Address not founded"),
+    IMAGE_SAVE_ERROR(HttpStatus.NOT_FOUND, "Image save Error")
 
     ;
 

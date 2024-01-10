@@ -2,14 +2,15 @@ package com.realEstate.realEstate.model.entity;
 
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.HType;
-import com.realEstate.realEstate.model.constant.Term;
+import com.realEstate.realEstate.model.constant.TermUnit;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -21,32 +22,51 @@ public class Contract extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long contractId;
 
-    @Column(nullable = false)
-    private CType type;
+    @Enumerated(EnumType.STRING)
+    private CType transactionType;
 
-    @Column(nullable = false)
-    private BigDecimal contractPrice;
+    private BigDecimal contractAmount;
 
-    @Column(nullable = false)
-    private Term termUnit;
+    private Date contractDate;
 
-    @Column(nullable = false)
+    private TermUnit termUnit;
+
     private int termLength;
 
-    @Column
-    private String conditions; //계약 조건
+    private String conditions;
 
-    //TODO : 밑에 세개는 다시 고민을 좀 해봐야할 것 같음
 
-//    @OneToOne
-//    private Property property;
-//
-//    @Column(nullable = false)
-//    private Integer buyerID; //매물 구매자 id
-//
-//    @Column(nullable = false)
-//    private Integer sellerID; // 이건 property안에 있으니깐 굳이 안해줘도 될 거 같은 느낌
+    @ManyToOne // Contract는 여러 개의 계약이 하나의 부동산과 연결될 수 있음
+    @JoinColumn(name = "propertyId")
+    private Property property;
+
+    @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
+    @JoinColumn(name = "buyerId")
+    private User buyer;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    public static Contract of(CType transactionType, BigDecimal contractAmount, Date contractDate,
+                              TermUnit termUnit, int termLength, String conditions, Property property, User buyer) {
+        Contract contract = new Contract();
+        contract.setTransactionType(transactionType);
+        contract.setContractAmount(contractAmount);
+        contract.setContractDate(contractDate);
+        contract.setTermUnit(termUnit);
+        contract.setTermLength(termLength);
+        contract.setConditions(conditions);
+        contract.setBuyer(buyer);
+        contract.setProperty(property);
+
+        return contract;
+    }
+
+
+    // 판매자 정보는 Property에서 가져올 수 있으므로 sellerID 필드는 제거
 
 }

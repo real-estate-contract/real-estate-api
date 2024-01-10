@@ -3,10 +3,14 @@ package com.realEstate.realEstate.service;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
+import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.HType;
+import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.entity.Address;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
+import com.realEstate.realEstate.repository.AddressRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -23,14 +28,20 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
-
+    private final AddressRepository addressRepository;
+    private final AddressService addressService;
 
     @Transactional
     // Create
-    public void create(HType type, BigDecimal price, String address, int area, String userName) {
-        User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
+    public void create(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, Long addressId, String userName) {
 
-        propertyRepository.save(Property.of(type,price,address,area,user));
+        //user exit
+        User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
+        //address exit
+        Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
+
+
+        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, area, floor, parkingAvailable, hasElevator,moveInDate,structure,address,user));
     }
 
     // ReadAll(페이징 처리)
@@ -48,21 +59,30 @@ public class PropertyService {
 
     // modify
     @Transactional
-    public PropertyDto modify(HType type, BigDecimal price, String address, int area, String userName, Integer propertyId) {
+    public PropertyDto modify(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String userName, Long propertyId) {
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
 
         // property Exit
         Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", propertyId)));
+
+        // Address Exit
 
         // 해당 유저가 적은게 맞는지
         if (property.getUser() != user) {
             throw new ApplicationException(ErrorCode.Invalid_Permission, String.format("%s has no permission", userName));
         }
 
-        property.setType(type);
+        property.setTransactionType(transactionType);
         property.setPrice(price);
-        property.setAddress(address);
+        property.setDeposit(deposit);
+        property.setMonthlyRent(monthlyRent);
         property.setArea(area);
+        property.setFloor(floor);
+        property.setParkingAvailable(parkingAvailable);
+        property.setHasElevator(hasElevator);
+        property.setMoveInDate(moveInDate);
+        property.setStructure(structure);
+        property.setUser(user);
 
 
         return PropertyDto.from(propertyRepository.saveAndFlush(property));
@@ -71,7 +91,7 @@ public class PropertyService {
 
 
     @Transactional
-    public void delete(String userName, Integer propertyId) {
+    public void delete(String userName, Long propertyId) {
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
 
         // property Exit

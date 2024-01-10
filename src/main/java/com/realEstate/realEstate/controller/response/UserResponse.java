@@ -10,8 +10,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserResponse {
-    private Integer id;
-    private String userName;
+    private Long userId;
+    private String name;
     private String email; // 명세서에서 추가된 부분
     private Gender gender;
     private int age;
@@ -19,7 +19,7 @@ public class UserResponse {
 
     public static UserResponse fromDto(UserDto dto) {
         return new UserResponse(
-                dto.getId(),
+                dto.getUserId(),
                 dto.getName(),
                 dto.getEmail(),
                 dto.getGender(),

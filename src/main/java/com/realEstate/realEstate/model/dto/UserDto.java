@@ -8,17 +8,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class UserDto implements UserDetails {
 
-    private Integer id;
+    private Long userId;
     private String name;
     private String password;
     private String email;
@@ -30,7 +32,7 @@ public class UserDto implements UserDetails {
 
     public static UserDto from(User entity) {
         return new UserDto(
-                entity.getId(),
+                entity.getUserId(),
                 entity.getName(),
                 entity.getPassword(),
                 entity.getEmail(),
@@ -45,17 +47,17 @@ public class UserDto implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.toString()));
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return name;
     }
 
     @Override
