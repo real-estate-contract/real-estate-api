@@ -37,6 +37,7 @@ public class ChatController {
     public void sendMessage(@DestinationVariable Long roomId, @Payload String content, Authentication authentication) {
         User sender = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         //User sender = userRepository.findById(2).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
+
         });
         ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
         chatService.sendMessage(sender,room,content);
