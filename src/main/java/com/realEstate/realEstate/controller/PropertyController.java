@@ -9,16 +9,16 @@ import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.UserRepository;
-import com.realEstate.realEstate.service.AddressService;
-import com.realEstate.realEstate.service.DescriptionService;
-import com.realEstate.realEstate.service.PropertyOptionService;
-import com.realEstate.realEstate.service.PropertyService;
+import com.realEstate.realEstate.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Arrays;
 
 
 @RestController
@@ -32,6 +32,7 @@ public class PropertyController {
     private final AddressService addressService;
     private final DescriptionService descriptionService;
     private final PropertyOptionService optionService;
+    private final PropertyImageService propertyImageService;
 
 //    @PostMapping("/create")
 //    public Response<Void> create(@RequestBody PropertyCreateRequest request, Authentication authentication) {
@@ -63,6 +64,13 @@ public class PropertyController {
     @PostMapping("step4/{propertyId}")
     public Response<Void> registerDescription(@RequestBody DescriptionCreateRequest request, @PathVariable Long propertyId) {
         descriptionService.registerDescription(request.getMemo(), request.isLoanAvailable(), request.isPetFriendly(), propertyId);
+        return Response.success();
+    }
+
+    //TODO : step5 파일 업로
+    @PostMapping("step5/{propertyId}")
+    public Response<Void> uploadPropertyImages(@PathVariable Long propertyId, MultipartFile[] images){
+        propertyImageService.uploadImage(propertyId, Arrays.asList(images));
         return Response.success();
     }
 

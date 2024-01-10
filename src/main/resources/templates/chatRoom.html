@@ -1,50 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Chat Room</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Chat</title>
     <style>
-        /* Add your own styles as needed */
-        .chat-messages {
-            height: 300px;
-            overflow-y: scroll;
+        #chat-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        #messages-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        #input-container {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 5px;
+        }
+
+        #send-button {
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
 
-<div>
-    <h2>Chat Room</h2>
-    <div class="chat-messages" id="chatMessages">
-        <!-- Display chat messages here -->
-        <div th:each="message : ${room.messages}">
-            <p th:text="${message.sender.name + ': ' + message.content}"></p>
-        </div>
+<div id="chat-container">
+    <div id="messages-container">
+        <!-- Messages will be displayed here -->
+    </div>
+    <div id="input-container">
+        <input type="text" id="message-input" placeholder="Type your message...">
+        <button id="send-button">Send</button>
     </div>
 </div>
 
-<div>
-    <form id="messageForm">
-        <input type="text" id="messageInput" placeholder="Type your message..." />
-        <button type="button" onclick="sendMessage()">Send</button>
-    </form>
-</div>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.2/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script>
     var stompClient = null;
-    var roomId = [[${room.roomId}]]/* 동적으로 얻어온 roomId 값 */;
+    var roomId = 2; // 현재는 고정된 값으로 설정, 필요에 따라 동적으로 받아오도록 수정
 
     function connect() {
         var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
-
         stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
-
-            // Subscribe to the message queue
-            stompClient.subscribe('/user/queue/messages', function (message) {
-                showMessage(JSON.parse(message.body));
+            console.log('Connected to Stomp');
+            stompClient.subscribe('/user/queue/messages', function (response) {
+                console.log('Received a message from server');
+                showMessage(JSON.parse(response.body));
             });
         });
     }
@@ -53,32 +69,39 @@
         if (stompClient !== null) {
             stompClient.disconnect();
         }
-        console.log("Disconnected");
     }
 
     function sendMessage() {
-        var content = $('#messageInput').val();
-        if (content.trim() !== "") {
-            stompClient.send("/app/chat/" + roomId + "/send", {}, JSON.stringify({
-                content: content
-            }));
-            $('#messageInput').val('');
-        }
+        var content = document.getElementById('message-input').value;
+        stompClient.send('/app/chat/' + roomId + '/send', {}, JSON.stringify({'content': content}));
+        document.getElementById('message-input').value = ''; // Clear the input field after sending
+        console.log("Message sent to server:", content);
     }
 
     function showMessage(message) {
-        $('#chatMessages').append('<p>' + message.sender.name + ': ' + message.content + '</p>');
-        // Scroll to the bottom of the chat messages
-        var chatMessages = document.getElementById('chatMessages');
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        console.log("Received message from server:", message);
+        var messagesContainer = document.getElementById('messages-container');
+        var messageDiv = document.createElement('div');
+        messageDiv.innerHTML = '<strong>' + message.sender.name + ':</strong> ' + message.content;
+        messagesContainer.appendChild(messageDiv);
+
+        // Scroll to the bottom to show the latest message
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    $(function () {
-        connect();
+    // Connect on page load
+    connect();
+
+    // Event listener for the send button
+    document.getElementById('send-button').addEventListener('click', function() {
+        sendMessage();
     });
 
-    $(window).on('beforeunload', function () {
-        disconnect();
+    // Event listener for pressing Enter key
+    document.getElementById('message-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
     });
 </script>
 
