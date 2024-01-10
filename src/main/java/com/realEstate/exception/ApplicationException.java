@@ -9,6 +9,7 @@ import lombok.Getter;
 public class ApplicationException extends RuntimeException{
     private ErrorCode errorCode;
     private String message;
+    private String ss;
 
     public ApplicationException(ErrorCode errorCode){
         this.errorCode = errorCode;
