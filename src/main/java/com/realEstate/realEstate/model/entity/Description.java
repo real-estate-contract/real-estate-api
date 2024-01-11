@@ -28,7 +28,7 @@ public class Description {
 
     @ToString.Exclude
     @OneToOne
-    @JoinColumn(name = "propertyId", unique = true)
+    @JoinColumn(name = "propertyId")
     private Property property;
 
     public static Description of(String memo, boolean loanAvailable, boolean petFriendly, Property property) {

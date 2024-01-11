@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class PropertyOptionService {
@@ -25,9 +28,11 @@ public class PropertyOptionService {
         Property property = propertyRepository.findById(propertyId).orElseThrow(() -> {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", propertyId));
         });
 
-        property.setOption(PropertyOption.of(sink, airConditioner, shoeRack, washingMachine, refrigerator, wardrobe, gasRange, induction,  bed, desk, microwave, bookshelf, property));
+        PropertyOption option = PropertyOption.of(sink, airConditioner, shoeRack, washingMachine, refrigerator, wardrobe, gasRange, induction,  bed, desk, microwave, bookshelf, property);
 
-        optionRepository.save(PropertyOption.of(sink, airConditioner, shoeRack, washingMachine, refrigerator, wardrobe, gasRange, induction,  bed, desk, microwave, bookshelf, property));
+        property.setOption(option);
+
+        optionRepository.save(option);
     }
 
     @Transactional

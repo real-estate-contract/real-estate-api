@@ -2,19 +2,29 @@ package com.realEstate.realEstate.config;
 
 import com.realEstate.exception.CustomAuthenticationEntryPoint;
 import com.realEstate.realEstate.config.filter.JwtTokenFilter;
+import com.realEstate.realEstate.repository.UserRepository;
+import com.realEstate.realEstate.service.OAuth2.CustomOAuth2UserService;
 import com.realEstate.realEstate.service.UserService;
+import com.realEstate.realEstate.util.jwt.JwtAuthenticationProcessingFilter;
+import com.realEstate.realEstate.util.jwt.JwtService;
+import com.realEstate.realEstate.util.oauth.OAuth2LoginFailureHandler;
+import com.realEstate.realEstate.util.oauth.OAuth2LoginSuccessHandler;
+import com.realEstate.realEstate.util.oauth.login.handler.LoginFailureHandler;
+import com.realEstate.realEstate.util.oauth.login.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -23,14 +33,20 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final SecurityConfig securityConfig;
 
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().regexMatchers("^(?!/realEstate/).*");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().regexMatchers("^(?!/realEstate/).*");
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -57,6 +73,66 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
-                .addFilterBefore(new JwtTokenFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
+                .oauth2Login()
+                .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
+                .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
+                .userInfoEndpoint().userService(customOAuth2UserService); // customUserService 설정
+        http.addFilterBefore(new JwtTokenFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
+
+
+    }
+
+    /**
+     * AuthenticationManager 설정 후 등록
+     * PasswordEncoder를 사용하는 AuthenticationProvider 지정 (PasswordEncoder는 위에서 등록한 PasswordEncoder 사용)
+     * FormLogin(기존 스프링 시큐리티 로그인)과 동일하게 DaoAuthenticationProvider 사용
+     * UserDetailsService는 커스텀 LoginService로 등록
+     * 또한, FormLogin과 동일하게 AuthenticationManager로는 구현체인 ProviderManager 사용(return ProviderManager)
+     *
+     */
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(securityConfig.encodePassword());
+        provider.setUserDetailsService(userService);
+        return new ProviderManager(provider);
+    }
+
+    /**
+     * 로그인 성공 시 호출되는 LoginSuccessJWTProviderHandler 빈 등록
+     */
+    @Bean
+    public LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler(jwtService, userRepository);
+    }
+
+    /**
+     * 로그인 실패 시 호출되는 LoginFailureHandler 빈 등록
+     */
+    @Bean
+    public LoginFailureHandler loginFailureHandler() {
+        return new LoginFailureHandler();
+    }
+
+    /**
+     * CustomJsonUsernamePasswordAuthenticationFilter 빈 등록
+     * 커스텀 필터를 사용하기 위해 만든 커스텀 필터를 Bean으로 등록
+     * setAuthenticationManager(authenticationManager())로 위에서 등록한 AuthenticationManager(ProviderManager) 설정
+     * 로그인 성공 시 호출할 handler, 실패 시 호출할 handler로 위에서 등록한 handler 설정
+     */
+//    @Bean
+//    public CustomJsonUsernamePasswordAuthenticationFilter customJsonUsernamePasswordAuthenticationFilter() {
+//        CustomJsonUsernamePasswordAuthenticationFilter customJsonUsernamePasswordLoginFilter
+//                = new CustomJsonUsernamePasswordAuthenticationFilter(objectMapper);
+//        customJsonUsernamePasswordLoginFilter.setAuthenticationManager(authenticationManager());
+//        customJsonUsernamePasswordLoginFilter.setAuthenticationSuccessHandler(loginSuccessHandler());
+//        customJsonUsernamePasswordLoginFilter.setAuthenticationFailureHandler(loginFailureHandler());
+//        return customJsonUsernamePasswordLoginFilter;
+//    }
+
+    @Bean
+    public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+        JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, userRepository);
+        return jwtAuthenticationFilter;
     }
 }
