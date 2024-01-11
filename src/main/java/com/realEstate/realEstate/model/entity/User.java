@@ -4,6 +4,7 @@ import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.UserRole;
 import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,7 +29,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+//    @Column(nullable = false) TODO : 소셜로그인 구현 후 비밀번호가 알아서 들어오는지 확인
     private String password;
 
     @Column
@@ -56,6 +57,14 @@ public class User extends BaseEntity {
         entity.setEmail(email);
         entity.setGender(gender);
         entity.setAge(age);
+        entity.setRole(userRole);
+        return entity;
+    }
+
+    public static User of(String userName, String email, UserRole userRole){
+        User entity = new User();
+        entity.setName(userName);
+        entity.setEmail(email);
         entity.setRole(userRole);
         return entity;
     }
