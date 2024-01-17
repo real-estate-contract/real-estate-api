@@ -7,6 +7,7 @@ import com.realEstate.realEstate.controller.request.property.*;
 import com.realEstate.realEstate.controller.response.property.AddressResponse;
 import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
+import com.realEstate.realEstate.model.dto.PropertyImageDto;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.PropertyRepository;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 @RestController
@@ -70,8 +72,10 @@ public class PropertyController {
     }
 
     @PostMapping("step5/{propertyId}")
-    public Response<Void> uploadPropertyImages(@PathVariable Long propertyId, MultipartFile[] images){
-        propertyImageService.uploadImage(propertyId, Arrays.asList(images));
+    public Response<Void> uploadPropertyImages(@PathVariable Long propertyId, @RequestParam("images") List<MultipartFile> images) {
+        PropertyImageDto propertyImageDto = new PropertyImageDto();
+        propertyImageDto.setImages(images);
+        propertyImageService.uploadImage(propertyId, propertyImageDto);
         return Response.success();
     }
 

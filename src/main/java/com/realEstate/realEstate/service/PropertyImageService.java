@@ -2,6 +2,7 @@ package com.realEstate.realEstate.service;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
+import com.realEstate.realEstate.model.dto.PropertyImageDto;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.PropertyImage;
 import com.realEstate.realEstate.repository.PropertyImageRepository;
@@ -11,32 +12,35 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PropertyImageService {
 
-    private PropertyRepository propertyRepository;
-    private PropertyImageRepository propertyImageRepository;
+
+    private final PropertyRepository propertyRepository;
+    private final PropertyImageRepository propertyImageRepository;
 
     @Value("${image.save-path}")
     private String savePath;
 
-    public void uploadImage(Long propertyID, List<MultipartFile> images) {
-        Property property = propertyRepository.findById(propertyID).orElseThrow(() ->
-        {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "없음");
-        });
-        // 이미지를 저장하고, propertyId에 매핑하여 DB에 저장
-        for(MultipartFile image : images) {
-            String imageUrl = saveImage(image);
-            PropertyImage propertyImage  = new PropertyImage(property, imageUrl);
-            propertyImageRepository.save(propertyImage);
-        }
+    public void uploadImage(Long propertyID, PropertyImageDto propertyImageDto) {
+        Property property = propertyRepository.findById(propertyID)
+                .orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, "없음"));
+
+        List<PropertyImage> propertyImages = propertyImageDto.getImages().stream()
+                .map(image -> new PropertyImage(property, saveImage(image)))
+                .collect(Collectors.toList());
+
+        propertyImageRepository.saveAll(propertyImages);
     }
 
     private String saveImage(MultipartFile image) {
