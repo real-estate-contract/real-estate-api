@@ -38,11 +38,6 @@ public class Contract extends BaseEntity {
     private String conditions;
 
 
-    // TODO : 주소 클래스로 빼기
-    private String sigunguCd;
-    private String bjdongCd;
-
-
     @ManyToOne // Contract는 여러 개의 계약이 하나의 부동산과 연결될 수 있음
     @JoinColumn(name = "propertyId")
     private Property property;

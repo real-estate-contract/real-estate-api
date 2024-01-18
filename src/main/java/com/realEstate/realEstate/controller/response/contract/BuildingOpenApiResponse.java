@@ -11,12 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 public class BuildingOpenApiResponse {
 
-    private Protocol protocol;
+    private Response response;
 
     @NoArgsConstructor
     @Getter
     @AllArgsConstructor
-    public static class Protocol {
+    public static class Response {
         private Buildingdata buildingdata;
     }
 
