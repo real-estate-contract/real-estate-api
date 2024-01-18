@@ -2,8 +2,11 @@
 
 package com.realEstate.realEstate.service.Chat;
 
+import com.realEstate.exception.ApplicationException;
+import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.model.dto.ChatMessageDTO;
 import com.realEstate.realEstate.model.dto.ChatRoomDTO;
+import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.entity.Chat.ChatMessage;
 import com.realEstate.realEstate.model.entity.Chat.ChatRoom;
 import com.realEstate.realEstate.model.entity.User;
@@ -15,6 +18,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -75,5 +80,37 @@ public class ChatService {
         );
 
 
+    }
+
+    public List<ChatRoomDTO> getMyChatRooms(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없음");
+                });
+        List<ChatRoom> chatRooms = chatRoomRepository.findByUsersContaining(user);
+
+        // ChatRoom 엔티티를 ChatRoomDTO로 변환
+        return chatRooms.stream()
+                .map(ChatRoomDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public void leaveChatRoom(Long userId, Long chatRoomId) {
+        ChatRoom room= chatRoomRepository.findById(chatRoomId).orElseThrow(() ->
+                {throw new ApplicationException(ErrorCode.Property_NOT_FOUND,"채팅방 없음");});
+        User user = userRepository.findById(userId).orElseThrow(() ->
+        {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없음");
+        });
+
+        //채팅방에서 사용자 제거
+        room.getUsers().remove(user);
+
+        //사용자가 더 이상 채팅방에 속해있지 않으면 채팅방 삭제
+        if (room.getUsers().isEmpty()) {
+            chatRoomRepository.delete(room);
+        } else {
+            chatRoomRepository.save(room);
+        }
+
+        userRepository.save(user);
     }
 }
