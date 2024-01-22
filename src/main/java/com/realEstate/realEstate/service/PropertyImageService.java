@@ -1,5 +1,7 @@
 package com.realEstate.realEstate.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.model.dto.PropertyImageDto;
@@ -29,8 +31,12 @@ public class PropertyImageService {
     private final PropertyRepository propertyRepository;
     private final PropertyImageRepository propertyImageRepository;
 
-    @Value("${image.save-path}")
-    private String savePath;
+    private final AmazonS3 amazonS3;
+
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
 
     public void uploadImage(Long propertyID, PropertyImageDto propertyImageDto) {
         Property property = propertyRepository.findById(propertyID)
@@ -44,22 +50,20 @@ public class PropertyImageService {
     }
 
     private String saveImage(MultipartFile image) {
-        // 이미지를 서버에 저장하고 저장된 경로를 반환
-        // 이미지 파일의 고유한 이름을 생성하고 중복을 피하기 위해 파일명에 타임스탬프 또는 UUId등을 사용
-        // 저장 경로, 파일명 생성 등은 프로젝트의 환경에 따라 다를 수 있습니다.
 
-        //디렉터리에 저장하는 코드
-        String fileName = "image_" + System.currentTimeMillis() + "." + getFileExtension(image.getOriginalFilename());
+        String fileName = "image_" + UUID.randomUUID() + "." + getFileExtension(image.getOriginalFilename());
 
-
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(image.getSize());
+        metadata.setContentType(image.getContentType());
         try {
-            Files.copy(image.getInputStream(), Paths.get(savePath).resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            amazonS3.putObject(bucket, fileName, image.getInputStream(),metadata);
         } catch (IOException e) {
             e.printStackTrace();
             throw new ApplicationException(ErrorCode.IMAGE_SAVE_ERROR, "이미지 저장 실패");
         }
 
-        return savePath + fileName;
+        return amazonS3.getUrl(bucket,fileName).toString();
     }
 
     private String getFileExtension(String filename) {

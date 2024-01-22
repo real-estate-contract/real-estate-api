@@ -20,10 +20,9 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-public class    JwtTokenFilter extends OncePerRequestFilter {
+public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final UserService userService;
-
     private final String secretKey;
 
     @Override
@@ -31,15 +30,35 @@ public class    JwtTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain)
             throws ServletException, IOException {
+        if (request.getRequestURI().equals("/login")) {
+            chain.doFilter(request, response);
+            return;
+        }
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        // header가 null이거나 "Bearer "로 시작하지 않는 경우 처리
-        if (header == null || !header.startsWith("Bearer ")) {
-            log.warn("Authorization Header does not start with Bearer");
+
+        if (header == null) {
+            log.warn("Authorization Header is missing");
             chain.doFilter(request, response);
             return;
         }
 
-        final String token = header.split(" ")[1].trim();
+        String[] headerParts = header.split(" ");
+
+        if (headerParts.length != 2) {
+            log.warn("Invalid Authorization Header format");
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String tokenType = headerParts[0];
+        String token = headerParts[1];
+
+        if (!tokenType.equals("Bearer")) {
+            log.info("Non-Bearer token type. Assuming Social Login token.");
+            // 여기서 소셜 로그인에 대한 처리를 추가할 수 있음
+            // 예: 특별한 로직을 사용하여 소셜 로그인 처리
+        }
+
         UserDto userDetails = userService.loadUserByUsername(JwtTokenUtils.getUsername(token, secretKey));
 
         if (!JwtTokenUtils.validate(token, userDetails, secretKey)) {
@@ -57,5 +76,4 @@ public class    JwtTokenFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
     }
-
 }
