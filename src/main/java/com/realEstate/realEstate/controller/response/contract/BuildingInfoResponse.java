@@ -1,6 +1,10 @@
 package com.realEstate.realEstate.controller.response.contract;
 
+import com.realEstate.realEstate.controller.response.UserJoinResponse;
+import com.realEstate.realEstate.model.dto.UserDto;
+import com.realEstate.realEstate.model.entity.BuildingInfo;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,58 +12,24 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 public class BuildingInfoResponse {
+    private String mainPurpsCdNm; //주용도코드명
+    private String etcRoof; //기타지붕
+    private String useAprDay; //사용승인일
+    private String newPlatPlc; //도로명대지위치
+    private int archArea; //건축면적(㎡)
+    private int bcRat; //건폐율(%)
+    private int vlRat; //용적률(%)
+    private String strctCdNm; //구조코드명
 
-    private Response response;
-
-    @NoArgsConstructor
-    @Getter
-    @AllArgsConstructor
-    public static class Response {
-        private Buildingdata buildingdata;
+    //Entity -> Dto
+    public BuildingInfoResponse(BuildingInfo buildingInfo) {
+        this.mainPurpsCdNm = buildingInfo.getMainPurpsCdNm();
+        this.etcRoof = buildingInfo.getEtcRoof();
+        this.useAprDay = buildingInfo.getUseAprDay();
+        this.newPlatPlc = buildingInfo.getNewPlatPlc();
+        this.archArea = buildingInfo.getArchArea();
+        this.bcRat = buildingInfo.getBcRat();
+        this.vlRat = buildingInfo.getVlRat();
+        this.strctCdNm = buildingInfo.getStrctCdNm();
     }
-
-    @NoArgsConstructor
-    @Getter
-    @AllArgsConstructor
-    public static class Buildingdata {
-        private String mainPurpsCdNm;
-        private String bldNm;
-        private String block;
-        private String bun;
-        private int bylotCnt;
-        private String crtnDay;
-        private String guyukCd;
-        private String guyukCdNm;
-        private String ji;
-        private String jiguCd;
-        private String jiguCdNm;
-        private String jiyukCd;
-        private String jiyukCdNm;
-        private String lot;
-        private String mgmBldrgstPk;
-        private String mgmUpBldrgstPk;
-        private String naBjdongCd;
-        private double naMainBun;
-        private String naRoadCd;
-        private double naSubBun;
-        private int naUgrndCd;
-        private String newPlatPlc;
-        private int platGbCd;
-        private String platPlc;
-        private int regstrGbCd;
-        private String regstrGbCdNm;
-        private int regstrKindCd;
-        private String regstrKindCdNm;
-        private int rnum;
-        private String sigunguCd;
-        private String splotNm;
-    }
-
-    @NoArgsConstructor
-    @Getter
-    @AllArgsConstructor
-    public static class Item {
-        private String data;
-    }
-
 }

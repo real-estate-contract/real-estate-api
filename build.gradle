@@ -52,6 +52,8 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
 	implementation 'org.json:json:20200518'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+
+	implementation 'org.modelmapper:modelmapper:2.4.2'
 }
 
 
