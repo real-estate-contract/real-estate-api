@@ -1,6 +1,5 @@
 package com.realEstate.realEstate.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,12 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -39,7 +34,6 @@ public class OpenApiController {
      * @param sigunguCd
      * @param bjdongCd
      * @return
-     * @throws IOException
      */
     @GetMapping("building-info/{sigunguCd}/{bjdongCd}")
     public String buildingInfoOpenApi(@PathVariable("sigunguCd") String sigunguCd,
@@ -52,8 +46,10 @@ public class OpenApiController {
         String encodedBjdongCd = URLEncoder.encode(bjdongCd, StandardCharsets.UTF_8.toString());
         String encodedServiceKey = URLEncoder.encode(buildingkey, StandardCharsets.UTF_8.toString());
 
-        URI uri = URI.create(String.format("%s?sigunguCd=%s&bjdongCd=%s&ServiceKey=%s&_type=json",
+        URI uri = URI.create(String.format("%s?sigunguCd=%s&bjdongCd=%s&platGbCd=0&ServiceKey=%s&_type=json",
                 url, encodedSigunguCd, encodedBjdongCd, encodedServiceKey));
+
+        log.info("building open api uri = [{}]", uri);
 
         String responseBody = webClient.get()
                 .uri(uri)
@@ -69,7 +65,6 @@ public class OpenApiController {
      * 토지대장 api
      * @param pnu
      * @return
-     * @throws IOException
      */
     @GetMapping("/land-info/{pnu}")
     public String landInfoOpenApi(@PathVariable String pnu) throws IOException {

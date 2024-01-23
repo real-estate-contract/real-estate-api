@@ -1,30 +1,18 @@
 package com.realEstate.realEstate.model.entity;
 
 import com.realEstate.realEstate.model.BaseEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @ToString
-@Setter
 @Table
 public class BuildingInfo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long buildingId;
-
-    private String dong;
-    private String bun;
-    private String ji;
-    private String sigunguCode;
-    private String bjdongCode;
-
-    private String pnu; //고유번호 (토지대장)
 
     private String mainPurpsCdNm; //주용도코드명
     private String etcRoof; //기타지붕
@@ -35,31 +23,39 @@ public class BuildingInfo extends BaseEntity {
     private int vlRat; //용적률(%)
     private String strctCdNm; //구조코드명
 
+    private String bun;
+    private String ji;
+    private String sigunguCode;
+    private String bjdongCode;
 
+    @Builder.Default
+    private String pnu = ""; //고유번호 (토지대장)
 
-    public String setPnu() {
-        pnu = sigunguCode + bjdongCode + dong + bun + ji;
-        return pnu;
+    public BuildingInfo() {
+        // 기본 생성자에 초기화 로직 추가
+        setPnu();
     }
 
-
-
-    public static BuildingInfo of(String mainPurpsCdNm, String etcRoof, String useAprDay, String newPlatPlc,
-                                  int archArea, int bcRat, int vlRat, String strctCdNm) {
-        BuildingInfo buildingInfo = new BuildingInfo();
-        buildingInfo.setMainPurpsCdNm(mainPurpsCdNm);
-        buildingInfo.setEtcRoof(etcRoof);
-        buildingInfo.setUseAprDay(useAprDay);
-        buildingInfo.setNewPlatPlc(newPlatPlc);
-        buildingInfo.setArchArea(archArea);
-        buildingInfo.setBcRat(bcRat);
-        buildingInfo.setVlRat(vlRat);
-        buildingInfo.setStrctCdNm(strctCdNm);
-
-        buildingInfo.setPnu();
-
-        return buildingInfo;
+    public void setPnu() {
+        this.pnu = (sigunguCode != null ? sigunguCode : "") +
+                (bjdongCode != null ? bjdongCode : "") +
+                "1" +
+                (bun != null ? bun : "") +
+                (ji != null ? ji : "");
     }
 
+    @Builder
+    public BuildingInfo(String mainPurpsCdNm, String etcRoof, String useAprDay, String newPlatPlc,
+                        int archArea, int bcRat, int vlRat, String strctCdNm) {
+        this.mainPurpsCdNm = mainPurpsCdNm;
+        this.etcRoof = etcRoof;
+        this.useAprDay = useAprDay;
+        this.newPlatPlc = newPlatPlc;
+        this.archArea = archArea;
+        this.bcRat = bcRat;
+        this.vlRat = vlRat;
+        this.strctCdNm = strctCdNm;
+        setPnu();
 
+    }
 }
