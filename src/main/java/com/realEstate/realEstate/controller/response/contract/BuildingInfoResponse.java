@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
+@Builder
 public class BuildingInfoResponse {
     private String mainPurpsCdNm; //주용도코드명
     private String etcRoof; //기타지붕

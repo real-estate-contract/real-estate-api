@@ -1,0 +1,73 @@
+package com.realEstate.realEstate.service.contract;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.realEstate.realEstate.controller.response.contract.BuildingInfoResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class BuildingInfoService {
+
+    @Value("${api.building-key}")
+    private String buildingkey;
+
+    private final WebClient webClient;
+
+    public BuildingInfoService(WebClient webClient) {
+        this.webClient = webClient;
+    }
+
+    public List<BuildingInfoResponse> getBuildingInfo(String sigunguCd, String bjdongCd) throws IOException {
+        String url = "http://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo";
+
+        String encodedSigunguCd = URLEncoder.encode(sigunguCd, StandardCharsets.UTF_8.toString());
+        String encodedBjdongCd = URLEncoder.encode(bjdongCd, StandardCharsets.UTF_8.toString());
+        String encodedServiceKey = URLEncoder.encode(buildingkey, StandardCharsets.UTF_8.toString());
+
+        URI uri = URI.create(String.format("%s?sigunguCd=%s&bjdongCd=%s&platGbCd=0&ServiceKey=%s&_type=json",
+                url, encodedSigunguCd, encodedBjdongCd, encodedServiceKey));
+
+        String responseBody = webClient.get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        // Parse the JSON response and return BuildingInfoResponse objects
+        return parseBuildingInfoResponse(responseBody);
+    }
+
+    private List<BuildingInfoResponse> parseBuildingInfoResponse(String responseBody) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        JsonNode itemsNode = jsonNode.path("response").path("body").path("items").path("item");
+
+        List<BuildingInfoResponse> buildingInfoList = new ArrayList<>();
+        if (itemsNode.isArray()) {
+            for (JsonNode itemNode : itemsNode) {
+                BuildingInfoResponse buildingInfoResponse = BuildingInfoResponse.builder()
+                        .mainPurpsCdNm(itemNode.path("regstrGbCdNm").asText())
+                        .etcRoof(itemNode.path("etcRoof").asText())
+                        .useAprDay(itemNode.path("useAprDay").asText())
+                        .newPlatPlc(itemNode.path("newPlatPlc").asText())
+                        .archArea(itemNode.path("archArea").asInt())
+                        .bcRat(itemNode.path("bcRat").asInt())
+                        .vlRat(itemNode.path("vlRat").asInt())
+                        .strctCdNm(itemNode.path("strctCdNm").asText())
+                        .build();
+                buildingInfoList.add(buildingInfoResponse);
+            }
+        }
+
+        return buildingInfoList;
+    }
+}
