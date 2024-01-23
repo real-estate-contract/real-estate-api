@@ -21,7 +21,6 @@ public class BuildingInfoService {
     private String buildingkey;
 
     private final WebClient webClient;
-
     public BuildingInfoService(WebClient webClient) {
         this.webClient = webClient;
     }
