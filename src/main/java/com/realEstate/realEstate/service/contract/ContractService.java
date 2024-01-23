@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.service;
+package com.realEstate.realEstate.service.contract;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
