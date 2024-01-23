@@ -1,7 +1,6 @@
 package com.realEstate.realEstate.model.entity;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -9,6 +8,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Table
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LandInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,11 @@ public class LandInfo {
     private String lndcgrCodeNm; //지목명
     private String lndpclAr; //면적(㎡)
 
-
+    @Builder
+    public LandInfo(String ldCodeNm, String lndcgrCodeNm, String lndpclAr) {
+        this.ldCodeNm = ldCodeNm;
+        this.lndcgrCodeNm = lndcgrCodeNm;
+        this.lndpclAr = lndpclAr;
+    }
 
 }
