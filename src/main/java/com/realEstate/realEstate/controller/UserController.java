@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-
     @PostMapping("/join")
     public Response<UserJoinResponse> join(@RequestBody UserJoinRequest request) {
         UserDto dto = userService.join(request.getName(), request.getPassword(), request.getEmail(), request.getGender(), request.getAge(), request.getRole());

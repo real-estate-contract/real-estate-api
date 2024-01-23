@@ -5,7 +5,7 @@ import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.controller.response.contract.ContractResponse;
 import com.realEstate.realEstate.model.dto.ContractDto;
 import com.realEstate.realEstate.repository.UserRepository;
-import com.realEstate.realEstate.service.ContractService;
+import com.realEstate.realEstate.service.contract.ContractService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -52,9 +52,4 @@ public class ContractController {
         ContractDto contractResponse = contractService.modifyContract(contractId, request, pageable);
         return Response.success(contractResponse);
     }
-
-
-
-
-
 }
