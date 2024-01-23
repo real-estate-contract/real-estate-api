@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
-public class BuildingOpenApiResponse {
+public class BuildingInfoResponse {
 
     private Response response;
 
@@ -24,7 +22,7 @@ public class BuildingOpenApiResponse {
     @Getter
     @AllArgsConstructor
     public static class Buildingdata {
-        private String bjdongCd;
+        private String mainPurpsCdNm;
         private String bldNm;
         private String block;
         private String bun;
