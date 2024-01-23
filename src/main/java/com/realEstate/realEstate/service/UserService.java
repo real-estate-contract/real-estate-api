@@ -30,16 +30,33 @@ public class UserService implements UserDetailsService {
 
 
     @Transactional
-    public UserDto join(String userName, String password, String email, Gender gender, int age, UserRole userRole) {
+    public UserDto join(String userName, String nickName, String password, String email, Gender gender, int age, UserRole userRole) {
         // 회원가입하려는 userName이 이미 있다면 예외
         userRepository.findByName(userName).ifPresent(it -> {
             throw new ApplicationException(ErrorCode.Duplicated_USER_NAME, String.format("%s is duplicated", userName));
         });
 
         // 회원가입
-        User user = userRepository.save(User.of(userName, encoder.encode(password), email, gender, age, userRole));
+        User user = userRepository.save(User.of(userName, nickName, encoder.encode(password), email, gender, age, userRole));
         return UserDto.from(user);
 
+    }
+
+    //처음 소셜로그인 하는 유저에 한해서 회원가입기능
+    @Transactional
+    public UserDto socialJoin(Long userId, String nickName, Gender gender, int age){
+        User user = userRepository.findById(userId).orElseThrow(() -> {
+            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s not founded", userId));
+        });
+
+        user.setNickName(nickName);
+        user.setGender(gender);
+        user.setAge(age);
+        user.setRole(UserRole.USER);
+
+        userRepository.save(user);
+
+        return UserDto.from(user);
     }
 
     @Transactional
@@ -62,6 +79,8 @@ public class UserService implements UserDetailsService {
 
         return token;
     }
+
+
 
     public UserDto loadUserByUsername(String userName) {
         User user = userRepository.findByName(userName).orElseThrow(()->{

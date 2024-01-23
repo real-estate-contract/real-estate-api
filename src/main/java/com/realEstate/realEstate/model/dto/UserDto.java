@@ -22,6 +22,7 @@ public class UserDto implements UserDetails {
 
     private Long userId;
     private String name;
+    private String nickName;;
     private String password;
     private String email;
     private Gender gender;
@@ -34,6 +35,7 @@ public class UserDto implements UserDetails {
         return new UserDto(
                 entity.getUserId(),
                 entity.getName(),
+                entity.getNickName(),
                 entity.getPassword(),
                 entity.getEmail(),
                 entity.getGender(),

@@ -8,16 +8,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserJoinRequest {
+public class UserSocialJoinRequest {
 
-    private String name;
     private String nickName;
-    private String password;
     private String email;
     private Gender gender;
     private int age;
-    private UserRole role;
-
-
-
 }

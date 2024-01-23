@@ -55,8 +55,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         if (!tokenType.equals("Bearer")) {
             log.info("Non-Bearer token type. Assuming Social Login token.");
-            // 여기서 소셜 로그인에 대한 처리를 추가할 수 있음
-            // 예: 특별한 로직을 사용하여 소셜 로그인 처리
         }
 
         UserDto userDetails = userService.loadUserByUsername(JwtTokenUtils.getUsername(token, secretKey));

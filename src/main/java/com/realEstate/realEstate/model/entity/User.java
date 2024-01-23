@@ -30,6 +30,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private String nickName;
+
 //    @Column(nullable = false) TODO : 소셜로그인 구현 후 비밀번호가 알아서 들어오는지 확인
     private String password;
 
@@ -61,9 +64,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "seller")
     private List<ChatRoom> chatRoomsAsSeller = new ArrayList<>();
 
-    public static User of(String userName, String password, String email, Gender gender, int age, UserRole userRole) {
+    public static User of(String userName, String nickName, String password, String email, Gender gender, int age, UserRole userRole) {
         User entity = new User();
         entity.setName(userName);
+        entity.setNickName(nickName);
         entity.setPassword(password);
         entity.setEmail(email);
         entity.setGender(gender);
