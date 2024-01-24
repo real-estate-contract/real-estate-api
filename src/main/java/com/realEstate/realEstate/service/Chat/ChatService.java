@@ -53,11 +53,9 @@ public class ChatService {
         message.setContent(content);
         chatMessageRepository.save(message);
 
-        // Convert to DTO
         ChatMessageDTO messageDTO = new ChatMessageDTO(sender, content);
         ChatRoomDTO roomDTO = new ChatRoomDTO(room);
 
-//
         messagingTemplate.convertAndSendToUser(
                 sender.getName(),
                 "/queue/messages",
@@ -74,7 +72,7 @@ public class ChatService {
             }
         }
         messagingTemplate.convertAndSendToUser(
-                roomDTO.getUserNames().get(0), // Update with the correct field
+                roomDTO.getUserNames().get(0),
                 "/queue/messages",
                 messageDTO
         );

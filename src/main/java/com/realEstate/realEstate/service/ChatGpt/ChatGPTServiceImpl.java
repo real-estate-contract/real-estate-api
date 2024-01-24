@@ -21,13 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * ChatGPT Service 구현체
- *
- * @author : lee
- * @fileName : ChatGPTServiceImpl
- * @since : 12/29/23
- */
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -90,12 +84,7 @@ public class ChatGPTServiceImpl implements ChatGPTService {
     }
 
 
-    /**
-     * 모델이 유효한지 확인하는 비즈니스 로직
-     *
-     * @param modelName {}
-     * @return Map<String, Object>
-     */
+
     @Override
     public Map<String, Object> isValidModel(String modelName) {
         log.debug("[+] 모델이 유효한지 조회합니다. 모델 : " + modelName);

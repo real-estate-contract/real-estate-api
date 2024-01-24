@@ -9,6 +9,7 @@ import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.PropertyImage;
 import com.realEstate.realEstate.repository.PropertyImageRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
+import com.realEstate.realEstate.repository.cacheRepository.PropertyCacheRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class PropertyImageService {
 
     private final PropertyRepository propertyRepository;
     private final PropertyImageRepository propertyImageRepository;
+    private final PropertyCacheRepository redisRepository;
 
     private final AmazonS3 amazonS3;
 
@@ -39,8 +41,7 @@ public class PropertyImageService {
 
 
     public void uploadImage(Long propertyID, PropertyImageDto propertyImageDto) {
-        Property property = propertyRepository.findById(propertyID)
-                .orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, "없음"));
+        Property property = loadPropertyByPropertyId(propertyID);
 
         List<PropertyImage> propertyImages = propertyImageDto.getImages().stream()
                 .map(image -> new PropertyImage(property, saveImage(image)))
@@ -68,6 +69,15 @@ public class PropertyImageService {
 
     private String getFileExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".")+1);
+    }
+
+    public Property loadPropertyByPropertyId(Long propertyId) {
+        return redisRepository.getProperty(propertyId).orElseGet(
+                ()-> propertyRepository.findById(propertyId).orElseThrow(()->
+                {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");
+                })
+        );
+
     }
 
 

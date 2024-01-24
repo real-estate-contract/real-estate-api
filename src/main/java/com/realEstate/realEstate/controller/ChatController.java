@@ -61,6 +61,8 @@ public class ChatController {
         model.addAttribute("room", room);
         return "chatRoom";
     }
+
+    //TODO :  내 채팅방보기, 채팅방 나가기 implemention
 }
 
 

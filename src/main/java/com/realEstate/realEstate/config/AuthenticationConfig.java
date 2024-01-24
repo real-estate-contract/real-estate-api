@@ -43,17 +43,12 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().regexMatchers("^(?!/realEstate/).*");
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/realEstate/user/join", "/realEstate/user/login", "/login", "/realEstate/chat/**/send").permitAll()
-//                .antMatchers("/realEstate/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
