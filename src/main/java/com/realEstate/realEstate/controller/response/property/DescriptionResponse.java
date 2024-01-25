@@ -12,7 +12,7 @@ public class DescriptionResponse {
     String memo;
     boolean loanAvailable;
     boolean petFriendly;
-    PropertyResponse property;
+    Long propertyId;
 
     public static DescriptionResponse fromDto(DescriptionDto dto) {
         return new DescriptionResponse(
@@ -20,7 +20,7 @@ public class DescriptionResponse {
                 dto.getMemo(),
                 dto.isLoanAvailable(),
                 dto.isPetFriendly(),
-                PropertyResponse.fromDto(dto.getProperty())
+                dto.getPropertyId()
         );
     }
 }

@@ -5,11 +5,14 @@ import com.realEstate.realEstate.controller.response.UserResponse;
 import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.dto.PropertyImageDto;
+import com.realEstate.realEstate.model.entity.PropertyOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -29,7 +32,9 @@ public class PropertyResponse {
     Structure structure;
     AddressResponse address;
     UserResponse user;
-
+    OptionResponse option;
+    DescriptionResponse description;
+    List<String> imageUrls;
     public static PropertyResponse fromDto(PropertyDto dto) {
         return new PropertyResponse(
                 dto.getCreatedAt(),
@@ -46,7 +51,10 @@ public class PropertyResponse {
                 dto.getMoveInDate(),
                 dto.getStructure(),
                 AddressResponse.fromDto(dto.getAddress()),
-                UserResponse.fromDto(dto.getUser())
+                UserResponse.fromDto(dto.getUser()),
+                OptionResponse.from(dto.getOption()),
+                DescriptionResponse.fromDto(dto.getDescription()),
+                dto.getImageUrls()
 
         );
     }

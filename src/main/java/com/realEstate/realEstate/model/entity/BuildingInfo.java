@@ -46,7 +46,7 @@ public class BuildingInfo extends BaseEntity {
 
     @Builder
     public BuildingInfo(String mainPurpsCdNm, String etcRoof, String useAprDay, String newPlatPlc,
-                        int archArea, int bcRat, int vlRat, String strctCdNm) {
+                        int archArea, int bcRat, int vlRat, String strctCdNm, String pnu) {
         this.mainPurpsCdNm = mainPurpsCdNm;
         this.etcRoof = etcRoof;
         this.useAprDay = useAprDay;
@@ -55,7 +55,7 @@ public class BuildingInfo extends BaseEntity {
         this.bcRat = bcRat;
         this.vlRat = vlRat;
         this.strctCdNm = strctCdNm;
-        setPnu();
+        this.pnu = pnu;
 
     }
 }

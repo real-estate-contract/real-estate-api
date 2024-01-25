@@ -13,6 +13,7 @@ import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.AddressRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
+import com.realEstate.realEstate.repository.cacheRepository.PropertyCacheRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,13 @@ public class PropertyService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final AddressService addressService;
+    private final PropertyCacheRepository redisRepository;
+
+    public PropertyDto detail(Long propertyId) {
+        return propertyRepository.findById(propertyId)
+                .map(PropertyDto::from)
+                .orElseThrow(() -> {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "없음"); });
+    }
 
     @Transactional
     // Create
@@ -39,6 +47,8 @@ public class PropertyService {
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
         //address exit
         Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
+
+        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, area, floor, parkingAvailable, hasElevator,moveInDate,structure,address,user));
 
 
         propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, area, floor, parkingAvailable, hasElevator,moveInDate,structure,address,user));
@@ -63,7 +73,7 @@ public class PropertyService {
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
 
         // property Exit
-        Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", propertyId)));
+        Property property = loadPropertyByPropertyId(propertyId);
 
         // Address Exit
 
@@ -95,7 +105,7 @@ public class PropertyService {
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
 
         // property Exit
-        Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", propertyId)));
+        Property property = loadPropertyByPropertyId(propertyId);
 
         // 해당 유저가 적은게 맞는지
         if (property.getUser() != user) {
@@ -103,5 +113,14 @@ public class PropertyService {
         }
 
         propertyRepository.delete(property);
+    }
+
+    public Property loadPropertyByPropertyId(Long propertyId) {
+        return redisRepository.getProperty(propertyId).orElseGet(
+                ()-> propertyRepository.findById(propertyId).orElseThrow(()->
+                        {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");
+                        })
+        );
+
     }
 }

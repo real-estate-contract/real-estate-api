@@ -32,7 +32,6 @@ public class ChatController {
     private final ChatRoomRepository chatRoomRepository;
 
 
-    //TODO : Authentication을 통한 인증
     @MessageMapping("/chat/{roomId}/send")
     public void sendMessage(@DestinationVariable Long roomId, @Payload String content, Authentication authentication) {
         User sender = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
@@ -47,8 +46,7 @@ public class ChatController {
 
     @PostMapping("/chat/{userId}/create")
     public String createRoom(@PathVariable Long userId, Authentication authentication) {
-//        User user1 = userRepository.findByName(authentication.getName()).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
-//        });
+
         User user1 = userRepository.findByName(authentication.getName()).orElseThrow(() -> new RuntimeException("User not found"));
         User user2 = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -62,6 +60,8 @@ public class ChatController {
         model.addAttribute("room", room);
         return "chatRoom";
     }
+
+    //TODO :  내 채팅방보기, 채팅방 나가기 implemention
 }
 
 

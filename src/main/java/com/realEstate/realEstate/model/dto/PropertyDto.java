@@ -3,6 +3,7 @@ package com.realEstate.realEstate.model.dto;
 import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.entity.Property;
+import com.realEstate.realEstate.model.entity.PropertyImage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,8 @@ import lombok.Value;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * DTO for {@link com.realEstate.realEstate.model.entity.Property}
@@ -34,6 +37,10 @@ public class PropertyDto implements Serializable {
     Structure structure;
     AddressDto address;
     UserDto user;
+    OptionDto option;
+    DescriptionDto description;
+    List<String> imageUrls;
+
 
     public static PropertyDto from(Property entity) {
         return new PropertyDto(
@@ -51,7 +58,12 @@ public class PropertyDto implements Serializable {
                 entity.getMoveInDate(),
                 entity.getStructure(),
                 AddressDto.from(entity.getAddress()),
-                UserDto.from(entity.getUser())
+                UserDto.from(entity.getUser()),
+                OptionDto.from(entity.getOption()),
+                DescriptionDto.from(entity.getDescription()),
+                entity.getPropertyImageList().stream()
+                        .map(PropertyImage::getImageUrl)
+                        .collect(Collectors.toList())
         );
     }
 }

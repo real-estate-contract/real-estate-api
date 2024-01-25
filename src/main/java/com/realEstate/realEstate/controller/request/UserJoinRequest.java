@@ -11,6 +11,7 @@ import lombok.Getter;
 public class UserJoinRequest {
 
     private String name;
+    private String nickName;
     private String password;
     private String email;
     private Gender gender;

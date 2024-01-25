@@ -21,7 +21,7 @@ public class OptionResponse {
     boolean desk;
     boolean microwave;
     boolean bookshelf;
-    PropertyResponse property;
+    Long propertyId;
 
     public static OptionResponse from(OptionDto dto) {
         return new OptionResponse(
@@ -38,7 +38,7 @@ public class OptionResponse {
                 dto.isDesk(),
                 dto.isMicrowave(),
                 dto.isBookshelf(),
-                PropertyResponse.fromDto(dto.getProperty())
+                dto.getPropertyId()
         );
     }
 }
