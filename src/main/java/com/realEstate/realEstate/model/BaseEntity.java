@@ -1,6 +1,8 @@
 package com.realEstate.realEstate.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
+@JsonSerialize
+@JsonDeserialize
 public abstract class BaseEntity {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

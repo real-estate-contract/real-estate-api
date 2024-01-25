@@ -24,6 +24,8 @@ repositories {
 }
 
 dependencies {
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
 //	implementation 'mysql:mysql-connector-java:8.0.23' // 원하는 버전 사용
 	//AWS
