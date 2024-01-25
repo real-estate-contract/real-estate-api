@@ -29,8 +29,6 @@ public class OpenApiController {
         this.landInfoService = landInfoService;
     }
 
-
-
     /**
      * 건축물대장 api
      * @param sigunguCd

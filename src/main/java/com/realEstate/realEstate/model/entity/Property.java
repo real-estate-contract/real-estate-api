@@ -1,6 +1,10 @@
 package com.realEstate.realEstate.model.entity;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.*;
 import lombok.Getter;
@@ -35,7 +39,11 @@ public class Property extends BaseEntity {
     private int floor; // 층수
     private boolean parkingAvailable;
     private boolean hasElevator;
-    private LocalDate moveInDate; // 입주 가능 날짜
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate moveInDate;
+
     @Enumerated(EnumType.STRING)
     private Structure structure;
 

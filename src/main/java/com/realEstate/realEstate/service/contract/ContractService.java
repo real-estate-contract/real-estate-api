@@ -8,7 +8,7 @@ import com.realEstate.realEstate.model.dto.ContractDto;
 import com.realEstate.realEstate.model.entity.Contract;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
-import com.realEstate.realEstate.repository.ContractRepository;
+import com.realEstate.realEstate.repository.contract.ContractRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

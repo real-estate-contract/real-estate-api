@@ -4,6 +4,7 @@ import com.realEstate.realEstate.model.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,9 +19,9 @@ public class BuildingInfo extends BaseEntity {
     private String etcRoof; //기타지붕
     private String useAprDay; //사용승인일
     private String newPlatPlc; //도로명대지위치
-    private int archArea; //건축면적(㎡)
-    private int bcRat; //건폐율(%)
-    private int vlRat; //용적률(%)
+    private Integer archArea; //건축면적(㎡)
+    private Integer bcRat; //건폐율(%)
+    private Integer vlRat; //용적률(%)
     private String strctCdNm; //구조코드명
 
     private String bun;
@@ -57,5 +58,16 @@ public class BuildingInfo extends BaseEntity {
         this.strctCdNm = strctCdNm;
         this.pnu = pnu;
 
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }

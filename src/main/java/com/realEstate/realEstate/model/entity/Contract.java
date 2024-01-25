@@ -46,6 +46,14 @@ public class Contract extends BaseEntity {
     @JoinColumn(name = "buyerId")
     private User buyer;
 
+    @Transient //데이터베이스에 저장 하지 않음
+    private BuildingInfo buildingInfo;
+
+    @Transient //데이터베이스에 저장 하지 않음
+    private LandInfo landInfo;
+
+
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
