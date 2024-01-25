@@ -11,19 +11,24 @@ import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.entity.Address;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
+import com.realEstate.realEstate.model.entity.Wish;
 import com.realEstate.realEstate.repository.AddressRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
+import com.realEstate.realEstate.repository.WishRepository;
 import com.realEstate.realEstate.repository.cacheRepository.PropertyCacheRepository;
 import com.realEstate.realEstate.repository.cacheRepository.UserCacheRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +39,7 @@ public class PropertyService {
     private final AddressRepository addressRepository;
     private final PropertyCacheRepository redisRepository;
     private final UserCacheRepository userCacheRepository;
+    private final WishRepository wishRepository;
 
     public PropertyDto detail(Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);
@@ -117,6 +123,31 @@ public class PropertyService {
         propertyRepository.delete(property);
     }
 
+    @Transactional
+    public void wish(Long propertyId, String userName) {
+        User user = userRepository.findByName(userName).orElseThrow(() ->
+        {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음"); });
+        Property property = loadPropertyByPropertyId(propertyId);
+
+        wishRepository.findByUserAndProperty(user, property).ifPresent(it ->
+        {throw new ApplicationException(ErrorCode.Invalid_Permission, "이미 찜하셨습니다."); });
+
+        wishRepository.save(Wish.of(user, property));
+
+
+    }
+
+//    @Transactional
+//    public Page<PropertyDto> myWishList(String userName, Pageable pageable) {
+//
+//        User user = userRepository.findByName(userName).orElseThrow(() ->
+//        {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음"); });
+//
+//        List<Wish> wishes = wishRepository.findByUser(user);
+//        return propertyRepository.findByWishes(wishes, pageable).map(PropertyDto::from);
+//
+//    }
+
     public Property loadPropertyByPropertyId(Long propertyId) {
         return redisRepository.getProperty(propertyId).orElseGet(
                 ()-> propertyRepository.findById(propertyId).orElseThrow(()->
@@ -126,12 +157,5 @@ public class PropertyService {
 
     }
 
-//    public UserDto loadUserByUsername(String userName) {
-//        User user = userCacheRepository.findByName(userName).orElseThrow(()->{
-//            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName));
-//        });
-//
-//        return UserDto.from(user);
-//
-//    }
+
 }

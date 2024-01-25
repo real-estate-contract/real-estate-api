@@ -1,6 +1,12 @@
 package com.realEstate.realEstate.model.entity;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.*;
 import lombok.Getter;
@@ -35,6 +41,8 @@ public class Property extends BaseEntity {
     private int floor; // 층수
     private boolean parkingAvailable;
     private boolean hasElevator;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate moveInDate; // 입주 가능 날짜
     @Enumerated(EnumType.STRING)
     private Structure structure;
@@ -58,6 +66,12 @@ public class Property extends BaseEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private List<PropertyImage> propertyImageList;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private List<Wish> wishes = new ArrayList<>();
+
+
 
 
     public static Property of(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, Address address, User user) {

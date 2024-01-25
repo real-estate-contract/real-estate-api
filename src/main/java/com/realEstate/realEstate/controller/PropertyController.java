@@ -79,8 +79,21 @@ public class PropertyController {
         return Response.success();
     }
 
+    @PostMapping("/wish/{propertyId}")
+    public Response<Void> wish(@PathVariable Long propertyId, Authentication authentication) {
+        propertyService.wish(propertyId, authentication.getName());
+        return Response.success();
+    }
+
+//    @GetMapping("/myWishList")
+//    public Response<Page<PropertyResponse>> myWishList(Authentication authentication, Pageable pageable) {
+//        return Response.success(propertyService.myWishList(authentication.getName(), pageable).map(PropertyResponse::fromDto));
+//
+//    }
+
     @GetMapping("/list")
     public Response<Page<PropertyResponse>> list(Pageable pageable, Authentication authentication) {
+
         return Response.success(propertyService.list(pageable).map(PropertyResponse::fromDto));
     }
 
