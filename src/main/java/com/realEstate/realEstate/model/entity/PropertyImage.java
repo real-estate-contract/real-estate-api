@@ -26,6 +26,9 @@ public class PropertyImage extends BaseEntity {
 
     @ManyToOne
     private Property property;
+    public PropertyImage() {
+    }
+
 
 
     public PropertyImage(Property property, String imageUrl) {

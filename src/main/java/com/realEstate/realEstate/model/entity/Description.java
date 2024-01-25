@@ -26,6 +26,7 @@ public class Description {
     @Column(nullable = false)
     private boolean petFriendly; // 반려 동물 가능 여부
 
+    @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "propertyId")
     private Property property;
@@ -34,6 +35,7 @@ public class Description {
         Description description = new Description();
         description.setMemo(memo);
         description.setLoanAvailable(loanAvailable);
+        description.setPetFriendly(petFriendly);
         description.setProperty(property);
         return description;
     }

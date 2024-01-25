@@ -25,7 +25,7 @@ public class OptionDto {
     boolean desk;
     boolean microwave;
     boolean bookshelf;
-    PropertyDto property;
+    Long propertyId;
 
     public static OptionDto from(PropertyOption entity) {
         return new OptionDto(
@@ -42,7 +42,7 @@ public class OptionDto {
                 entity.isDesk(),
                 entity.isMicrowave(),
                 entity.isBookshelf(),
-                PropertyDto.from((entity.getProperty()))
+                entity.getProperty().getPropertyId()
         );
     }
 }

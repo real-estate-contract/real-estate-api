@@ -8,9 +8,13 @@ import com.realEstate.realEstate.model.entity.PropertyOption;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.repository.PropertyOptionRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
+import com.realEstate.realEstate.repository.cacheRepository.PropertyCacheRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +22,17 @@ public class PropertyOptionService {
 
     private final PropertyOptionRepository optionRepository;
     private final PropertyRepository propertyRepository;
+    private final PropertyCacheRepository redisRepository;
 
 
     @Transactional
     public void registerOption(boolean sink, boolean airConditioner, boolean shoeRack, boolean washingMachine, boolean refrigerator, boolean wardrobe, boolean gasRange, boolean induction, boolean bed, boolean desk, boolean microwave, boolean bookshelf, Long propertyId){
-        Property property = propertyRepository.findById(propertyId).orElseThrow(() -> {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", propertyId));
-        });
+        Property property = loadPropertyByPropertyId(propertyId);
+        PropertyOption option = PropertyOption.of(sink, airConditioner, shoeRack, washingMachine, refrigerator, wardrobe, gasRange, induction,  bed, desk, microwave, bookshelf, property);
 
-        optionRepository.save(PropertyOption.of(sink, airConditioner, shoeRack, washingMachine, refrigerator, wardrobe, gasRange, induction,  bed, desk, microwave, bookshelf, property));
+        property.setOption(option);
+
+        optionRepository.save(option);
     }
 
     @Transactional
@@ -47,5 +54,14 @@ public class PropertyOptionService {
         option.setBookshelf(bookshelf);
 
         return OptionDto.from(option);
+    }
+
+    public Property loadPropertyByPropertyId(Long propertyId) {
+        return redisRepository.getProperty(propertyId).orElseGet(
+                ()-> propertyRepository.findById(propertyId).orElseThrow(()->
+                {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");
+                })
+        );
+
     }
 }

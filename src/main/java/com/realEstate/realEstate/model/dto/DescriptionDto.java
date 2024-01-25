@@ -19,7 +19,7 @@ public class DescriptionDto{
     String memo;
     boolean loanAvailable;
     boolean petFriendly;
-    PropertyDto property;
+    Long propertyId;
 
     public static DescriptionDto from(Description entity) {
         return new DescriptionDto(
@@ -27,7 +27,7 @@ public class DescriptionDto{
                 entity.getMemo(),
                 entity.isLoanAvailable(),
                 entity.isPetFriendly(),
-                PropertyDto.from(entity.getProperty())
+                entity.getProperty().getPropertyId()
         );
     }
 }
