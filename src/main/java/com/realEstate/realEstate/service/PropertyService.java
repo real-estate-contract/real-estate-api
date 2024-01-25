@@ -7,6 +7,7 @@ import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.entity.Address;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
@@ -14,6 +15,7 @@ import com.realEstate.realEstate.repository.AddressRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.repository.cacheRepository.PropertyCacheRepository;
+import com.realEstate.realEstate.repository.cacheRepository.UserCacheRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,13 +32,13 @@ public class PropertyService {
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
-    private final AddressService addressService;
     private final PropertyCacheRepository redisRepository;
+    private final UserCacheRepository userCacheRepository;
 
     public PropertyDto detail(Long propertyId) {
-        return propertyRepository.findById(propertyId)
-                .map(PropertyDto::from)
-                .orElseThrow(() -> {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "없음"); });
+        Property property = loadPropertyByPropertyId(propertyId);
+        PropertyDto dto = PropertyDto.from(property);
+        return dto;
     }
 
     @Transactional
@@ -123,4 +125,13 @@ public class PropertyService {
         );
 
     }
+
+//    public UserDto loadUserByUsername(String userName) {
+//        User user = userCacheRepository.findByName(userName).orElseThrow(()->{
+//            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName));
+//        });
+//
+//        return UserDto.from(user);
+//
+//    }
 }

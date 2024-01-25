@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private final UserCacheRepository redisRepository
+    private final UserCacheRepository redisRepository;
 
     @Value("${jwt.secret-key}")
     private String secretKey;
