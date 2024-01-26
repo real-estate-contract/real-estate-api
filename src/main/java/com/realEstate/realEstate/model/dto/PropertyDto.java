@@ -29,15 +29,18 @@ public class PropertyDto implements Serializable {
     int price;
     int deposit;
     int monthlyRent;
+    private int managementFee;
     int area;
     int floor;
     boolean parkingAvailable;
     boolean hasElevator;
     LocalDate moveInDate;
     Structure structure;
+    private String direction;;
     AddressDto address;
     UserDto user;
     OptionDto option;
+    AmenitiesDto amenities;
     DescriptionDto description;
     List<String> imageUrls;
 
@@ -51,15 +54,18 @@ public class PropertyDto implements Serializable {
                 entity.getPrice(),
                 entity.getDeposit(),
                 entity.getMonthlyRent(),
+                entity.getManagementFee(),
                 entity.getArea(),
                 entity.getFloor(),
                 entity.isParkingAvailable(),
                 entity.isHasElevator(),
                 entity.getMoveInDate(),
                 entity.getStructure(),
+                entity.getDirection(),
                 AddressDto.from(entity.getAddress()),
                 UserDto.from(entity.getUser()),
                 OptionDto.from(entity.getOption()),
+                AmenitiesDto.from(entity.getAmenities()),
                 DescriptionDto.from(entity.getDescription()),
                 entity.getPropertyImageList().stream()
                         .map(PropertyImage::getImageUrl)

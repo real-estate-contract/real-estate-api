@@ -1,11 +1,10 @@
 package com.realEstate.realEstate.model.constant;
 
 public enum Structure {
-    OPEN_STUDIO("오픈형 원룸"),
-    ONE_ROOM("분리형 원룸"),
-    TWO_ROOM("투룸"),
-    THREE_ROOM("쓰리룸"),
-    FOUR_ROOM_PLUS("포룸 +");
+    APART("아파트"),
+    VILLA("빌라/투룸+"),
+    ONE_ROOM("원룸"),
+    OFFICETEL("오피스텔");
 
     private final String displayName;
 

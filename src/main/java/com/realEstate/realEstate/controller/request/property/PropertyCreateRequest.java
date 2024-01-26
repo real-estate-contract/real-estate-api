@@ -22,12 +22,13 @@ public class PropertyCreateRequest {
     int price;
     int deposit;
     int monthlyRent;
+    int managementFee;
     int area;
     int floor;
     boolean parkingAvailable;
     boolean hasElevator;
     LocalDate moveInDate;
     Structure structure;
-//    Integer userId; // TODO: 없애주고 Authentication으로
+    String direction;
 
 }

@@ -24,15 +24,18 @@ public class PropertyResponse {
     int price;
     int deposit;
     int monthlyRent;
+   int managementFee;
     int area;
     int floor;
     boolean parkingAvailable;
     boolean hasElevator;
     LocalDate moveInDate;
     Structure structure;
+    String direction;
     AddressResponse address;
     UserResponse user;
     OptionResponse option;
+    AmenitiesResponse amenities;
     DescriptionResponse description;
     List<String> imageUrls;
     public static PropertyResponse fromDto(PropertyDto dto) {
@@ -44,15 +47,18 @@ public class PropertyResponse {
                 dto.getPrice(),
                 dto.getDeposit(),
                 dto.getMonthlyRent(),
+                dto.getManagementFee(),
                 dto.getArea(),
                 dto.getFloor(),
                 dto.isParkingAvailable(),
                 dto.isHasElevator(),
                 dto.getMoveInDate(),
                 dto.getStructure(),
+                dto.getDirection(),
                 AddressResponse.fromDto(dto.getAddress()),
                 UserResponse.fromDto(dto.getUser()),
                 OptionResponse.from(dto.getOption()),
+                AmenitiesResponse.from(dto.getAmenities()),
                 DescriptionResponse.fromDto(dto.getDescription()),
                 dto.getImageUrls()
 

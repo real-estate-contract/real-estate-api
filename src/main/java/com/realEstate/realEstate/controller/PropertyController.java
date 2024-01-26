@@ -9,6 +9,7 @@ import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.model.dto.PropertyImageDto;
 import com.realEstate.realEstate.model.entity.Property;
+import com.realEstate.realEstate.model.entity.PropertyAmenities;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
@@ -38,6 +39,7 @@ public class PropertyController {
     private final DescriptionService descriptionService;
     private final PropertyOptionService optionService;
     private final PropertyImageService propertyImageService;
+    private final PropertyAmenitiesService amenitiesService;
 
 
     @GetMapping({"/{propertyId}"})
@@ -55,7 +57,7 @@ public class PropertyController {
     public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
-        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),addressId, user.getName());
+        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getManagementFee(), request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(),addressId, user.getName());
         return Response.success();
     }
 
@@ -72,6 +74,13 @@ public class PropertyController {
     }
 
     @PostMapping("step5/{propertyId}")
+    public Response<Void> registerAmenities(@RequestBody AmenitiesCreateRequest request, @PathVariable Long propertyId) {
+        amenitiesService.createAmenities(request.getSubway(), request.getBus(), request.getMart(), request.getCafe(), request.getLaundry(), request.getHospital(), request.getBank(), propertyId);
+        return Response.success();
+    }
+
+
+    @PostMapping("step6/{propertyId}")
     public Response<Void> uploadPropertyImages(@PathVariable Long propertyId, @RequestParam("images") List<MultipartFile> images) {
         PropertyImageDto propertyImageDto = new PropertyImageDto();
         propertyImageDto.setImages(images);
