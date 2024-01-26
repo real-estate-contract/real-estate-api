@@ -8,6 +8,7 @@ import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.model.dto.UserDto;
+import com.realEstate.realEstate.model.dto.WishDto;
 import com.realEstate.realEstate.model.entity.Address;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
@@ -137,16 +138,15 @@ public class PropertyService {
 
     }
 
-//    @Transactional
-//    public Page<PropertyDto> myWishList(String userName, Pageable pageable) {
-//
-//        User user = userRepository.findByName(userName).orElseThrow(() ->
-//        {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음"); });
-//
-//        List<Wish> wishes = wishRepository.findByUser(user);
-//        return propertyRepository.findByWishes(wishes, pageable).map(PropertyDto::from);
-//
-//    }
+    @Transactional
+    public Page<WishDto> myWishList(String userName, Pageable pageable) {
+
+        User user = userRepository.findByName(userName).orElseThrow(() ->
+        {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음"); });
+
+        return wishRepository.findByUser(user,pageable).map(WishDto::from);
+
+    }
 
     public Property loadPropertyByPropertyId(Long propertyId) {
         return redisRepository.getProperty(propertyId).orElseGet(
