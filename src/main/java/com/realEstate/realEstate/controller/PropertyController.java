@@ -7,6 +7,8 @@ import com.realEstate.realEstate.controller.request.property.*;
 import com.realEstate.realEstate.controller.response.property.AddressResponse;
 import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
+import com.realEstate.realEstate.model.constant.CType;
+import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyImageDto;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.PropertyAmenities;
@@ -110,6 +112,42 @@ public class PropertyController {
     @GetMapping("myList")
     public Response<Page<PropertyResponse>> myList(Pageable pageable, Authentication authentication) {
         return Response.success(propertyService.myList(authentication.getName(), pageable).map(PropertyResponse::fromDto));
+    }
+
+    @GetMapping("/search")
+    public Response<Page<PropertyResponse>> searchProperties(PropertySearchRequest request, Pageable pageable) {
+        CType transactionType = request.getTransactionType();
+        Integer minPrice = request.getMinPrice();
+        Integer maxPrice = request.getMaxPrice();
+        Integer minArea = request.getMinArea();
+        Integer maxArea = request.getMaxArea();
+        Integer minFloor = request.getMinFloor();
+        Integer maxFloor = request.getMaxFloor();
+        Structure structure = request.getStructure();
+        Boolean sink = request.getSink();
+        Boolean airConditioner = request.getAirConditioner();
+        Boolean shoeRack = request.getShoeRack();
+        Boolean washingMachine = request.getWashingMachine();
+        Boolean refrigerator = request.getRefrigerator();
+        Boolean wardrobe = request.getWardrobe();
+        Boolean gasRange = request.getGasRange();
+        Boolean induction = request.getInduction();
+        Boolean bed = request.getBed();
+        Boolean desk = request.getDesk();
+        Boolean microwave = request.getMicrowave();
+        Boolean bookshelf = request.getBookshelf();
+        Integer minDeposit = request.getMinDeposit();
+        Integer maxDeposit = request.getMaxDeposit();
+        Integer minMonthlyRent = request.getMinMonthlyRent();
+        Integer maxMonthlyRent = request.getMaxMonthlyRent();
+
+        Page<PropertyResponse> properties = propertyService.searchProperties(
+                transactionType, minPrice, maxPrice, minArea, maxArea, minFloor, maxFloor,
+                structure, sink, airConditioner, shoeRack, washingMachine, refrigerator,
+                wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,
+                minDeposit, maxDeposit, minMonthlyRent, maxMonthlyRent, pageable).map(PropertyResponse::fromDto);
+
+        return Response.success(properties);
     }
 
 

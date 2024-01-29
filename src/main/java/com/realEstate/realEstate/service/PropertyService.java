@@ -9,10 +9,8 @@ import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.dto.WishDto;
-import com.realEstate.realEstate.model.entity.Address;
-import com.realEstate.realEstate.model.entity.Property;
-import com.realEstate.realEstate.model.entity.User;
-import com.realEstate.realEstate.model.entity.Wish;
+import com.realEstate.realEstate.model.dto.querydsl.PropertySearchCriteria;
+import com.realEstate.realEstate.model.entity.*;
 import com.realEstate.realEstate.repository.AddressRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
@@ -20,6 +18,7 @@ import com.realEstate.realEstate.repository.WishRepository;
 import com.realEstate.realEstate.repository.cacheRepository.PropertyCacheRepository;
 import com.realEstate.realEstate.repository.cacheRepository.UserCacheRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +29,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +41,22 @@ public class PropertyService {
     private final PropertyCacheRepository redisRepository;
     private final UserCacheRepository userCacheRepository;
     private final WishRepository wishRepository;
+
+    public Page<PropertyDto> searchProperties(CType transactionType, Integer minPrice, Integer maxPrice,
+                                              Integer minArea, Integer maxArea, Integer minFloor, Integer maxFloor,
+                                              Structure structure, Boolean sink, Boolean airConditioner, Boolean shoeRack,
+                                              Boolean washingMachine, Boolean refrigerator, Boolean wardrobe, Boolean gasRange,
+                                              Boolean induction, Boolean bed, Boolean desk, Boolean microwave, Boolean bookshelf,
+                                              Integer minDeposit, Integer maxDeposit, Integer minMonthlyRent, Integer maxMonthlyRent,
+                                              Pageable pageable){
+        PropertySearchCriteria criteria = new PropertySearchCriteria(transactionType, minPrice, maxPrice,
+                minArea, maxArea, minFloor, maxFloor, structure, sink, airConditioner, shoeRack,
+                washingMachine, refrigerator, wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,minDeposit,maxDeposit,minMonthlyRent,maxMonthlyRent);
+
+        return propertyRepository.findAll(criteria.getPredicate(), pageable).map(PropertyDto::from);
+
+
+    }
 
     public PropertyDto detail(Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);
