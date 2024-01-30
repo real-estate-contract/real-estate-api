@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class LandPriceResponse {
-    private String strctCdNm;
+    private String pblntfPclnd;
 }

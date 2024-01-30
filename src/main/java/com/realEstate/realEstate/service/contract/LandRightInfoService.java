@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class LandRightInfoService {
     @Value("${api.land-key}")
-    private String landRightKey;
+    private String landkey;
 
     private LandRightInfoRespository landRightInfoRespository;
     private final WebClient webClient;
@@ -33,7 +33,7 @@ public class LandRightInfoService {
         String url = "http://api.vworld.kr/ned/data/ldaregList";
 
         String encodedPnu = URLEncoder.encode(pnu, StandardCharsets.UTF_8.toString());
-        String encodedServiceKey = URLEncoder.encode(landRightKey, StandardCharsets.UTF_8.toString());
+        String encodedServiceKey = URLEncoder.encode(landkey, StandardCharsets.UTF_8.toString());
 
         URI uri = URI.create(String.format("%s?pnu=%s&format=json&key=%s&domain=www.test.com/map.html",
                 url, encodedPnu, encodedServiceKey));
