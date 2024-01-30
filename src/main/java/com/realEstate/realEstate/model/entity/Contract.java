@@ -1,8 +1,7 @@
 package com.realEstate.realEstate.model.entity;
 
 import com.realEstate.realEstate.model.BaseEntity;
-import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.TermUnit;
+import com.realEstate.realEstate.model.constant.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -24,18 +24,101 @@ public class Contract extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contractId;
 
-    @Enumerated(EnumType.STRING)
-    private CType transactionType;
+    // 융자금
+    private BigDecimal loanAmount;
 
-    private BigDecimal contractAmount;
+    // 승계은행
+    private String succeedingBank;
 
-    private Date contractDate;
+    // 1차 중도금
+    private BigDecimal firstInstallment;
 
-    private TermUnit termUnit;
+    // 1차 지급일
+    private LocalDate firstPaymentDate;
 
-    private int termLength;
+    // 2차 중도금
+    private BigDecimal secondInstallment;
 
-    private String conditions;
+    // 2차 지급일
+    private LocalDate secondPaymentDate;
+
+    // 잔금
+    private BigDecimal balance;
+
+    // 잔금 지급일
+    private LocalDate balancePaymentDate;
+
+    // 계약일
+    private LocalDate contractDate;
+
+    // 인도일
+    private LocalDate deliveryDate;
+
+    // 특약사항
+    private String specialAgreement;
+
+    // 거래예정금액
+    private BigDecimal transactionAmount;
+
+    // 권리사항
+    private String rightsClaim;
+
+    // 수도 파손
+    private boolean waterDamage;
+
+    // 수도 용수량
+    private boolean sufficientWaterSupply;
+
+    // 전기 공급상태
+    private boolean electricitySupplyStatus;
+
+    // 가스 공급방식
+    private boolean gasSupplyMethod;
+
+    // 소방
+    private boolean fireSafety;
+
+    // 난방 공급방식
+    private HeatingSupplyMethod heatingSupplyMethod;  // 중앙공급, 개별공급
+
+    // 난방 시설작동
+    private boolean heatingSystemOperation;
+
+    // 난방 종류
+    private HeatingType heatingType;  // 도시가스, 기름, 프로판가스, 연탄, etc
+
+    // 승강기
+    private ElevatorStatus elevatorStatus;  // 양호, 불량, 없음
+
+    // 배수
+    private boolean drainage;
+
+    // 그 밖의 시설물
+    private String otherFacilities;
+
+    // 벽면균열
+    private boolean wallCracks;
+
+    // 벽면누수
+    private boolean wallLeakage;
+
+    // 박닥면상태
+    private FloorCondition floorCondition;  // 깨끗함, 보통임, 수리필요
+
+    // 도배상태
+    private TilingCondition tilingCondition;  // 깨끗함, 보통임, 도배필요
+
+    // 일조량
+    private SunlightAmount sunlightAmount;  // 풍부함, 보통임, 불충분
+
+    // 소음
+    private NoiseLevel noiseLevel;  // 아주작음, 보통임, 심한편임
+
+    // 진동
+    private VibrationLevel vibrationLevel;  // 아주작음, 보통임, 심한편임
+
+    // 수리필요시설
+    private boolean repairsNeeded;
 
 
     @ManyToOne // Contract는 여러 개의 계약이 하나의 부동산과 연결될 수 있음
@@ -59,20 +142,59 @@ public class Contract extends BaseEntity {
         createdAt = LocalDateTime.now();
     }
 
-    public static Contract of(CType transactionType, BigDecimal contractAmount, Date contractDate,
-                              TermUnit termUnit, int termLength, String conditions, Property property, User buyer) {
+    public static Contract of(BigDecimal loanAmount, String succeedingBank, BigDecimal firstInstallment,
+                              LocalDate firstPaymentDate, BigDecimal secondInstallment, LocalDate secondPaymentDate,
+                              BigDecimal balance, LocalDate balancePaymentDate, LocalDate contractDate,
+                              LocalDate deliveryDate, String specialAgreement, BigDecimal transactionAmount,
+                              String rightsClaim, boolean waterDamage, boolean sufficientWaterSupply,
+                              boolean electricitySupplyStatus, boolean gasSupplyMethod, boolean fireSafety,
+                              HeatingSupplyMethod heatingSupplyMethod, boolean heatingSystemOperation,
+                              HeatingType heatingType, ElevatorStatus elevatorStatus, boolean drainage,
+                              String otherFacilities, boolean wallCracks, boolean wallLeakage,
+                              FloorCondition floorCondition, TilingCondition tilingCondition,
+                              SunlightAmount sunlightAmount, NoiseLevel noiseLevel,
+                              VibrationLevel vibrationLevel, boolean repairsNeeded,
+                              Property property, User buyer) {
+
         Contract contract = new Contract();
-        contract.setTransactionType(transactionType);
-        contract.setContractAmount(contractAmount);
+        contract.setLoanAmount(loanAmount);
+        contract.setSucceedingBank(succeedingBank);
+        contract.setFirstInstallment(firstInstallment);
+        contract.setFirstPaymentDate(firstPaymentDate);
+        contract.setSecondInstallment(secondInstallment);
+        contract.setSecondPaymentDate(secondPaymentDate);
+        contract.setBalance(balance);
+        contract.setBalancePaymentDate(balancePaymentDate);
         contract.setContractDate(contractDate);
-        contract.setTermUnit(termUnit);
-        contract.setTermLength(termLength);
-        contract.setConditions(conditions);
-        contract.setBuyer(buyer);
+        contract.setDeliveryDate(deliveryDate);
+        contract.setSpecialAgreement(specialAgreement);
+        contract.setTransactionAmount(transactionAmount);
+        contract.setRightsClaim(rightsClaim);
+        contract.setWaterDamage(waterDamage);
+        contract.setSufficientWaterSupply(sufficientWaterSupply);
+        contract.setElectricitySupplyStatus(electricitySupplyStatus);
+        contract.setGasSupplyMethod(gasSupplyMethod);
+        contract.setFireSafety(fireSafety);
+        contract.setHeatingSupplyMethod(heatingSupplyMethod);
+        contract.setHeatingSystemOperation(heatingSystemOperation);
+        contract.setHeatingType(heatingType);
+        contract.setElevatorStatus(elevatorStatus);
+        contract.setDrainage(drainage);
+        contract.setOtherFacilities(otherFacilities);
+        contract.setWallCracks(wallCracks);
+        contract.setWallLeakage(wallLeakage);
+        contract.setFloorCondition(floorCondition);
+        contract.setTilingCondition(tilingCondition);
+        contract.setSunlightAmount(sunlightAmount);
+        contract.setNoiseLevel(noiseLevel);
+        contract.setVibrationLevel(vibrationLevel);
+        contract.setRepairsNeeded(repairsNeeded);
         contract.setProperty(property);
+        contract.setBuyer(buyer);
 
         return contract;
     }
+
 
 
     // 판매자 정보는 Property에서 가져올 수 있으므로 sellerID 필드는 제거
