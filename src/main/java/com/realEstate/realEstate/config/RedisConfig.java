@@ -1,6 +1,8 @@
 package com.realEstate.realEstate.config;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,8 @@ public class RedisConfig {
         RedisTemplate<String , Property> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
+
+
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Property>(Property.class));
 
         return redisTemplate;
