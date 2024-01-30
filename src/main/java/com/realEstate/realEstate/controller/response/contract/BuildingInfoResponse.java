@@ -1,6 +1,7 @@
 package com.realEstate.realEstate.controller.response.contract;
 
 import com.realEstate.realEstate.controller.response.UserJoinResponse;
+import com.realEstate.realEstate.model.dto.BuildingInfoDto;
 import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.entity.BuildingInfo;
 import lombok.AllArgsConstructor;
@@ -22,15 +23,17 @@ public class BuildingInfoResponse {
     private int vlRat; //용적률(%)
     private String strctCdNm; //구조코드명
 
-    //Entity -> Dto
-    public BuildingInfoResponse(BuildingInfo buildingInfo) {
-        this.mainPurpsCdNm = buildingInfo.getMainPurpsCdNm();
-        this.etcRoof = buildingInfo.getEtcRoof();
-        this.useAprDay = buildingInfo.getUseAprDay();
-        this.newPlatPlc = buildingInfo.getNewPlatPlc();
-        this.archArea = buildingInfo.getArchArea();
-        this.bcRat = buildingInfo.getBcRat();
-        this.vlRat = buildingInfo.getVlRat();
-        this.strctCdNm = buildingInfo.getStrctCdNm();
+
+    public static BuildingInfoResponse fromDto(BuildingInfoDto dto) {
+        return BuildingInfoResponse.builder()
+                .mainPurpsCdNm(dto.getMainPurpsCdNm())
+                .etcRoof(dto.getEtcRoof())
+                .useAprDay(dto.getUseAprDay())
+                .newPlatPlc(dto.getNewPlatPlc())
+                .archArea(dto.getArchArea())
+                .bcRat(dto.getBcRat())
+                .vlRat(dto.getVlRat())
+                .strctCdNm(dto.getStrctCdNm())
+                .build();
     }
 }

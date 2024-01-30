@@ -1,19 +1,19 @@
 spring:
-  redis:
-    host: localhost
-    port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: 'jdbc:mysql://localhost:3306/realEstate'
-    username: root
-    password: 1234
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  redis:
+    host: localhost
+    port: 6379
   security:
     oauth2:
       client:
@@ -60,7 +60,6 @@ jwt:
     header: Authorization
     expiration: 604800000
 
-
 cloud:
   aws:
     s3:
@@ -74,18 +73,20 @@ cloud:
     stack:
       auto: false
 
-
 chatgpt:
   api-key: ${CHATGPT_API_KEY}
   model: text-davinci-003
+
 openai:
   url:
     model: https://api.openai.com/v1/models
     model-list: https://api.openai.com/v1/models/
     legacy-prompt: https://api.openai.com/v1/completions
     prompt: https://api.openai.com/v1/chat/completions
+
 image:
   save_path : ./images
+
 api:
   building-key: ${GET_BUILDING_API_KEY}
   land-key: ${GET_LAND_API_KEY}

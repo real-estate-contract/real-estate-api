@@ -3,6 +3,10 @@ package com.realEstate.realEstate.service.contract;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.realEstate.realEstate.controller.response.contract.BuildingInfoResponse;
+import com.realEstate.realEstate.controller.response.contract.LandInfoResponse;
+import com.realEstate.realEstate.model.entity.BuildingInfo;
+import com.realEstate.realEstate.repository.contract.BuildingInfoRespository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,15 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BuildingInfoService {
 
     @Value("${api.building-key}")
     private String buildingkey;
 
     private final WebClient webClient;
-    public BuildingInfoService(WebClient webClient) {
-        this.webClient = webClient;
-    }
+    private BuildingInfoRespository buildingInfoRespository;
 
     public List<BuildingInfoResponse> getBuildingInfo(String sigunguCd, String bjdongCd) throws IOException {
         String url = "http://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo";
@@ -51,9 +54,10 @@ public class BuildingInfoService {
         JsonNode itemsNode = jsonNode.path("response").path("body").path("items").path("item");
 
         List<BuildingInfoResponse> buildingInfoList = new ArrayList<>();
+
         if (itemsNode.isArray()) {
             for (JsonNode itemNode : itemsNode) {
-                BuildingInfoResponse buildingInfoResponse = BuildingInfoResponse.builder()
+                BuildingInfo buildingInfo = BuildingInfo.builder()
                         .mainPurpsCdNm(itemNode.path("regstrGbCdNm").asText())
                         .etcRoof(itemNode.path("etcRoof").asText())
                         .useAprDay(itemNode.path("useAprDay").asText())
@@ -63,10 +67,22 @@ public class BuildingInfoService {
                         .vlRat(itemNode.path("vlRat").asInt())
                         .strctCdNm(itemNode.path("strctCdNm").asText())
                         .build();
-                buildingInfoList.add(buildingInfoResponse);
+                //save the entity
+                buildingInfoRespository.save(buildingInfo);
+
+                // Convert the entity to response and add to the list if needed
+                buildingInfoList.add(BuildingInfoResponse.builder()
+                        .mainPurpsCdNm(buildingInfo.getMainPurpsCdNm())
+                        .etcRoof(buildingInfo.getEtcRoof())
+                        .useAprDay(buildingInfo.getUseAprDay())
+                        .newPlatPlc(buildingInfo.getNewPlatPlc())
+                        .archArea(buildingInfo.getArchArea())
+                        .bcRat(buildingInfo.getBcRat())
+                        .vlRat(buildingInfo.getVlRat())
+                        .strctCdNm(buildingInfo.getStrctCdNm())
+                        .build());
             }
         }
-
         return buildingInfoList;
     }
 }

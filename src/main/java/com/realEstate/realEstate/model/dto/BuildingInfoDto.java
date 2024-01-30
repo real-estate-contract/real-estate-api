@@ -1,11 +1,11 @@
 package com.realEstate.realEstate.model.dto;
 
 import com.realEstate.realEstate.model.entity.BuildingInfo;
+import com.realEstate.realEstate.model.entity.LandInfo;
 import lombok.*;
 
 @Getter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BuildingInfoDto {
 
@@ -18,7 +18,6 @@ public class BuildingInfoDto {
     private int vlRat; //용적률(%)
     private String strctCdNm; //구조코드명
 
-    //Dto -> Entity
     public BuildingInfo toEntity(){
         return BuildingInfo.builder()
                 .mainPurpsCdNm(mainPurpsCdNm)
@@ -29,6 +28,32 @@ public class BuildingInfoDto {
                 .bcRat(bcRat)
                 .vlRat(vlRat)
                 .strctCdNm(strctCdNm)
+                .build();
+    }
+
+    @Builder
+    public BuildingInfoDto(String mainPurpsCdNm, String etcRoof, String useAprDay,
+                           String newPlatPlc, int archArea, int bcRat, int vlRat, String strctCdNm) {
+        this.mainPurpsCdNm = mainPurpsCdNm;
+        this.etcRoof = etcRoof;
+        this.useAprDay = useAprDay;
+        this.newPlatPlc = newPlatPlc;
+        this.archArea = archArea;
+        this.bcRat = bcRat;
+        this.vlRat = vlRat;
+        this.strctCdNm = strctCdNm;
+    }
+
+    public static BuildingInfoDto fromEntity(BuildingInfoDto entity) {
+        return BuildingInfoDto.builder()
+                .mainPurpsCdNm(entity.getMainPurpsCdNm())
+                .etcRoof(entity.getEtcRoof())
+                .useAprDay(entity.getUseAprDay())
+                .newPlatPlc(entity.getNewPlatPlc())
+                .archArea(entity.getArchArea())
+                .bcRat(entity.getBcRat())
+                .vlRat(entity.getVlRat())
+                .strctCdNm(entity.getStrctCdNm())
                 .build();
     }
 
