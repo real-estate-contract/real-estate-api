@@ -1,14 +1,13 @@
 package com.realEstate.realEstate.model.constant;
 
-public enum Structure {
-    APART("아파트"),
-    VILLA("빌라/투룸+"),
-    ONE_ROOM("원룸"),
-    OFFICETEL("오피스텔");
+public enum ParkingOption {
+    DEDICATED("전용 주차 시설"),
+    SHARED("공동 주차 시설"),
+    OTHER("그 밖의 주차 시설");
 
     private final String displayName;
 
-    Structure(String displayName) {
+    ParkingOption(String displayName) {
         this.displayName = displayName;
     }
 
@@ -16,4 +15,3 @@ public enum Structure {
         return displayName;
     }
 }
-

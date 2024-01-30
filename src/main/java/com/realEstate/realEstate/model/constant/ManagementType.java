@@ -1,19 +1,18 @@
 package com.realEstate.realEstate.model.constant;
 
-public enum Structure {
-    APART("아파트"),
-    VILLA("빌라/투룸+"),
-    ONE_ROOM("원룸"),
-    OFFICETEL("오피스텔");
+public enum ManagementType {
+    OUTSOURCED("위탁 관리"),
+    SELF_MANAGED("자체 관리"),
+    OTHER("그 밖의 유형");
 
     private final String displayName;
 
-    Structure(String displayName) {
+    ManagementType(String displayName) {
         this.displayName = displayName;
     }
 
     public String getDisplayName() {
         return displayName;
     }
-}
 
+}

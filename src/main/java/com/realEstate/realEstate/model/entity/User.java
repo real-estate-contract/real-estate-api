@@ -1,11 +1,17 @@
 package com.realEstate.realEstate.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.SocialType;
 import com.realEstate.realEstate.model.constant.UserRole;
 import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -93,13 +99,13 @@ public class User extends BaseEntity {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
     // 유저 권한 설정 메소드
     public void authorizeUser() {
         this.role = UserRole.USER;
