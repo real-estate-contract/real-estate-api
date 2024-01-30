@@ -105,7 +105,6 @@ public class User extends BaseEntity {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
     // 유저 권한 설정 메소드
     public void authorizeUser() {
         this.role = UserRole.USER;

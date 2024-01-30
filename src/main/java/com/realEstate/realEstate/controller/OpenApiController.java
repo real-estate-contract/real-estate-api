@@ -2,8 +2,10 @@ package com.realEstate.realEstate.controller;
 
 import com.realEstate.realEstate.controller.response.contract.BuildingInfoResponse;
 import com.realEstate.realEstate.controller.response.contract.LandInfoResponse;
+import com.realEstate.realEstate.controller.response.contract.LandRightResponse;
 import com.realEstate.realEstate.service.contract.BuildingInfoService;
 import com.realEstate.realEstate.service.contract.LandInfoService;
+import com.realEstate.realEstate.service.contract.LandRightInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,13 @@ public class OpenApiController {
 
     private final BuildingInfoService buildingInfoService;
     private final LandInfoService landInfoService;
+    private final LandRightInfoService landRightInfoService;
 
     @Autowired
-    public OpenApiController(BuildingInfoService buildingInfoService, LandInfoService landInfoService){
+    public OpenApiController(BuildingInfoService buildingInfoService, LandInfoService landInfoService, LandRightInfoService landRightInfoService){
         this.buildingInfoService = buildingInfoService;
         this.landInfoService = landInfoService;
+        this.landRightInfoService = landRightInfoService;
     }
 
     /**
@@ -52,6 +56,18 @@ public class OpenApiController {
     public ResponseEntity<List<LandInfoResponse>> landInfoOpenApi(@PathVariable String pnu) throws IOException {
 
         List<LandInfoResponse> landInfoList = landInfoService.getLandInfo(pnu);
+        return ResponseEntity.ok().body(landInfoList);
+    }
+
+    /**
+     * 대지권등록목록조회 api
+     * @param pnu
+     * @return
+     */
+    @GetMapping("/land-right-info/{pnu}")
+    public ResponseEntity<List<LandRightResponse>> landRightInfoOpenApi(@PathVariable String pnu) throws IOException {
+
+        List<LandRightResponse> landInfoList = landRightInfoService.getLandInfo(pnu);
         return ResponseEntity.ok().body(landInfoList);
     }
 }

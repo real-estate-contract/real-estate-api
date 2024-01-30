@@ -25,7 +25,6 @@ public class LandInfoService {
     private final WebClient webClient;
 
     public LandInfoService(WebClient webClient, LandInfoRepository landInfoRepository) {
-
         this.webClient = webClient;
         this.landInfoRepository = landInfoRepository;
     }

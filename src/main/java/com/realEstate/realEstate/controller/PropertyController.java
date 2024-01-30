@@ -7,8 +7,11 @@ import com.realEstate.realEstate.controller.request.property.*;
 import com.realEstate.realEstate.controller.response.property.AddressResponse;
 import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
+import com.realEstate.realEstate.model.constant.CType;
+import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyImageDto;
 import com.realEstate.realEstate.model.entity.Property;
+import com.realEstate.realEstate.model.entity.PropertyAmenities;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
@@ -38,6 +41,8 @@ public class PropertyController {
     private final DescriptionService descriptionService;
     private final PropertyOptionService optionService;
     private final PropertyImageService propertyImageService;
+    private final PropertyAmenitiesService amenitiesService;
+    private final PropertyConditionService propertyConditionService;
 
 
     @GetMapping({"/{propertyId}"})
@@ -55,7 +60,7 @@ public class PropertyController {
     public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
-        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),addressId, user.getName());
+        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getManagementFee(), request.isCondominium(),request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), addressId, user.getName());
         return Response.success();
     }
 
@@ -72,21 +77,85 @@ public class PropertyController {
     }
 
     @PostMapping("step5/{propertyId}")
+    public Response<Void> registerAmenities(@RequestBody AmenitiesCreateRequest request, @PathVariable Long propertyId) {
+        amenitiesService.createAmenities(request.getSubway(), request.getBus(), request.getMart(), request.getCafe(), request.getLaundry(), request.getHospital(), request.getBank(), propertyId);
+        return Response.success();
+    }
+
+    @PostMapping("step6/{propertyId}")
+    public Response<Void> registerCondition(@RequestBody ConditionRequest request, @PathVariable Long propertyId) {
+        propertyConditionService.createCondition(request.getStreetL(), request.getStreetR(), request.isStreetPaving(), request.isStreetAccessibility(), request.getBusStation(), request.isBusWalk(), request.getBusTime(), request.getSubwayStation(), request.isSubwayWalk(), request.getSubwayTime(), request.getParkingOption(), request.getParkingMemo(), request.getElementarySchool(), request.isElementaryWalk(), request.getElementaryTime(), request.getMiddleSchool(), request.isMiddleWalk(), request.getMiddleTime(), request.getHighSchool(), request.isHighWalk(), request.getHighTime(), request.getDepartmentStore(), request.isDepartmentWalk(), request.getDepartmentTime(), request.getHospitalStore(), request.isHospitalWalk(), request.getHospitalTime(), request.isSecurityOffice(), request.getManagementType(), request.isDispreferredFacilities(), request.getDispreferredFacilitiesMemo(), propertyId);
+        return Response.success();
+    }
+
+
+    @PostMapping("step7/{propertyId}")
     public Response<Void> uploadPropertyImages(@PathVariable Long propertyId, @RequestParam("images") List<MultipartFile> images) {
+
         PropertyImageDto propertyImageDto = new PropertyImageDto();
         propertyImageDto.setImages(images);
         propertyImageService.uploadImage(propertyId, propertyImageDto);
         return Response.success();
     }
 
+    @PostMapping("/wish/{propertyId}")
+    public Response<Void> wish(@PathVariable Long propertyId, Authentication authentication) {
+        propertyService.wish(propertyId, authentication.getName());
+        return Response.success();
+    }
+
+    @GetMapping("/myWishList")
+    public Response<Page<PropertyResponse>> myWishList(Authentication authentication, Pageable pageable) {
+
+        return Response.success(propertyService.myWishList(authentication.getName(), pageable).map(PropertyResponse::from));
+
+    }
+
     @GetMapping("/list")
     public Response<Page<PropertyResponse>> list(Pageable pageable, Authentication authentication) {
+
         return Response.success(propertyService.list(pageable).map(PropertyResponse::fromDto));
     }
 
     @GetMapping("myList")
     public Response<Page<PropertyResponse>> myList(Pageable pageable, Authentication authentication) {
         return Response.success(propertyService.myList(authentication.getName(), pageable).map(PropertyResponse::fromDto));
+    }
+
+    @GetMapping("/search")
+    public Response<Page<PropertyResponse>> searchProperties(PropertySearchRequest request, Pageable pageable) {
+        CType transactionType = request.getTransactionType();
+        Integer minPrice = request.getMinPrice();
+        Integer maxPrice = request.getMaxPrice();
+        Integer minArea = request.getMinArea();
+        Integer maxArea = request.getMaxArea();
+        Integer minFloor = request.getMinFloor();
+        Integer maxFloor = request.getMaxFloor();
+        Structure structure = request.getStructure();
+        Boolean sink = request.getSink();
+        Boolean airConditioner = request.getAirConditioner();
+        Boolean shoeRack = request.getShoeRack();
+        Boolean washingMachine = request.getWashingMachine();
+        Boolean refrigerator = request.getRefrigerator();
+        Boolean wardrobe = request.getWardrobe();
+        Boolean gasRange = request.getGasRange();
+        Boolean induction = request.getInduction();
+        Boolean bed = request.getBed();
+        Boolean desk = request.getDesk();
+        Boolean microwave = request.getMicrowave();
+        Boolean bookshelf = request.getBookshelf();
+        Integer minDeposit = request.getMinDeposit();
+        Integer maxDeposit = request.getMaxDeposit();
+        Integer minMonthlyRent = request.getMinMonthlyRent();
+        Integer maxMonthlyRent = request.getMaxMonthlyRent();
+
+        Page<PropertyResponse> properties = propertyService.searchProperties(
+                transactionType, minPrice, maxPrice, minArea, maxArea, minFloor, maxFloor,
+                structure, sink, airConditioner, shoeRack, washingMachine, refrigerator,
+                wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,
+                minDeposit, maxDeposit, minMonthlyRent, maxMonthlyRent, pageable).map(PropertyResponse::fromDto);
+
+        return Response.success(properties);
     }
 
 

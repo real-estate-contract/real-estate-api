@@ -18,10 +18,9 @@ public class LandRightInfo extends BaseEntity {
 
     private String ldaQotaRate; //대지권비율
 
-    public static LandRightInfo of(String ldaQotaRate) {
-        LandRightInfo landRightInfo = new LandRightInfo();
-        landRightInfo.setLdaQotaRate(ldaQotaRate);
-        return landRightInfo;
+    @Builder
+    public LandRightInfo(String ldaQotaRate) {
+        this.ldaQotaRate = ldaQotaRate;
     }
 
     @PrePersist

@@ -21,10 +21,10 @@ public class LandPriceInfo extends BaseEntity {
 
     private String pblntfPclnd; //개별공시지가
 
-    public static LandPriceInfo of(String pblntfPclnd) {
-        LandPriceInfo landPriceInfo = new LandPriceInfo();
-        landPriceInfo.setPblntfPclnd(pblntfPclnd);
-        return landPriceInfo;
+
+    @Builder
+    public LandPriceInfo(String pblntfPclnd) {
+        this.pblntfPclnd = pblntfPclnd;
     }
 
     @PrePersist
