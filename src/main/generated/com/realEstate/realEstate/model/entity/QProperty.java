@@ -30,6 +30,8 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final NumberPath<Integer> area = createNumber("area", Integer.class);
 
+    public final BooleanPath condominium = createBoolean("condominium");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
@@ -54,6 +56,8 @@ public class QProperty extends EntityPathBase<Property> {
     public final BooleanPath parkingAvailable = createBoolean("parkingAvailable");
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
+
+    public final QPropertyCondition propertyCondition;
 
     public final NumberPath<Long> propertyId = createNumber("propertyId", Long.class);
 
@@ -92,6 +96,7 @@ public class QProperty extends EntityPathBase<Property> {
         this.amenities = inits.isInitialized("amenities") ? new QPropertyAmenities(forProperty("amenities"), inits.get("amenities")) : null;
         this.description = inits.isInitialized("description") ? new QDescription(forProperty("description"), inits.get("description")) : null;
         this.option = inits.isInitialized("option") ? new QPropertyOption(forProperty("option"), inits.get("option")) : null;
+        this.propertyCondition = inits.isInitialized("propertyCondition") ? new QPropertyCondition(forProperty("propertyCondition"), inits.get("propertyCondition")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 

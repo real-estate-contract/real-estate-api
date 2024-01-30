@@ -19,6 +19,11 @@ public class QLandInfo extends EntityPathBase<LandInfo> {
 
     public static final QLandInfo landInfo = new QLandInfo("landInfo");
 
+    public final com.realEstate.realEstate.model.QBaseEntity _super = new com.realEstate.realEstate.model.QBaseEntity(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
     public final NumberPath<Long> landId = createNumber("landId", Long.class);
 
     public final StringPath ldCodeNm = createString("ldCodeNm");
@@ -26,6 +31,9 @@ public class QLandInfo extends EntityPathBase<LandInfo> {
     public final StringPath lndcgrCodeNm = createString("lndcgrCodeNm");
 
     public final StringPath lndpclAr = createString("lndpclAr");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QLandInfo(String variable) {
         super(LandInfo.class, forVariable(variable));

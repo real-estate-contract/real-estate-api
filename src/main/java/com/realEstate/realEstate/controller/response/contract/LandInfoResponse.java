@@ -1,5 +1,6 @@
 package com.realEstate.realEstate.controller.response.contract;
 
+import com.realEstate.realEstate.model.dto.LandInfoDto;
 import com.realEstate.realEstate.model.entity.BuildingInfo;
 import com.realEstate.realEstate.model.entity.LandInfo;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,11 @@ public class LandInfoResponse {
     private String lndcgrCodeNm; //지목명
     private String lndpclAr; //면적(㎡)
 
-    //Entity -> Dto
-    public LandInfoResponse(LandInfo landInfo) {
-        this.ldCodeNm = landInfo.getLdCodeNm();
-        this.lndcgrCodeNm = landInfo.getLndcgrCodeNm();
-        this.lndpclAr = landInfo.getLndpclAr();
+    public static LandInfoResponse fromDto(LandInfoDto dto) {
+        return LandInfoResponse.builder()
+                .ldCodeNm(dto.getLdCodeNm())
+                .lndcgrCodeNm(dto.getLndcgrCodeNm())
+                .lndpclAr(dto.getLndpclAr())
+                .build();
     }
 }

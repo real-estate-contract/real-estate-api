@@ -2,9 +2,9 @@ package com.realEstate.realEstate.service.contract;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.realEstate.realEstate.controller.response.contract.LandInfoResponse;
-import com.realEstate.realEstate.model.entity.LandInfo;
-import com.realEstate.realEstate.repository.contract.LandInfoRepository;
+import com.realEstate.realEstate.controller.response.contract.LandRightResponse;
+import com.realEstate.realEstate.model.entity.LandRightInfo;
+import com.realEstate.realEstate.repository.contract.LandRightInfoRespository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,20 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LandInfoService {
+public class LandRightInfoService {
     @Value("${api.land-key}")
     private String landkey;
 
-    private LandInfoRepository landInfoRepository;
+    private LandRightInfoRespository landRightInfoRespository;
     private final WebClient webClient;
 
-    public LandInfoService(WebClient webClient, LandInfoRepository landInfoRepository) {
+    public LandRightInfoService(WebClient webClient, LandRightInfoRespository landRightInfoRespository) {
         this.webClient = webClient;
-        this.landInfoRepository = landInfoRepository;
+        this.landRightInfoRespository = landRightInfoRespository;
     }
 
-    public List<LandInfoResponse> getLandInfo(String pnu) throws IOException {
-        String url = "http://api.vworld.kr/ned/data/ladfrlList";
+    public List<LandRightResponse> getLandInfo(String pnu) throws IOException {
+        String url = "http://api.vworld.kr/ned/data/ldaregList";
 
         String encodedPnu = URLEncoder.encode(pnu, StandardCharsets.UTF_8.toString());
         String encodedServiceKey = URLEncoder.encode(landkey, StandardCharsets.UTF_8.toString());
@@ -47,32 +47,28 @@ public class LandInfoService {
         return parseLandInfoResponse(responseBody);
     }
 
-    private List<LandInfoResponse> parseLandInfoResponse(String responseBody) throws IOException {
+    private List<LandRightResponse> parseLandInfoResponse(String responseBody) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
-        JsonNode itemsNode = jsonNode.path("ladfrlVOList").path("ladfrlVOList");
+        JsonNode itemsNode = jsonNode.path("ldaregVOList").path("ldaregVOList");
 
-        List<LandInfoResponse> landInfoList = new ArrayList<>();
+        List<LandRightResponse> landRightInfoList = new ArrayList<>();
 
         if (itemsNode.isArray()) {
             for (JsonNode itemNode : itemsNode) {
-                LandInfo landInfo = LandInfo.builder()
-                        .ldCodeNm(itemNode.path("ldCodeNm").asText())
-                        .lndcgrCodeNm(itemNode.path("lndcgrCodeNm").asText())
-                        .lndpclAr(itemNode.path("lndpclAr").asText())
+                LandRightInfo landRightInfo = LandRightInfo.builder()
+                        .ldaQotaRate(itemNode.path("ldaQotaRate").asText())
                         .build();
 
                 // Save the entity
-                landInfoRepository.save(landInfo);
+                landRightInfoRespository.save(landRightInfo);
 
                 // Convert the entity to response and add to the list if needed
-                landInfoList.add(LandInfoResponse.builder()
-                        .ldCodeNm(landInfo.getLdCodeNm())
-                        .lndcgrCodeNm(landInfo.getLndcgrCodeNm())
-                        .lndpclAr(landInfo.getLndpclAr())
+                landRightInfoList.add(LandRightResponse.builder()
+                        .ldaQotaRate(landRightInfo.getLdaQotaRate())
                         .build());
             }
         }
-        return landInfoList;
+        return landRightInfoList;
     }
 }

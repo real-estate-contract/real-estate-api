@@ -95,7 +95,6 @@ public class User extends BaseEntity {
         this.name = updateNickname;
     }
 
-
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

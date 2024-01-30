@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.repository;
+package com.realEstate.realEstate.repository.contract;
 
 import com.realEstate.realEstate.model.entity.Contract;
 import org.springframework.data.jpa.repository.JpaRepository;
