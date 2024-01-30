@@ -6,6 +6,7 @@ import com.realEstate.realEstate.controller.response.contract.BuildingInfoRespon
 import com.realEstate.realEstate.controller.response.contract.LandInfoResponse;
 import com.realEstate.realEstate.model.entity.BuildingInfo;
 import com.realEstate.realEstate.repository.contract.BuildingInfoRespository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BuildingInfoService {
 
     @Value("${api.building-key}")
@@ -25,10 +27,6 @@ public class BuildingInfoService {
 
     private final WebClient webClient;
     private BuildingInfoRespository buildingInfoRespository;
-    public BuildingInfoService(WebClient webClient, BuildingInfoRespository buildingInfoRespository) {
-        this.webClient = webClient;
-        this.buildingInfoRespository = buildingInfoRespository;
-    }
 
     public List<BuildingInfoResponse> getBuildingInfo(String sigunguCd, String bjdongCd) throws IOException {
         String url = "http://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo";
