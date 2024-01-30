@@ -22,6 +22,11 @@ public class PropertyCreateRequest {
     int price;
     int deposit;
     int monthlyRent;
+<<<<<<< HEAD
+=======
+    int managementFee;
+    boolean condominium;
+>>>>>>> b156b5d ([add] 매물 입지조건 추가)
     int area;
     int floor;
     boolean parkingAvailable;
@@ -29,5 +34,7 @@ public class PropertyCreateRequest {
     LocalDate moveInDate;
     Structure structure;
 //    Integer userId; // TODO: 없애주고 Authentication으로
+
+
 
 }
