@@ -26,7 +26,8 @@ public class PropertyResponse {
     int price;
     int deposit;
     int monthlyRent;
-   int managementFee;
+    int managementFee;
+    boolean condominium;
     int area;
     int floor;
     boolean parkingAvailable;
@@ -34,6 +35,7 @@ public class PropertyResponse {
     LocalDate moveInDate;
     Structure structure;
     String direction;
+    PropertyConditionResponse propertyCondition;
     AddressResponse address;
     UserResponse user;
     OptionResponse option;
@@ -50,6 +52,7 @@ public class PropertyResponse {
                 dto.getDeposit(),
                 dto.getMonthlyRent(),
                 dto.getManagementFee(),
+                dto.isCondominium(),
                 dto.getArea(),
                 dto.getFloor(),
                 dto.isParkingAvailable(),
@@ -57,6 +60,7 @@ public class PropertyResponse {
                 dto.getMoveInDate(),
                 dto.getStructure(),
                 dto.getDirection(),
+                PropertyConditionResponse.fromDto(dto.getPropertyCondition()),
                 AddressResponse.fromDto(dto.getAddress()),
                 UserResponse.fromDto(dto.getUser()),
                 OptionResponse.from(dto.getOption()),
@@ -77,6 +81,7 @@ public class PropertyResponse {
                 dto.getProperty().getDeposit(),
                 dto.getProperty().getMonthlyRent(),
                 dto.getProperty().getManagementFee(),
+                dto.getProperty().isCondominium(),
                 dto.getProperty().getArea(),
                 dto.getProperty().getFloor(),
                 dto.getProperty().isParkingAvailable(),
@@ -84,6 +89,7 @@ public class PropertyResponse {
                 dto.getProperty().getMoveInDate(),
                 dto.getProperty().getStructure(),
                 dto.getProperty().getDirection(),
+                PropertyConditionResponse.fromDto(dto.getProperty().getPropertyCondition()),
                 AddressResponse.fromDto(dto.getProperty().getAddress()),
                 UserResponse.fromDto(dto.getUser()),
                 OptionResponse.from(dto.getProperty().getOption()),

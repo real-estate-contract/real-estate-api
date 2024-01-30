@@ -38,6 +38,7 @@ public class Property extends BaseEntity {
     private int deposit;  // 보증금
     private int monthlyRent;  // 월세
     private int managementFee; // 관리비
+    private boolean condominium; //공동주택 / 단독주택여부
     private int area; // 평형
     private int floor; // 층수
     private boolean parkingAvailable;
@@ -48,6 +49,11 @@ public class Property extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Structure structure;
     private String direction;
+
+    @ToString.Exclude
+    @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
+    private PropertyCondition propertyCondition;
+
 
     @ManyToOne
     @JoinColumn(name = "adressId")
@@ -80,13 +86,14 @@ public class Property extends BaseEntity {
 
 
 
-    public static Property of(CType transactionType, int price, int deposit, int monthlyRent, int managementFee, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction, Address address, User user) {
+    public static Property of(CType transactionType, int price, int deposit, int monthlyRent, int managementFee, boolean condominium, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction, Address address, User user) {
         Property property = new Property();
         property.setTransactionType(transactionType);
         property.setPrice(price);
         property.setDeposit(deposit);
         property.setMonthlyRent(monthlyRent);
         property.setManagementFee(managementFee);
+        property.setCondominium(condominium);
         property.setArea(area);
         property.setFloor(floor);
         property.setParkingAvailable(parkingAvailable);

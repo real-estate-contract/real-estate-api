@@ -23,6 +23,7 @@ public class PropertyCreateRequest {
     int deposit;
     int monthlyRent;
     int managementFee;
+    boolean condominium;
     int area;
     int floor;
     boolean parkingAvailable;
@@ -30,5 +31,7 @@ public class PropertyCreateRequest {
     LocalDate moveInDate;
     Structure structure;
     String direction;
+
+
 
 }

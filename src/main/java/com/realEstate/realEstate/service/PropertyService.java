@@ -66,17 +66,17 @@ public class PropertyService {
 
     @Transactional
     // Create
-    public void create(CType transactionType, int price, int deposit,int managementFee, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction,Long addressId, String userName) {
+    public void create(CType transactionType, int price, int deposit,int monthlyRent,int managementFee, boolean condominium,int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction, Long addressId, String userName) {
 
         //user exit
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
         //address exit
         Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
 
-        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, managementFee,area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address,user));
+        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, address,user));
 
 
-        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, managementFee, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address,user));
+        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address,user));
     }
 
     // ReadAll(페이징 처리)

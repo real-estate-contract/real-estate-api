@@ -42,6 +42,7 @@ public class PropertyController {
     private final PropertyOptionService optionService;
     private final PropertyImageService propertyImageService;
     private final PropertyAmenitiesService amenitiesService;
+    private final PropertyConditionService propertyConditionService;
 
 
     @GetMapping({"/{propertyId}"})
@@ -59,7 +60,7 @@ public class PropertyController {
     public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
-        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getManagementFee(), request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(),addressId, user.getName());
+        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getManagementFee(), request.isCondominium(),request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), addressId, user.getName());
         return Response.success();
     }
 
@@ -81,9 +82,16 @@ public class PropertyController {
         return Response.success();
     }
 
-
     @PostMapping("step6/{propertyId}")
+    public Response<Void> registerCondition(@RequestBody ConditionRequest request, @PathVariable Long propertyId) {
+        propertyConditionService.createCondition(request.getStreetL(), request.getStreetR(), request.isStreetPaving(), request.isStreetAccessibility(), request.getBusStation(), request.isBusWalk(), request.getBusTime(), request.getSubwayStation(), request.isSubwayWalk(), request.getSubwayTime(), request.getParkingOption(), request.getParkingMemo(), request.getElementarySchool(), request.isElementaryWalk(), request.getElementaryTime(), request.getMiddleSchool(), request.isMiddleWalk(), request.getMiddleTime(), request.getHighSchool(), request.isHighWalk(), request.getHighTime(), request.getDepartmentStore(), request.isDepartmentWalk(), request.getDepartmentTime(), request.getHospitalStore(), request.isHospitalWalk(), request.getHospitalTime(), request.isSecurityOffice(), request.getManagementType(), request.isDispreferredFacilities(), request.getDispreferredFacilitiesMemo(), propertyId);
+        return Response.success();
+    }
+
+
+    @PostMapping("step7/{propertyId}")
     public Response<Void> uploadPropertyImages(@PathVariable Long propertyId, @RequestParam("images") List<MultipartFile> images) {
+
         PropertyImageDto propertyImageDto = new PropertyImageDto();
         propertyImageDto.setImages(images);
         propertyImageService.uploadImage(propertyId, propertyImageDto);

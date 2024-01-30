@@ -29,14 +29,16 @@ public class PropertyDto implements Serializable {
     int price;
     int deposit;
     int monthlyRent;
-    private int managementFee;
+    int managementFee;
+    boolean condominium;
     int area;
     int floor;
     boolean parkingAvailable;
     boolean hasElevator;
     LocalDate moveInDate;
     Structure structure;
-    private String direction;;
+    String direction;
+    PropertyConditionDto propertyCondition;
     AddressDto address;
     UserDto user;
     OptionDto option;
@@ -55,6 +57,7 @@ public class PropertyDto implements Serializable {
                 entity.getDeposit(),
                 entity.getMonthlyRent(),
                 entity.getManagementFee(),
+                entity.isCondominium(),
                 entity.getArea(),
                 entity.getFloor(),
                 entity.isParkingAvailable(),
@@ -62,6 +65,7 @@ public class PropertyDto implements Serializable {
                 entity.getMoveInDate(),
                 entity.getStructure(),
                 entity.getDirection(),
+                PropertyConditionDto.from(entity.getPropertyCondition()),
                 AddressDto.from(entity.getAddress()),
                 UserDto.from(entity.getUser()),
                 OptionDto.from(entity.getOption()),
