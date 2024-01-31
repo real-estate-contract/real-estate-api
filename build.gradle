@@ -82,6 +82,11 @@ dependencies {
 }
 
 
+task buildDocker(type: Exec) {
+	commandLine 'docker', 'build', '-t', 'your-image-name', '.'
+}
+
+
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
