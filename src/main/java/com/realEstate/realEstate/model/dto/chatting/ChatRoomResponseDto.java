@@ -19,7 +19,7 @@ public class ChatRoomResponseDto {
 
     private Integer joinMember;
 
-    private Integer saleNo;
+    private Long saleNo;
     private String saleTitle;
 
     private long regDate;
@@ -32,7 +32,7 @@ public class ChatRoomResponseDto {
         this.unReadCount = unReadCount;
     }
 
-    public ChatRoomResponseDto(Integer chatNo, Integer createMember, Integer joinMember, Integer saleNo, String saleTitle,
+    public ChatRoomResponseDto(Integer chatNo, Integer createMember, Integer joinMember, Long saleNo, String saleTitle,
                                LocalDateTime regDate, Participant participant) {
         this.chatNo = chatNo;
         this.createMember = createMember;

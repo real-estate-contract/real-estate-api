@@ -1,5 +1,12 @@
 package com.realEstate.realEstate.service.chat;
 
+
+
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.realEstate.realEstate.model.dto.chatting.ChatRoomResponseDto;
 import com.realEstate.realEstate.model.entity.User;
@@ -9,18 +16,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Objects;
+
+import static com.realEstate.realEstate.model.entity.QProperty.property;
+import static com.realEstate.realEstate.model.entity.QUser.user;
+import static com.realEstate.realEstate.model.entity.chat.QChat.chat;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -30,36 +32,28 @@ public class ChatQueryService {
     private final UserRepository userRepository;
 
     // 채팅방 리스트 조회
-    public List<ChatRoomResponseDto> getChattingList(Integer memberNo, Integer saleNo) {
+    public List<ChatRoomResponseDto> getChattingList(Long memberNo, Long saleNo) {
         return jpaQueryFactory.select(Projections.constructor(ChatRoomResponseDto.class,
-                        chat.chatNo
+                        chat.chatNo,
                         chat.createMember,
                         chat.joinMember,
                         chat.saleNo,
-                        adopt.title,
+                        property.address,
                         chat.regDate,
                         Projections.constructor(ChatRoomResponseDto.Participant.class,
                                 ExpressionUtils.as(
-                                        JPAExpressions.select(member.nickname)
-                                                .from(member)
-                                                .where(member.memberNo.eq(
+                                        JPAExpressions.select(user.nickName)
+                                                .from(user)
+                                                .where(user.userId.eq(
                                                         new CaseBuilder()
                                                                 .when(chat.createMember.eq(memberNo)).then(chat.joinMember)
                                                                 .otherwise(chat.createMember)
 
                                                 ))
-                                        , "nickname"),
-                                ExpressionUtils.as(
-                                        JPAExpressions.select(member.profile)
-                                                .from(member)
-                                                .where(member.memberNo.eq(
-                                                        new CaseBuilder()
-                                                                .when(chat.createMember.eq(memberNo)).then(chat.joinMember)
-                                                                .otherwise(chat.createMember)
-                                                )), "profile"))
+                                        , "nickname"))
                 ))
                 .from(chat)
-                .join(adopt).on(adopt.saleNo.eq(chat.saleNo))
+                .join(property).on(property.propertyId.eq(chat.saleNo))
                 .where(chat.createMember.eq(memberNo).or(chat.joinMember.eq(memberNo)), saleNoEq(saleNo))
                 .fetch();
     }
@@ -71,14 +65,14 @@ public class ChatQueryService {
                 .where(chat.chatNo.eq(chatNo))
                 .fetchOne();
 
-        Integer memberNo = chatroom.getCreateMember().equals(senderNo) ?
+        Long memberNo = chatroom.getCreateMember().equals(senderNo) ?
                 chatroom.getJoinMember() : chatroom.getCreateMember();
 
-        return memberRepository.findById(memberNo)
+        return userRepository.findById(memberNo)
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private BooleanExpression saleNoEq(Integer saleNo) {
+    private BooleanExpression saleNoEq(Long saleNo) {
         return Objects.nonNull(saleNo) ? chat.saleNo.eq(saleNo) : null;
     }
 

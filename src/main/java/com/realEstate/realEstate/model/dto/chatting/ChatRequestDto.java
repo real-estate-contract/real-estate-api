@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class ChatRequestDto {
 
     @NotNull
-    private Integer saleNo;
+    private Long saleNo;
     @NotNull
     private Long createMember;
 

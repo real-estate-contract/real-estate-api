@@ -28,7 +28,7 @@ public class Message implements Serializable {
 
     private String senderName;
 
-    private Integer senderNo;
+    private Long senderNo;
 
     @NotNull
     private Integer saleNo;
@@ -37,7 +37,7 @@ public class Message implements Serializable {
     private Integer readCount;
     private String senderEmail;
 
-    public void setSendTimeAndSender(LocalDateTime sendTime, Integer senderNo, String senderName, Integer readCount) {
+    public void setSendTimeAndSender(LocalDateTime sendTime, Long senderNo, String senderName, Integer readCount) {
         this.senderName = senderName;
         this.sendTime = sendTime.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
         this.senderNo = senderNo;

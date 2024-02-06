@@ -24,7 +24,7 @@ public class Chat {
     private Long joinMember;
 
     @Column(name = "sale_no")
-    private Integer saleNo;
+    private Long saleNo;
 
     @Column(name = "reg_date")
     private LocalDateTime regDate;

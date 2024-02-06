@@ -8,7 +8,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class AggregationDto implements Serializable {
 
-    private Integer saleNo;
+    private Long saleNo;
     private String isIncrease;
     private AggregationTarget target;
 }

@@ -19,7 +19,7 @@ public class Chatting {
     @Id
     private String id;
     private Integer chatRoomNo;
-    private Integer senderNo;
+    private Long senderNo;
     private String senderName;
     private String contentType;
     private String content;
