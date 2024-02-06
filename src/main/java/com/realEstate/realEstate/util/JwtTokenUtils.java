@@ -5,13 +5,19 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
+@Service
+@RequiredArgsConstructor
 public class JwtTokenUtils {
+
+    private String secretKey;
 
     //JSON Web Token(JWT)을 생성하고 검증하는 유틸리티 클래스
 
@@ -59,4 +65,12 @@ public class JwtTokenUtils {
                 .signWith(getSigningKey(key), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    // 토큰에서 Email을 추출한다.
+    public String getUid(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+
+
 }

@@ -84,6 +84,11 @@ dependencies {
 
 	//mongoDB
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+	//Guava
+	implementation 'com.google.guava:guava:31.0.1-jre'
+	implementation 'javax.validation:validation-api:2.0.1.Final' // 현재 버전에 맞게 업데이트
+
 }
 
 
