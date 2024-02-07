@@ -1,4 +1,4 @@
-package com.realEstate.realEstate;
+package com.realEstate.realEstate.controller;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;

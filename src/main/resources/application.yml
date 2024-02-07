@@ -1,3 +1,7 @@
+mongodb:
+  client: mongodb://localhost:27017
+  name: realEstate
+
 spring:
   redis:
     host: localhost

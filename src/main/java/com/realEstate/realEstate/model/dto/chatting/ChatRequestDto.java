@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
 public class ChatRequestDto {
 
     @NotNull
-    private Long saleNo;
+    private Long saleNo; // 매물 id
     @NotNull
-    private Long createMember;
+    private Long createMember; // 매물 만든이
 
 }
