@@ -1,5 +1,6 @@
 package com.realEstate.realEstate.config.kafka;
 
+
 import com.google.common.collect.ImmutableMap;
 import com.realEstate.realEstate.model.dto.chatting.Message;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -15,13 +16,14 @@ import java.util.Map;
 
 
 
+
 @EnableKafka
 @Configuration
 public class ListenerConfiguration {
 
     // KafkaListener 컨테이너 팩토리를 생성하는 Bean 메서드
     @Bean
-    ConcurrentKafkaListenerContainerFactory<String, Message> kafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, Message> stringMessageConcurrentKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Message> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
