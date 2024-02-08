@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "property_amenities")
 @Getter
 @Setter
 public class PropertyAmenities extends BaseEntity {

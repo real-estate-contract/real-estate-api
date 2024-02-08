@@ -42,6 +42,8 @@ public class UserService implements UserDetailsService {
 
     }
 
+
+
     @Transactional
     public UserDto socialJoin(Long userId, String nickName, Gender gender, int age){
         User user = userRepository.findById(userId).orElseThrow(() -> {

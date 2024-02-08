@@ -8,7 +8,6 @@ import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.SocialType;
 import com.realEstate.realEstate.model.constant.UserRole;
-import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,7 +25,7 @@ import java.util.List;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseEntity {
+public class User extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +35,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(name = "nick_name")
     private String nickName;
 
-//    @Column(nullable = false) TODO : 소셜로그인 구현 후 비밀번호가 알아서 들어오는지 확인
     private String password;
 
     @Column
@@ -54,21 +52,21 @@ public class User extends BaseEntity {
     @Column
     private UserRole role;
 
+    @Column(name = "image_url")
     private String imageUrl; // 프로필 이미지
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "social_type")
     private SocialType socialType; // KAKAO, NAVER, GOOGLE
 
+    @Column(name = "social_id")
     private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
+    @Column(name = "refresh_token")
     private String refreshToken; // 리프레시 토큰
 
 
-    @OneToMany(mappedBy = "buyer")
-    private List<ChatRoom> chatRoomsAsBuyer = new ArrayList<>();
 
-    @OneToMany(mappedBy = "seller")
-    private List<ChatRoom> chatRoomsAsSeller = new ArrayList<>();
 
     public static User of(String userName, String nickName, String password, String email, Gender gender, int age, UserRole userRole) {
         User entity = new User();

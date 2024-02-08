@@ -21,6 +21,7 @@ import java.util.Optional;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Long>,
         QuerydslPredicateExecutor<Property> {
+    Optional<Property> findByPropertyId(Long id);
 
     public Page<Property> findAllByUser(User user, Pageable pageable);
 

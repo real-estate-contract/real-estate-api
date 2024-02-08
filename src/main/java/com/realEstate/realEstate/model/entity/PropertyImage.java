@@ -15,13 +15,14 @@ import java.util.List;
 @Getter
 @ToString
 @Setter
-@Table
+@Table(name = "property_image")
 public class PropertyImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "image_url")
     private String imageUrl;
 
     @ManyToOne

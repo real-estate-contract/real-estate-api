@@ -20,10 +20,10 @@ public class Description {
     @Column
     private String memo;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "loan_availbale")
     private boolean loanAvailable; // 대출 가능 여부
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "pet_friendly")
     private boolean petFriendly; // 반려 동물 가능 여부
 
     @ToString.Exclude

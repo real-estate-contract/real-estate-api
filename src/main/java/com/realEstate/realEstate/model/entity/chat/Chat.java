@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 @Entity
 @Getter
-@Table(name = "CHAT")
+@Table(name = "chat")
 @DynamicInsert
 @AllArgsConstructor @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
