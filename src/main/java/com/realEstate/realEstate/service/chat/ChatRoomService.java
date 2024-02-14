@@ -3,7 +3,6 @@ package com.realEstate.realEstate.service.chat;
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.model.entity.chat.ChatRedisRoom;
-import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import com.realEstate.realEstate.repository.chat.ChatRedisRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

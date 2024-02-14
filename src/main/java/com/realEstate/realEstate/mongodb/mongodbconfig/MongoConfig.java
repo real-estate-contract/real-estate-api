@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.config.mongodb;
+package com.realEstate.realEstate.mongodb.mongodbconfig;
 
 
 import com.mongodb.client.MongoClient;
@@ -11,17 +11,16 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @RequiredArgsConstructor
-@EnableMongoRepositories(basePackages = "com.realEstate.realEstate")
 public class MongoConfig {
 
     private final MongoProperties mongoProperties;
 
     @Bean
     public MongoClient mongoClient() {
-        return MongoClients.create(mongoProperties.getClient());
+        return MongoClients.create("mongodb://localhost:27017");
     }
     @Bean
     public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongoClient(), mongoProperties.getName());
+        return new MongoTemplate(mongoClient(), "realEstate");
     }
 }

@@ -1,6 +1,7 @@
 package com.realEstate.realEstate.model.dto.chatting;
 
 
+import com.realEstate.realEstate.model.dto.Chatting;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;

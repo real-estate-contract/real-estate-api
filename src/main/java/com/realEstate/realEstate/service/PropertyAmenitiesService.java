@@ -3,7 +3,6 @@ package com.realEstate.realEstate.service;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
-import com.realEstate.realEstate.controller.response.property.AmenitiesResponse;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.PropertyAmenities;
 import com.realEstate.realEstate.repository.PropertyAmenitiesRepository;

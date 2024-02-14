@@ -2,7 +2,6 @@ package com.realEstate.realEstate.controller;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
-import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.controller.response.StatusResponseDto;
 import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.dto.chatting.ChatRequestDto;

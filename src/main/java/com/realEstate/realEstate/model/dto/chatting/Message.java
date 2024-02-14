@@ -1,5 +1,6 @@
 package com.realEstate.realEstate.model.dto.chatting;
 
+import com.realEstate.realEstate.model.dto.Chatting;
 import com.sun.istack.NotNull;
 import lombok.*;
 

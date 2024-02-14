@@ -1,4 +1,4 @@
-package com.realEstate.realEstate.model.dto.chatting;
+package com.realEstate.realEstate.model.dto;
 
 import lombok.*;
 import org.apache.kafka.common.protocol.types.Field;
