@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EntityScan
-@EnableJpaRepositories(basePackages = "com.realEstate.realEstate.model")
-@EnableMongoRepositories(basePackages = "com.realEstate.realEstate.mongodb")
 public class RealEstateApplication {
 
 	public static void main(String[] args) {
