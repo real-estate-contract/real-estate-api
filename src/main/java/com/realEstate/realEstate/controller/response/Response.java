@@ -1,6 +1,6 @@
 package com.realEstate.realEstate.controller.response;
 
-import com.realEstate.realEstate.controller.response.contract.ContractResponse;
+//import com.realEstate.realEstate.controller.response.contract.ContractResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

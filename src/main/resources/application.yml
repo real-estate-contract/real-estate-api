@@ -1,4 +1,8 @@
 spring:
+#  kafka:
+#    template:
+#      default-topic: realestate
+#    bootstrap-servers: localhost:9092
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: 'jdbc:mysql://localhost:3306/realEstate'
