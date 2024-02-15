@@ -31,7 +31,7 @@ public class PropertyAmenities extends BaseEntity {
 
     @ToString.Exclude
     @OneToOne
-    @JoinColumn(name = "propertyId")
+    @JoinColumn(name = "property_id")
     private Property property;
 
     public static PropertyAmenities of(String subway, String bus, String mart, String cafe, String laundry, String hospital, String bank, Property property) {

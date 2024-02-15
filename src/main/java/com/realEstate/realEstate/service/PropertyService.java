@@ -65,10 +65,10 @@ public class PropertyService {
         //address exit
         Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
 
-        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, address,user));
+        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, address, user));
 
 
-        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address,user));
+        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address, user));
     }
 
     // ReadAll(페이징 처리)

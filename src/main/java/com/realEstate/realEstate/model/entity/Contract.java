@@ -39,11 +39,11 @@ public class Contract extends BaseEntity {
 
 
     @ManyToOne // Contract는 여러 개의 계약이 하나의 부동산과 연결될 수 있음
-    @JoinColumn(name = "propertyId")
+    @JoinColumn(name = "property_id")
     private Property property;
 
     @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
-    @JoinColumn(name = "buyerId")
+    @JoinColumn(name = "buyer_id")
     private User buyer;
 
     @PrePersist

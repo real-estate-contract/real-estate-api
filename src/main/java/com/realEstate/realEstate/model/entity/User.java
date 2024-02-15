@@ -1,17 +1,11 @@
 package com.realEstate.realEstate.model.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.realEstate.realEstate.model.BaseEntity;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.SocialType;
 import com.realEstate.realEstate.model.constant.UserRole;
+//import com.realEstate.realEstate.model.entity.chat.ChatRoom;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -65,6 +59,11 @@ public class User extends BaseEntity{
     @Column(name = "refresh_token")
     private String refreshToken; // 리프레시 토큰
 
+//    @OneToMany(mappedBy = "buyer")
+//    private List<ChatRoom> chatRoomsAsBuyer = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "seller")
+//    private List<ChatRoom> chatRoomsAsSeller = new ArrayList<>();
 
 
 
