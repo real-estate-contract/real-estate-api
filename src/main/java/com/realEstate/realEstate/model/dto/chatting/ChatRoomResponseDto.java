@@ -11,6 +11,7 @@ import java.time.ZoneId;
 
 @Getter
 @ToString
+@AllArgsConstructor
 public class ChatRoomResponseDto {
 
     private Integer chatNo;

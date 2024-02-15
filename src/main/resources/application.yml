@@ -1,4 +1,12 @@
 spring:
+  data:
+    mongodb:
+      database: realEstate
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      username: root
+      password: 1234
   redis:
     host: localhost
     port: 6379
@@ -9,7 +17,7 @@ spring:
     password: 1234
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:

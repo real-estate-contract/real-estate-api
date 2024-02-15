@@ -50,7 +50,14 @@ public class ChatQueryService {
                                                                 .otherwise(chat.createMember)
 
                                                 ))
-                                        , "nickname"))
+                                        , "nickname"),
+                                ExpressionUtils.as(JPAExpressions.select(user.nickName)
+                                        .from(user)
+                                        .where(user.userId.eq(
+                                                new CaseBuilder()
+                                                        .when(chat.createMember.eq(memberNo)).then(chat.joinMember)
+                                                        .otherwise(chat.createMember)
+                                        )),"profile"))
                 ))
                 .from(chat)
                 .join(property).on(property.propertyId.eq(chat.saleNo))
