@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@Document(collection = "부동산")
+@Document(collection = "realEstate")
 @Getter
 @ToString
 @AllArgsConstructor
