@@ -59,13 +59,6 @@ public class User extends BaseEntity{
     @Column(name = "refresh_token")
     private String refreshToken; // 리프레시 토큰
 
-//    @OneToMany(mappedBy = "buyer")
-//    private List<ChatRoom> chatRoomsAsBuyer = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "seller")
-//    private List<ChatRoom> chatRoomsAsSeller = new ArrayList<>();
-
-
 
     public static User of(String userName, String nickName, String password, String email, Gender gender, int age, UserRole userRole) {
         User entity = new User();

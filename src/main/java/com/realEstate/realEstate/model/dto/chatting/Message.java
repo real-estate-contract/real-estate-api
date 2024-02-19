@@ -32,7 +32,7 @@ public class Message implements Serializable {
     private Long senderNo;
 
     @NotNull
-    private Integer saleNo;
+    private Long saleNo;
 
     private long sendTime;
     private Integer readCount;
