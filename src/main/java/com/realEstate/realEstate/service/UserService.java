@@ -37,6 +37,10 @@ public class UserService implements UserDetailsService {
             throw new ApplicationException(ErrorCode.Duplicated_USER_NAME, String.format("%s is duplicated", userName));
         });
 
+        userRepository.findByEmail(email).ifPresent(it -> {
+            throw new ApplicationException(ErrorCode.Duplicated_USER_NAME, "이미 존재하는 이메일입니다.");
+        });
+
         User user = userRepository.save(User.of(userName, nickName, encoder.encode(password), email, gender, age, userRole));
         return UserDto.from(user);
 

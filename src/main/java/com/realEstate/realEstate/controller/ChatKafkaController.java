@@ -50,7 +50,6 @@ public class ChatKafkaController {
     public ResponseEntity<ChattingHistoryResponseDto> chattingList(@PathVariable("roomNo") Integer roomNo, Authentication authentication){
         User user = userRepository.findByName(authentication.getName()).orElseThrow(()-> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");
         });
-
         ChattingHistoryResponseDto chattingList = chatService.getChattingList(roomNo, UserDto.from(user));
         return ResponseEntity.ok(chattingList);
     }
