@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
         redisRepository.setUser(user);
 
         //토큰 생성
-        String token = JwtTokenUtils.doGenerateToken(userName, secretKey,expiredTimeMs);
+        String token = JwtTokenUtils.doGenerateToken(userName, user.getEmail(), secretKey,expiredTimeMs);
 
 
 

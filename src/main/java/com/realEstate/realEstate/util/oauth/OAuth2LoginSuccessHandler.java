@@ -42,7 +42,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
             // User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트
             if(oAuth2User.getRole() == UserRole.GUEST) {
-                String accessToken = jwtService.createAccessToken(authentication.getName(), secretKey, expiredTimeMs);
+                String accessToken = jwtService.createAccessToken(authentication.getName(),oAuth2User.getEmail(), secretKey, expiredTimeMs);
                 log.info(accessToken);
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
                 User user = userRepository.findByEmail(oAuth2User.getEmail()).orElseThrow(() ->
@@ -64,7 +64,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
-        String accessToken = jwtService.createAccessToken(oAuth2User.getName(), secretKey, expiredTimeMs);
+        String accessToken = jwtService.createAccessToken(oAuth2User.getName(), oAuth2User.getEmail(), secretKey, expiredTimeMs);
         String refreshToken = jwtService.createRefreshToken();
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);

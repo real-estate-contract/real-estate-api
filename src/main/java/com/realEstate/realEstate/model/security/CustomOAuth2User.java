@@ -14,6 +14,7 @@ import java.util.Map;
 public class CustomOAuth2User extends DefaultOAuth2User {
     private String email;
     private UserRole role;
+    private String name;
 
     /**
      * Constructs a {@code DefaultOAuth2User} using the provided parameters.
@@ -25,9 +26,10 @@ public class CustomOAuth2User extends DefaultOAuth2User {
      */
     public CustomOAuth2User(Collection<? extends GrantedAuthority> authorities,
                             Map<String, Object> attributes, String nameAttributeKey,
-                            String email, UserRole role) {
+                            String email, UserRole role, String name) {
         super(authorities, attributes, nameAttributeKey);
         this.email = email;
         this.role = role;
+        this.name = name;
     }
 }

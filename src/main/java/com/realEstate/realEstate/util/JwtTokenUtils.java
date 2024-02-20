@@ -53,16 +53,17 @@ public class JwtTokenUtils {
         return expiration.before(new Date());
     }
 
-    public static String generateAccessToken(String username, String key, long expiredTimeMs) {
-        return doGenerateToken(username, key, expiredTimeMs);
+    public static String generateAccessToken(String username, String email, String key, long expiredTimeMs) {
+        return doGenerateToken(username, email, key, expiredTimeMs);
     }
 
-    public static String doGenerateToken(String username,String key ,long expireTime) {
+    public static String doGenerateToken(String username, String email, String key ,long expireTime) {
         Claims claims = Jwts.claims();
         claims.put("username", username);
 
         return Jwts.builder()
                 .setClaims(claims)
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
                 .signWith(getSigningKey(key), SignatureAlgorithm.HS256)

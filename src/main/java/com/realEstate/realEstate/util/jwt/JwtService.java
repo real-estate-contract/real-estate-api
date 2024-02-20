@@ -71,7 +71,7 @@ public class JwtService {
 //                .sign(Algorithm.HMAC256(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
 //    }
 
-    public static String createAccessToken(String username, String key ,long expireTime) {
+    public static String createAccessToken(String username, String email, String key ,long expireTime) {
         Claims claims = Jwts.claims();
         claims.put("username", username);
 
@@ -79,6 +79,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
+                .setSubject(email)
                 .signWith(getSigningKey(key), SignatureAlgorithm.HS256)
                 .compact();
     }
