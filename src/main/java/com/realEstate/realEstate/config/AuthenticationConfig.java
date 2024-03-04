@@ -47,7 +47,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/realEstate/user/join", "/realEstate/user/login", "/login", "/realEstate/chat/**/send").permitAll()
-                .antMatchers("/chat/**").permitAll()
+                .antMatchers("/chat/**","?", "app.js","main.css" ).permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
