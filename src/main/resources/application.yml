@@ -107,3 +107,4 @@ image:
 api:
   building-key: ${GET_BUILDING_API_KEY}
   land-key: ${GET_LAND_API_KEY}
+
