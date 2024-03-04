@@ -83,6 +83,25 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+	//kafka
+	implementation 'org.springframework.kafka:spring-kafka'
+
+	//mongoDB
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+	//Guava
+	implementation 'com.google.guava:guava:31.0.1-jre'
+	implementation 'javax.validation:validation-api:2.0.1.Final' // 현재 버전에 맞게 업데이트
+
+	//RDS연동
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'mysql:mysql-connector-java'
+
+}
+
+
+task buildDocker(type: Exec) {
+	commandLine 'docker', 'build', '-t', 'your-image-name', '.'
 }
 
 

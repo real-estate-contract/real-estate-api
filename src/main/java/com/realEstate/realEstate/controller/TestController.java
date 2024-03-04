@@ -17,7 +17,7 @@ public class TestController {
 
     @PostMapping("/sign-up")
     public String signUp(@RequestBody UserJoinRequest request) throws Exception {
-        UserDto dto = userService.join(request.getName(), request.getNickName(),request.getPassword(), request.getEmail(), request.getGender(), request.getAge(), request.getRole());
+        UserDto dto = userService.join(request.getName(), request.getNickName(),request.getPassword(), request.getEmail(), request.getGender(), request.getAge());
 
         return "회원가입 성공";
     }

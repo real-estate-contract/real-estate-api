@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table
-public class PropertyCondition extends BaseEntity {
+public class PropertyCondition{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +71,7 @@ public class PropertyCondition extends BaseEntity {
 
     @ToString.Exclude
     @OneToOne
-    @JoinColumn(name = "propertyId")
+    @JoinColumn(name = "property_id")
     private Property property;
 
     public static PropertyCondition of(int streetL, int streetR, boolean streetPaving, boolean streetAccessibility, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo, String elementarySchool, boolean elementaryWalk, int elementaryTime, String middleSchool, boolean middleWalk, int middleTime, String highSchool, boolean highWalk, int highTime, String departmentStore, boolean departmentWalk, int departmentTime, String hospitalStore, boolean hospitalWalk, int hospitalTime, boolean securityOffice, ManagementType managementType, boolean dispreferredFacilities, String dispreferredFacilitiesMemo, Property property) {

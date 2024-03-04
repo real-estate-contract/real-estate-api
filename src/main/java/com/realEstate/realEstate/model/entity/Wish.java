@@ -17,11 +17,11 @@ public class Wish extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "propertyId")
+    @JoinColumn(name = "property_id")
     private Property property;
 
     @PrePersist

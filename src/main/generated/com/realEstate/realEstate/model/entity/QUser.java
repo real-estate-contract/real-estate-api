@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -23,10 +22,6 @@ public class QUser extends EntityPathBase<User> {
     public final com.realEstate.realEstate.model.QBaseEntity _super = new com.realEstate.realEstate.model.QBaseEntity(this);
 
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
-
-    public final ListPath<com.realEstate.realEstate.model.entity.chat.ChatRoom, com.realEstate.realEstate.model.entity.chat.QChatRoom> chatRoomsAsBuyer = this.<com.realEstate.realEstate.model.entity.chat.ChatRoom, com.realEstate.realEstate.model.entity.chat.QChatRoom>createList("chatRoomsAsBuyer", com.realEstate.realEstate.model.entity.chat.ChatRoom.class, com.realEstate.realEstate.model.entity.chat.QChatRoom.class, PathInits.DIRECT2);
-
-    public final ListPath<com.realEstate.realEstate.model.entity.chat.ChatRoom, com.realEstate.realEstate.model.entity.chat.QChatRoom> chatRoomsAsSeller = this.<com.realEstate.realEstate.model.entity.chat.ChatRoom, com.realEstate.realEstate.model.entity.chat.QChatRoom>createList("chatRoomsAsSeller", com.realEstate.realEstate.model.entity.chat.ChatRoom.class, com.realEstate.realEstate.model.entity.chat.QChatRoom.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;

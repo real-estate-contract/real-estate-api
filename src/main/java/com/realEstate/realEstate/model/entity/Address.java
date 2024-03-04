@@ -14,9 +14,10 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id")
     private Long addressId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "street_address")
     private String streetAddress; // 도로명 주소
 
     @Column(nullable = false)

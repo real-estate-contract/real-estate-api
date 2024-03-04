@@ -13,7 +13,11 @@
 //@NoArgsConstructor
 //@Getter
 //@Setter
+
 ////public class ContractDto {
+
+//public class ContractDto {
+
 //
 //    private Long contractId;
 //    private CType transactionType;

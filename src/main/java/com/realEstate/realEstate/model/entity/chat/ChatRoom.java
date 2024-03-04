@@ -1,49 +1,32 @@
-// ChatRoom.java
-
 package com.realEstate.realEstate.model.entity.chat;
 
-import com.realEstate.realEstate.model.BaseEntity;
-import com.realEstate.realEstate.model.entity.User;
-import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.redis.core.RedisHash;
 
-@Entity
+import javax.persistence.Id;
+
 @Getter
-@Setter
-public class ChatRoom extends BaseEntity {
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@RedisHash(value = "chatRoom")
+public class ChatRoom {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roomId;
+    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "buyer_id")
-    private User buyer;
+    @Indexed
+    private Integer chatroomNo;
 
-    @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private User seller;
+    @Indexed
+    private String email;
 
-    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
-    private List<ChatMessage> messages = new ArrayList<>();
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "chat_room_user",
-            joinColumns = @JoinColumn(name = "room_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<User> users = new ArrayList<>();
-
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
+    @Builder
+    public ChatRoom(Integer chatroomNo, String email) {
+        this.chatroomNo = chatroomNo;
+        this.email = email;
     }
-    // 생성자, 메서드 등 필요한 부분 추가
+
+
 }

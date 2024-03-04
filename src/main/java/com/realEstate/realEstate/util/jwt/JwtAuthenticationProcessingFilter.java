@@ -5,6 +5,7 @@ import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
@@ -42,6 +43,13 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
 
     private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
+
+    @Value("${jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${jwt.token.expired-time-ms}")
+    private Long expiredTimeMs;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -85,7 +93,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         userRepository.findByRefreshToken(refreshToken)
                 .ifPresent(user -> {
                     String reIssuedRefreshToken = reIssueRefreshToken(user);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()),
+                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getName(), user.getEmail(), secretKey, expiredTimeMs),
                             reIssuedRefreshToken);
                 });
     }
@@ -144,7 +152,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         }
 
         UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
-                .username(myUser.getEmail())
+                .username(myUser.getName())
                 .password(password)
                 .roles(myUser.getRole().name())
                 .build();

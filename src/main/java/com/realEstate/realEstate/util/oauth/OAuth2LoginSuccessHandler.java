@@ -10,6 +10,7 @@ import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.util.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,12 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+    @Value("${jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${jwt.token.expired-time-ms}")
+    private Long expiredTimeMs;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("OAuth2 Login 성공!");
@@ -35,13 +42,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
             // User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트
             if(oAuth2User.getRole() == UserRole.GUEST) {
-                String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
+                String accessToken = jwtService.createAccessToken(authentication.getName(),oAuth2User.getEmail(), secretKey, expiredTimeMs);
                 log.info(accessToken);
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
                 User user = userRepository.findByEmail(oAuth2User.getEmail()).orElseThrow(() ->
                 {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");
                 });
-                response.sendRedirect("realEstate/user/socialJoin/"+user.getUserId()); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
+                response.sendRedirect("realEstate/user/socialJoin/"+ user.getUserId()); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
 
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
 //                User findUser = userRepository.findByEmail(oAuth2User.getEmail())
@@ -57,7 +64,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
-        String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
+        String accessToken = jwtService.createAccessToken(oAuth2User.getName(), oAuth2User.getEmail(), secretKey, expiredTimeMs);
         String refreshToken = jwtService.createRefreshToken();
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);

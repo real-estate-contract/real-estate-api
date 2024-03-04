@@ -27,7 +27,7 @@ public abstract class BaseEntity {
     @CreatedDate
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "created_at")
     protected LocalDateTime createdAt; // 생성일시
 
 
@@ -35,7 +35,7 @@ public abstract class BaseEntity {
     @LastModifiedDate
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @Column
+    @Column(name ="updated_at")
     protected LocalDateTime updatedAt; // 수정일시
 }
 
