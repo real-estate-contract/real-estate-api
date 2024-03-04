@@ -18,7 +18,7 @@ spring:
     port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 'jdbc:mysql://realestate.cdic8iso881z.ap-northeast-2.rds.amazonaws.com:3306/realEsate?serverTimezone=Asia/Seoul&characterEncoding=UTF-8'
+    url: 'jdbc:mysql://database-1.cdic8iso881z.ap-northeast-2.rds.amazonaws.com :3306/realEstate?serverTimezone=Asia/Seoul&characterEncoding=UTF-8'
     username: ${AWS.USERNAME}
     password: ${AWS.PASSWORD}
   jpa:
