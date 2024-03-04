@@ -48,6 +48,8 @@ public class PropertyController {
 
     }
 
+
+
     @PostMapping("/step1")
     public Response<AddressResponse> registerAddress(@RequestBody AddressCreateRequest request) {
         return Response.success(AddressResponse.fromDto(addressService.registerAddress(request.getStreetAddress(),request.getCity(), request.isOwner())));
@@ -58,6 +60,12 @@ public class PropertyController {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
         propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getManagementFee(), request.isCondominium(),request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), addressId, user.getName());
+        return Response.success();
+    }
+
+    @DeleteMapping("/{propertyId}")
+    public Response<Void> deleteProperty(@PathVariable Long propertyId, Authentication authentication) {
+        propertyService.delete(authentication.getName(), propertyId);
         return Response.success();
     }
 

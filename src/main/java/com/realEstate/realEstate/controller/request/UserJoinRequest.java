@@ -16,7 +16,6 @@ public class UserJoinRequest {
     private String email;
     private Gender gender;
     private int age;
-    private UserRole role;
 
 
 

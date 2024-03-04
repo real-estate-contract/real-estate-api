@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,8 @@ public class ChatKafkaController {
         return ResponseEntity.ok(StatusResponseDto.addStatus(200));
     }
 
+
+
     //채팅 내역 조회
     @GetMapping("/chatRoom/{roomNo}")
     public ResponseEntity<ChattingHistoryResponseDto> chattingList(@PathVariable("roomNo") Integer roomNo, Authentication authentication){
@@ -65,6 +68,7 @@ public class ChatKafkaController {
     }
 
     @MessageMapping("/message")
+//    @SendTo("/subscribe/chat")
     public void sendMessage(@Valid Message message, @Header("Authorization") final String accessToken) {
         chatService.sendMessage(message, accessToken);
     }
@@ -72,9 +76,11 @@ public class ChatKafkaController {
     // 채팅방 접속 끊기
     @PostMapping("/chatroom/{chatroomNo}")
     public ResponseEntity<StatusResponseDto> disconnectChat(@PathVariable("chatroomNo") Integer chatroomNo,
-                                                            @RequestParam("email") String email) {
+                                                            Authentication authentication) {
+        User user = userRepository.findByName(authentication.getName()).orElseThrow(()-> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");
+        });
 
-        chatRoomService.disconnectChatRoom(chatroomNo, email);
+        chatRoomService.disconnectChatRoom(chatroomNo, user.getEmail());
         return ResponseEntity.ok(StatusResponseDto.success());
     }
 

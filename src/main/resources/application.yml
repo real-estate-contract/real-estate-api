@@ -1,3 +1,9 @@
+logging:
+  level:
+      org:
+        springframework:
+          web:
+            socket: DEBUG
 spring:
   data:
     mongodb:
@@ -12,9 +18,9 @@ spring:
     port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 'jdbc:mysql://localhost:3306/realEstate'
-    username: root
-    password: 1234
+    url: 'jdbc:mysql://realestate.cdic8iso881z.ap-northeast-2.rds.amazonaws.com:3306/realEsate?serverTimezone=Asia/Seoul&characterEncoding=UTF-8'
+    username: ${AWS.USERNAME}
+    password: ${AWS.PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create

@@ -60,6 +60,16 @@ public class User extends BaseEntity{
     private String refreshToken; // 리프레시 토큰
 
 
+    public static User of(String userName, String nickName, String password, String email, Gender gender, int age) {
+        User entity = new User();
+        entity.setName(userName);
+        entity.setNickName(nickName);
+        entity.setPassword(password);
+        entity.setEmail(email);
+        entity.setGender(gender);
+        entity.setAge(age);
+        return entity;
+    }
     public static User of(String userName, String nickName, String password, String email, Gender gender, int age, UserRole userRole) {
         User entity = new User();
         entity.setName(userName);
