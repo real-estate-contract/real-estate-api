@@ -23,4 +23,4 @@ public class  MessageReceiver {
         template.convertAndSend("/subscribe/public/" + message.getChatNo(), message);
     }
 }
-//테스트
+//test
