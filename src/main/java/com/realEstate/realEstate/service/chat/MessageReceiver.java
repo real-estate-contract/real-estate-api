@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MessageReceiver {
+public class  MessageReceiver {
     private final SimpMessageSendingOperations template;
 
     @KafkaListener(topics = ConstantUtil.KAFKA_TOPIC, containerFactory = "stringMessageConcurrentKafkaListenerContainerFactory")
@@ -23,3 +23,4 @@ public class MessageReceiver {
         template.convertAndSend("/subscribe/public/" + message.getChatNo(), message);
     }
 }
+//테스트
