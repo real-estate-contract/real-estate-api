@@ -22,16 +22,11 @@ public class QPropertyCondition extends EntityPathBase<PropertyCondition> {
 
     public static final QPropertyCondition propertyCondition = new QPropertyCondition("propertyCondition");
 
-    public final com.realEstate.realEstate.model.QBaseEntity _super = new com.realEstate.realEstate.model.QBaseEntity(this);
-
     public final StringPath busStation = createString("busStation");
 
     public final NumberPath<Integer> busTime = createNumber("busTime", Integer.class);
 
     public final BooleanPath busWalk = createBoolean("busWalk");
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final StringPath departmentStore = createString("departmentStore");
 
@@ -92,9 +87,6 @@ public class QPropertyCondition extends EntityPathBase<PropertyCondition> {
     public final NumberPath<Integer> subwayTime = createNumber("subwayTime", Integer.class);
 
     public final BooleanPath subwayWalk = createBoolean("subwayWalk");
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QPropertyCondition(String variable) {
         this(PropertyCondition.class, forVariable(variable), INITS);

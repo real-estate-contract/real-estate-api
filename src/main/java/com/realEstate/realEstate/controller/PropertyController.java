@@ -10,8 +10,6 @@ import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyImageDto;
-import com.realEstate.realEstate.model.entity.Property;
-import com.realEstate.realEstate.model.entity.PropertyAmenities;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
@@ -24,7 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -51,6 +48,8 @@ public class PropertyController {
 
     }
 
+
+
     @PostMapping("/step1")
     public Response<AddressResponse> registerAddress(@RequestBody AddressCreateRequest request) {
         return Response.success(AddressResponse.fromDto(addressService.registerAddress(request.getStreetAddress(),request.getCity(), request.isOwner())));
@@ -61,6 +60,12 @@ public class PropertyController {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
         propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getManagementFee(), request.isCondominium(),request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), addressId, user.getName());
+        return Response.success();
+    }
+
+    @DeleteMapping("/{propertyId}")
+    public Response<Void> deleteProperty(@PathVariable Long propertyId, Authentication authentication) {
+        propertyService.delete(authentication.getName(), propertyId);
         return Response.success();
     }
 

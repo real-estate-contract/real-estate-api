@@ -4,10 +4,8 @@ package com.realEstate.realEstate.service;
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.model.constant.CType;
-import com.realEstate.realEstate.model.constant.HType;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
-import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.dto.WishDto;
 import com.realEstate.realEstate.model.dto.querydsl.PropertySearchCriteria;
 import com.realEstate.realEstate.model.entity.*;
@@ -18,18 +16,12 @@ import com.realEstate.realEstate.repository.WishRepository;
 import com.realEstate.realEstate.repository.cacheRepository.PropertyCacheRepository;
 import com.realEstate.realEstate.repository.cacheRepository.UserCacheRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -73,10 +65,10 @@ public class PropertyService {
         //address exit
         Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
 
-        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, address,user));
+        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, address, user));
 
 
-        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address,user));
+        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address, user));
     }
 
     // ReadAll(페이징 처리)

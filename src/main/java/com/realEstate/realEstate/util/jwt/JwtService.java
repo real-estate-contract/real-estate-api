@@ -1,6 +1,10 @@
 package com.realEstate.realEstate.util.jwt;
 
 import com.realEstate.realEstate.repository.UserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,11 +13,14 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+
 
 
 @Service
@@ -51,17 +58,35 @@ public class JwtService {
     /**
      * AccessToken 생성 메소드
      */
-    public String createAccessToken(String email) {
-        Date now = new Date();
-        return JWT.create() // JWT 토큰을 생성하는 빌더 반환
-                .withSubject(ACCESS_TOKEN_SUBJECT) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
-                .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod)) // 토큰 만료 시간 설정
+//    public String createAccessToken(String email) {
+//        Date now = new Date();
+//        return JWT.create() // JWT 토큰을 생성하는 빌더 반환
+//                .withSubject(ACCESS_TOKEN_SUBJECT) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
+//                .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod)) // 토큰 만료 시간 설정
+//
+//                //클레임으로는 저희는 email 하나만 사용합니다.
+//                //추가적으로 식별자나, 이름 등의 정보를 더 추가하셔도 됩니다.
+//                //추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
+//                .withClaim(EMAIL_CLAIM, email)
+//                .sign(Algorithm.HMAC256(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
+//    }
 
-                //클레임으로는 저희는 email 하나만 사용합니다.
-                //추가적으로 식별자나, 이름 등의 정보를 더 추가하셔도 됩니다.
-                //추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
-                .withClaim(EMAIL_CLAIM, email)
-                .sign(Algorithm.HMAC256(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
+    public static String createAccessToken(String username, String email, String key ,long expireTime) {
+        Claims claims = Jwts.claims();
+        claims.put("username", username);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
+                .setSubject(email)
+                .signWith(getSigningKey(key), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    private static Key getSigningKey(String secretKey) {
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     /**

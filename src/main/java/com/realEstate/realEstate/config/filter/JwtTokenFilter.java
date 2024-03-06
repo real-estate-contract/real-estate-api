@@ -1,7 +1,6 @@
 package com.realEstate.realEstate.config.filter;
 
 import com.realEstate.realEstate.model.dto.UserDto;
-import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.service.UserService;
 import com.realEstate.realEstate.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;

@@ -10,6 +10,7 @@ import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.repository.cacheRepository.UserCacheRepository;
 import com.realEstate.realEstate.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.Temperature;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,17 +31,40 @@ public class UserService implements UserDetailsService {
     @Value("${jwt.token.expired-time-ms}")
     private Long expiredTimeMs;
 
+    @Temperature
+    public UserDto update(String userName, String nickName, String password, String email, Gender gender, int age) {
+        User user = userRepository.findByName(userName).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");});
+        user.setNickName(nickName);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setGender(gender);
+        user.setAge(age);
+
+        userRepository.save(user);
+
+        return UserDto.from(user);
+    }
+
 
     @Transactional
-    public UserDto join(String userName, String nickName, String password, String email, Gender gender, int age, UserRole userRole) {
+    public UserDto join(String userName, String nickName, String password, String email, Gender gender, int age) {
         userRepository.findByName(userName).ifPresent(it -> {
             throw new ApplicationException(ErrorCode.Duplicated_USER_NAME, String.format("%s is duplicated", userName));
         });
 
-        User user = userRepository.save(User.of(userName, nickName, encoder.encode(password), email, gender, age, userRole));
+        userRepository.findByEmail(email).ifPresent(it -> {
+            throw new ApplicationException(ErrorCode.Duplicated_USER_NAME, "이미 존재하는 이메일입니다.");
+        });
+
+        User user = userRepository.save(User.of(userName, nickName, encoder.encode(password), email, gender, age));
+
+        user.setRole(UserRole.USER);
+        userRepository.save(user);
         return UserDto.from(user);
 
     }
+
+
 
     @Transactional
     public UserDto socialJoin(Long userId, String nickName, Gender gender, int age){
@@ -71,7 +95,7 @@ public class UserService implements UserDetailsService {
         redisRepository.setUser(user);
 
         //토큰 생성
-        String token = JwtTokenUtils.doGenerateToken(userName, secretKey,expiredTimeMs);
+        String token = JwtTokenUtils.doGenerateToken(userName, user.getEmail(), secretKey,expiredTimeMs);
 
 
 

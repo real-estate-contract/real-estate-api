@@ -12,7 +12,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,19 +29,25 @@ public class Property extends BaseEntity {
     private Long propertyId;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type")
     private CType transactionType; // 매매, 전세, 월세 유형
 
     private int price; //매매가
     private int deposit;  // 보증금
+    @Column(name = "monthly_rent")
     private int monthlyRent;  // 월세
+    @Column(name = "management_fee")
     private int managementFee; // 관리비
     private boolean condominium; //공동주택 / 단독주택여부
     private int area; // 평형
     private int floor; // 층수
+    @Column(name = "parking_available")
     private boolean parkingAvailable;
+    @Column(name = "has_elevator")
     private boolean hasElevator;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @Column(name = "move_in_date")
     private LocalDate moveInDate; // 입주 가능 날짜
     @Enumerated(EnumType.STRING)
     private Structure structure;
@@ -54,11 +59,11 @@ public class Property extends BaseEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "adressId")
+    @JoinColumn(name = "adress_id")
     private Address address;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ToString.Exclude

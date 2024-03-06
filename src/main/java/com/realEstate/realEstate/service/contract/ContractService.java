@@ -6,9 +6,15 @@
 //import com.realEstate.realEstate.model.constant.TermUnit;
 //import com.realEstate.realEstate.model.dto.ContractDto;
 //import com.realEstate.realEstate.model.entity.Contract;
+
 //import com.realEstate.realEstate.model.entity.Property;
 //import com.realEstate.realEstate.model.entity.User;
 //import com.realEstate.realEstate.repository.contract.ContractRepository;
+
+//import com.realEstate.realEstate.model.entity.User;
+//import com.realEstate.realEstate.model.entity.Property;
+//import com.realEstate.realEstate.repository.ContractRepository;
+
 //import com.realEstate.realEstate.repository.PropertyRepository;
 //import com.realEstate.realEstate.repository.UserRepository;
 //import lombok.RequiredArgsConstructor;
@@ -39,7 +45,11 @@
 //        //property exit
 //        Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", propertyId)));
 //
+
 //        //contractRepository.save(Contract.of(transactionType, contractAmount, contractDate, termUnit, termLength, conditions, property, buyer));
+
+//        contractRepository.save(Contract.of(transactionType, contractAmount, contractDate, termUnit, termLength, conditions, property, buyer));
+
 //    }
 //
 //    // ReadAll(페이징 처리)
@@ -70,12 +80,21 @@
 //        // contract exit
 //        Contract findContract = contractRepository.findById(contractId).orElseThrow(() -> new ApplicationException(ErrorCode.Property_NOT_FOUND, String.format("%s is not founded", contractId)));
 //
+
 ////        findContract.setTransactionType(updateParam.getTransactionType());
 ////        findContract.setContractAmount(updateParam.getContractAmount());
 ////        findContract.setContractDate(updateParam.getContractDate());
 ////        findContract.setTermUnit(updateParam.getTermUnit());
 ////        findContract.setTermLength(updateParam.getTermLength());
 ////        findContract.setConditions(updateParam.getConditions());
+
+//        findContract.setTransactionType(updateParam.getTransactionType());
+//        findContract.setContractAmount(updateParam.getContractAmount());
+//        findContract.setContractDate(updateParam.getContractDate());
+//        findContract.setTermUnit(updateParam.getTermUnit());
+//        findContract.setTermLength(updateParam.getTermLength());
+//        findContract.setConditions(updateParam.getConditions());
+
 //
 //        return ContractDto.from(contractRepository.saveAndFlush(findContract));
 //    }

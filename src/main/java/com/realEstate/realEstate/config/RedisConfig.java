@@ -1,10 +1,8 @@
 package com.realEstate.realEstate.config;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
+import com.realEstate.realEstate.model.entity.Property;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
