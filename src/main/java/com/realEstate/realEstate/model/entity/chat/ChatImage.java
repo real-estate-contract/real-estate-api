@@ -15,12 +15,18 @@ public class ChatImage extends BaseImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "picture_no")
-    private Integer pictureNo;
+    private Long pictureNo;
 
     @Column(name = "chat_no")
     private Integer chatNo;
 
-    @Column(name = "sort")
-    private Integer sort;
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    public ChatImage(Integer chatNo, String imageUrl) {
+        this.chatNo = chatNo;
+        this.imageUrl = imageUrl;
+    }
+
 
 }

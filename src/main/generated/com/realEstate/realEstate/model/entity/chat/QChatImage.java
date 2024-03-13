@@ -29,18 +29,15 @@ public class QChatImage extends EntityPathBase<ChatImage> {
     //inherited
     public final StringPath imageType = _super.imageType;
 
-    //inherited
-    public final StringPath imageUrl = _super.imageUrl;
+    public final StringPath imageUrl = createString("imageUrl");
 
-    public final NumberPath<Integer> pictureNo = createNumber("pictureNo", Integer.class);
+    public final NumberPath<Long> pictureNo = createNumber("pictureNo", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
     //inherited
     public final StringPath regId = _super.regId;
-
-    public final NumberPath<Integer> sort = createNumber("sort", Integer.class);
 
     public QChatImage(String variable) {
         super(ChatImage.class, forVariable(variable));

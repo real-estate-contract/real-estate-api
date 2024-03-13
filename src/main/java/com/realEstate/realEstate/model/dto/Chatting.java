@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Document(collection = "test")
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @Builder
