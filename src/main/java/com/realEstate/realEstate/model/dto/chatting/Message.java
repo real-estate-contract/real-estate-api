@@ -3,11 +3,13 @@ package com.realEstate.realEstate.model.dto.chatting;
 import com.realEstate.realEstate.model.dto.Chatting;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -26,6 +28,8 @@ public class Message implements Serializable {
 
     @NotNull
     private String content;
+
+    private MultipartFile image;
 
     private String senderName;
 

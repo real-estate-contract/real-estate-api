@@ -32,38 +32,6 @@ public class ChatQueryService {
     private final UserRepository userRepository;
 
 
-//    public List<ChatRoomResponseDto> getChattingList(Long memberNo, Long saleNo) {
-//        return jpaQueryFactory.select(Projections.constructor(ChatRoomResponseDto.class,
-//                        chat.chatNo,
-//                        chat.createMember,
-//                        chat.joinMember,
-//                        chat.saleNo,
-//                        property.address,
-//                        chat.regDate,
-//                        Projections.constructor(ChatRoomResponseDto.Participant.class,
-//                                ExpressionUtils.as(
-//                                        JPAExpressions.select(user.nickName)
-//                                                .from(user)
-//                                                .where(user.userId.eq(
-//                                                        new CaseBuilder()
-//                                                                .when(chat.createMember.eq(memberNo)).then(chat.joinMember)
-//                                                                .otherwise(chat.createMember)
-//
-//                                                ))
-//                                        , "nickname"),
-//                                ExpressionUtils.as(JPAExpressions.select(user.nickName)
-//                                        .from(user)
-//                                        .where(user.userId.eq(
-//                                                new CaseBuilder()
-//                                                        .when(chat.createMember.eq(memberNo)).then(chat.joinMember)
-//                                                        .otherwise(chat.createMember)
-//                                        )),"profile"))
-//                ))
-//                .from(chat)
-//                .join(property).on(property.propertyId.eq(chat.saleNo))
-//                .where(chat.createMember.eq(memberNo).or(chat.joinMember.eq(memberNo)), property.propertyId.eq(saleNo))
-//                .fetch();
-//    }
 public List<ChatRoomResponseDto> getChattingList(Long memberNo, Long saleNo) {
     return jpaQueryFactory.select(Projections.constructor(ChatRoomResponseDto.class,
                     chat.chatNo,

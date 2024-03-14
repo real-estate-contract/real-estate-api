@@ -1,5 +1,7 @@
 package com.realEstate.realEstate.service.chat;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.model.dto.UserDto;
@@ -7,6 +9,7 @@ import com.realEstate.realEstate.model.dto.chatting.*;
 import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.model.entity.chat.Chat;
 import com.realEstate.realEstate.model.dto.Chatting;
+import com.realEstate.realEstate.model.entity.chat.ChatImage;
 import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.repository.chat.ChatRepository;
 import com.realEstate.realEstate.repository.MongoChatRepository;
@@ -14,6 +17,7 @@ import com.realEstate.realEstate.util.ConstantUtil;
 import com.realEstate.realEstate.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -22,10 +26,15 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static com.google.common.io.Files.getFileExtension;
 
 @Slf4j
 @Service
@@ -42,6 +51,11 @@ public class ChatKafkaService {
     private final AggregationSender aggregationSender;
     private final ChatRoomService chatRoomService;
     private final ChatQueryService chatQueryService;
+    private final AmazonS3 amazonS3;
+
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Transactional
     public Chat makeChatRoom(UserDto userDto, ChatRequestDto requestDto) {
@@ -109,6 +123,7 @@ public class ChatKafkaService {
         User findUser = userRepository.findByEmail(jwtUtil.getUid(accessToken)).orElseThrow(()->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
 
+
         //채팅방에 모든 유저가 참여중인지 확인한다.
         boolean isConnectedAll = chatRoomService.isAllConnected(message.getChatNo());
 
@@ -127,9 +142,14 @@ public class ChatKafkaService {
     public Message sendNotificationAndSaveMessage(Message message){
         User findUser = userRepository.findById(message.getSenderNo())
                 .orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");});
+        Integer chatNo = message.getChatNo();
+
 
         if(message.getSenderEmail().equals(findUser.getEmail())){
             Chatting chatting = message.convertEntity();
+            if (message.getContentType().equals("photo")){
+                chatting.setContent(saveImage(message.getImage()));
+            }
             Chatting savedChat = mongoChatRepository.save(chatting);
             message.setId(savedChat.getId());
         }
@@ -165,6 +185,23 @@ public class ChatKafkaService {
                 .and("senderNo").ne(senderNo));
 
         return mongoTemplate.count(query, Chatting.class);
+    }
+
+    private String saveImage(MultipartFile image) {
+        String fileName = "image_" + UUID.randomUUID() + "." + getFileExtension(image.getOriginalFilename());
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(image.getSize());
+        metadata.setContentType(image.getContentType());
+
+        try {
+            amazonS3.putObject(bucket, fileName, image.getInputStream(), metadata);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ApplicationException(ErrorCode.IMAGE_SAVE_ERROR, "이미지 저장 실패");
+        }
+
+        return amazonS3.getUrl(bucket, fileName).toString();
     }
 
 }
