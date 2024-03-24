@@ -1,16 +1,11 @@
-FROM openjdk:17 as builder
-WORKDIR /workspace
-COPY . .
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget unzip && \
-    wget https://services.gradle.org/distributions/gradle-7.0-bin.zip && \
-    unzip -d /opt gradle-7.0-bin.zip
-
-ENV PATH="${PATH}:/opt/gradle-7.0/bin"
-
-RUN gradle build
-
 FROM openjdk:17
-COPY --from=builder /workspace/build/libs/realEstate-0.0.1-SNAPSHOT.jar app.jar
-ENV TZ=Asia/Seoul
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+
+# 작업 디렉토리를 설정합니다.
+WORKDIR /app
+
+# 빌드 파일을 컨테이너에 복사합니다.
+# Gradle 빌드 시 생성되는 JAR 파일의 경로를 확인하고, 해당 경로를 사용하세요.
+COPY build/libs/*SNAPSHOT.jar app.jar
+
+# 애플리케이션을 실행합니다.
+ENTRYPOINT ["java","-jar","app.jar"]
