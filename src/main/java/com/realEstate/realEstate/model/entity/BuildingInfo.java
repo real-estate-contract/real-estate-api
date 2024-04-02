@@ -31,7 +31,7 @@ public class BuildingInfo extends BaseEntity {
     private String sigunguCode;
     private String bjdongCode;
 
-    private String pnu = ""; //고유번호 (토지대장)
+    private String pnu; //고유번호 (토지대장)
 
     public BuildingInfo() {
         // 기본 생성자에 초기화 로직 추가
