@@ -17,8 +17,10 @@ public class Description {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String lineMemo; // 한줄정리
+
     @Column
-    private String memo;
+    private String memo; // 상세설명
 
     @Column(nullable = false, name = "loan_availbale")
     private boolean loanAvailable; // 대출 가능 여부
@@ -31,8 +33,9 @@ public class Description {
     @JoinColumn(name = "property_id")
     private Property property;
 
-    public static Description of(String memo, boolean loanAvailable, boolean petFriendly, Property property) {
+    public static Description of(String lineMemo, String memo, boolean loanAvailable, boolean petFriendly, Property property) {
         Description description = new Description();
+        description.setLineMemo(lineMemo);
         description.setMemo(memo);
         description.setLoanAvailable(loanAvailable);
         description.setPetFriendly(petFriendly);

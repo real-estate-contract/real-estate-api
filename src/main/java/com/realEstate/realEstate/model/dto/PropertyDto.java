@@ -1,6 +1,7 @@
 package com.realEstate.realEstate.model.dto;
 
 import com.realEstate.realEstate.model.constant.CType;
+import com.realEstate.realEstate.model.constant.Condominium;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.PropertyImage;
@@ -28,15 +29,20 @@ public class PropertyDto implements Serializable {
     int price;
     int deposit;
     int monthlyRent;
+    boolean management;
     int managementFee;
-    boolean condominium;
+    Condominium condominium;
     int area;
+    int wholeFloor;
     int floor;
     boolean parkingAvailable;
     boolean hasElevator;
     LocalDate moveInDate;
     Structure structure;
     String direction;
+    boolean UsageFee; // 개별 사용료
+    boolean negotiationFee; // 가격 협의 가능
+    boolean loanFund; // 융자
     PropertyConditionDto propertyCondition;
     AddressDto address;
     UserDto user;
@@ -55,15 +61,20 @@ public class PropertyDto implements Serializable {
                 entity.getPrice(),
                 entity.getDeposit(),
                 entity.getMonthlyRent(),
+                entity.isManagement(),
                 entity.getManagementFee(),
-                entity.isCondominium(),
+                entity.getCondominium(),
                 entity.getArea(),
+                entity.getWholeFloor(),
                 entity.getFloor(),
                 entity.isParkingAvailable(),
                 entity.isHasElevator(),
                 entity.getMoveInDate(),
                 entity.getStructure(),
                 entity.getDirection(),
+                entity.isUsageFee(),
+                entity.isNegotiationFee(),
+                entity.isLoanFund(),
                 PropertyConditionDto.from(entity.getPropertyCondition()),
                 AddressDto.from(entity.getAddress()),
                 UserDto.from(entity.getUser()),

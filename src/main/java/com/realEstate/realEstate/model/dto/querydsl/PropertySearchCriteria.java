@@ -10,7 +10,7 @@ public class PropertySearchCriteria {
 
     public PropertySearchCriteria(CType transactionType, Integer minPrice, Integer maxPrice,
                                   Integer minArea, Integer maxArea, Integer minFloor, Integer maxFloor,
-                                  Structure structure, Boolean sink, Boolean airConditioner, Boolean shoeRack,
+                                  Structure structure, Boolean parkingAvailable,Boolean sink, Boolean airConditioner, Boolean shoeRack,
                                   Boolean washingMachine, Boolean refrigerator, Boolean wardrobe, Boolean gasRange,
                                   Boolean induction, Boolean bed, Boolean desk, Boolean microwave, Boolean bookshelf,
                                   Integer minDeposit, Integer maxDeposit, Integer minMonthlyRent, Integer maxMonthlyRent) {
@@ -70,6 +70,9 @@ public class PropertySearchCriteria {
         BooleanExpression monthlyRentExpression = minMonthlyRent == null && maxMonthlyRent == null ?
                 property.monthlyRent.isNotNull() : property.monthlyRent.between(minMonthlyRent, maxMonthlyRent);
 
+        BooleanExpression parkingAvailableExpression = parkingAvailable == null ? property.parkingAvailable.isNotNull() :
+                property.parkingAvailable.eq(bookshelf);
+
         this.predicate = transactionTypeExpression
                 .and(structureExpression)
                 .and(minPriceExpression)
@@ -89,7 +92,8 @@ public class PropertySearchCriteria {
                 .and(microwaveExpression)
                 .and(bookshelfExpression)
                 .and(depositExpression)
-                .and(monthlyRentExpression);
+                .and(monthlyRentExpression)
+                .and(parkingAvailableExpression);
     }
 
     public BooleanExpression getPredicate() {

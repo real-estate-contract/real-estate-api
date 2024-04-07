@@ -47,6 +47,9 @@ public class PropertyConditionDto implements Serializable {
     String hospitalStore;
     boolean hospitalWalk;
     int hospitalTime;
+    String bank;
+    boolean bankWalk;
+    int bankTime;
     boolean securityOffice;
     ManagementType managementType;
     boolean dispreferredFacilities;
@@ -83,6 +86,9 @@ public class PropertyConditionDto implements Serializable {
                 entity.getHospitalStore(),
                 entity.isHospitalWalk(),
                 entity.getHospitalTime(),
+                entity.getBank(),
+                entity.isBankWalk(),
+                entity.getBankTime(),
                 entity.isSecurityOffice(),
                 entity.getManagementType(),
                 entity.isDispreferredFacilities(),

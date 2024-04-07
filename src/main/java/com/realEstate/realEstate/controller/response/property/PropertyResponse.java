@@ -3,6 +3,7 @@ package com.realEstate.realEstate.controller.response.property;
 
 import com.realEstate.realEstate.controller.response.UserResponse;
 import com.realEstate.realEstate.model.constant.CType;
+import com.realEstate.realEstate.model.constant.Condominium;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.model.dto.PropertyImageDto;
@@ -26,15 +27,20 @@ public class PropertyResponse {
     int price;
     int deposit;
     int monthlyRent;
+    boolean management;
     int managementFee;
-    boolean condominium;
+    Condominium condominium;
     int area;
+    int wholeFloor;
     int floor;
     boolean parkingAvailable;
     boolean hasElevator;
     LocalDate moveInDate;
     Structure structure;
     String direction;
+    boolean UsageFee; // 개별 사용료
+    boolean negotiationFee; // 가격 협의 가능
+    boolean loanFund; // 융자
     PropertyConditionResponse propertyCondition;
     AddressResponse address;
     UserResponse user;
@@ -51,15 +57,20 @@ public class PropertyResponse {
                 dto.getPrice(),
                 dto.getDeposit(),
                 dto.getMonthlyRent(),
+                dto.isManagement(),
                 dto.getManagementFee(),
-                dto.isCondominium(),
+                dto.getCondominium(),
                 dto.getArea(),
+                dto.getWholeFloor(),
                 dto.getFloor(),
                 dto.isParkingAvailable(),
                 dto.isHasElevator(),
                 dto.getMoveInDate(),
                 dto.getStructure(),
                 dto.getDirection(),
+                dto.isUsageFee(),
+                dto.isNegotiationFee(),
+                dto.isLoanFund(),
                 PropertyConditionResponse.fromDto(dto.getPropertyCondition()),
                 AddressResponse.fromDto(dto.getAddress()),
                 UserResponse.fromDto(dto.getUser()),
@@ -80,15 +91,20 @@ public class PropertyResponse {
                 dto.getProperty().getPrice(),
                 dto.getProperty().getDeposit(),
                 dto.getProperty().getMonthlyRent(),
+                dto.getProperty().isManagement(),
                 dto.getProperty().getManagementFee(),
-                dto.getProperty().isCondominium(),
+                dto.getProperty().getCondominium(),
                 dto.getProperty().getArea(),
+                dto.getProperty().getWholeFloor(),
                 dto.getProperty().getFloor(),
                 dto.getProperty().isParkingAvailable(),
                 dto.getProperty().isHasElevator(),
                 dto.getProperty().getMoveInDate(),
                 dto.getProperty().getStructure(),
                 dto.getProperty().getDirection(),
+                dto.getProperty().isUsageFee(),
+                dto.getProperty().isNegotiationFee(),
+                dto.getProperty().isLoanFund(),
                 PropertyConditionResponse.fromDto(dto.getProperty().getPropertyCondition()),
                 AddressResponse.fromDto(dto.getProperty().getAddress()),
                 UserResponse.fromDto(dto.getUser()),

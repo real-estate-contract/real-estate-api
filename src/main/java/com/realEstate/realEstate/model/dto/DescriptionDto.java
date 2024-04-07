@@ -16,6 +16,7 @@ import java.io.Serializable;
 @Getter
 public class DescriptionDto{
     Long id;
+    String lineMemo;
     String memo;
     boolean loanAvailable;
     boolean petFriendly;
@@ -24,6 +25,7 @@ public class DescriptionDto{
     public static DescriptionDto from(Description entity) {
         return new DescriptionDto(
                 entity.getId(),
+                entity.getLineMemo(),
                 entity.getMemo(),
                 entity.isLoanAvailable(),
                 entity.isPetFriendly(),

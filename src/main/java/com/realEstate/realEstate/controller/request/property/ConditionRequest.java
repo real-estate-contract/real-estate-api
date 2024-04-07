@@ -39,6 +39,9 @@ public class ConditionRequest {
     String hospitalStore;
     boolean hospitalWalk;
     int hospitalTime;
+    String bank;
+    boolean bankWalk;
+    int bankTime;
     boolean securityOffice;
     ManagementType managementType;
     boolean dispreferredFacilities;

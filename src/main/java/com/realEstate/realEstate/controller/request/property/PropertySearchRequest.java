@@ -16,6 +16,7 @@ public class PropertySearchRequest {
     private Integer minFloor;
     private Integer maxFloor;
     private Structure structure;
+    private Boolean parkingAvailable;
     private Boolean sink;
     private Boolean airConditioner;
     private Boolean shoeRack;

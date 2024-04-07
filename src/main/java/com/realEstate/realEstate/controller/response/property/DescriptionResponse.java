@@ -9,6 +9,7 @@ import lombok.Getter;
 public class DescriptionResponse {
 
     Long id;
+    String lineMemo;
     String memo;
     boolean loanAvailable;
     boolean petFriendly;
@@ -17,6 +18,7 @@ public class DescriptionResponse {
     public static DescriptionResponse fromDto(DescriptionDto dto) {
         return new DescriptionResponse(
                 dto.getId(),
+                dto.getLineMemo(),
                 dto.getMemo(),
                 dto.isLoanAvailable(),
                 dto.isPetFriendly(),
