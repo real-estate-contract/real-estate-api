@@ -59,7 +59,7 @@ public class PropertyController {
     public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
-        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.isManagement(), request.getManagementFee(), request.getCondominium(),request.getArea(), request.getWholeFloor(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), request.isUsageFee(), request.isNegotiationFee(), request.isLoanFund(), addressId, user.getName());
+        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.isManagement(), request.getManagementFee(), request.getCondominium(),request.getArea(), request.getWholeFloor(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), request.isUsageFee(), request.isNegotiationFee(), request.isLoanFund(), request.getYear(), request.getGenerationCount(), addressId, user.getName());
         return Response.success();
     }
 
@@ -132,10 +132,8 @@ public class PropertyController {
         CType transactionType = request.getTransactionType();
         Integer minPrice = request.getMinPrice();
         Integer maxPrice = request.getMaxPrice();
-        Integer minArea = request.getMinArea();
-        Integer maxArea = request.getMaxArea();
-        Integer minFloor = request.getMinFloor();
-        Integer maxFloor = request.getMaxFloor();
+        List<String> areaOptions = request.getAreaOptions();
+        List<String> floorOptions = request.getFloorOptions();
         Structure structure = request.getStructure();
         Boolean parkingAvailable = request.getParkingAvailable();
         Boolean sink = request.getSink();
@@ -154,12 +152,15 @@ public class PropertyController {
         Integer maxDeposit = request.getMaxDeposit();
         Integer minMonthlyRent = request.getMinMonthlyRent();
         Integer maxMonthlyRent = request.getMaxMonthlyRent();
+        Integer yearOfCompletionOption = request.getYearOfCompletionOption();
+        Integer totalUnitOption = request.getTotalUnitOption();
+        Boolean includeManagementFee = request.getIncludeManagementFee();
 
         Page<PropertyResponse> properties = propertyService.searchProperties(
-                transactionType, minPrice, maxPrice, minArea, maxArea, minFloor, maxFloor,
+                transactionType, minPrice, maxPrice, areaOptions, floorOptions,
                 structure,parkingAvailable, sink, airConditioner, shoeRack, washingMachine, refrigerator,
                 wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,
-                minDeposit, maxDeposit, minMonthlyRent, maxMonthlyRent,  pageable).map(PropertyResponse::fromDto);
+                minDeposit, maxDeposit, minMonthlyRent, maxMonthlyRent, yearOfCompletionOption, totalUnitOption, includeManagementFee, pageable).map(PropertyResponse::fromDto);
 
         return Response.success(properties);
     }

@@ -57,6 +57,8 @@ public class Property extends BaseEntity {
     private boolean UsageFee; // 개별 사용료
     private boolean negotiationFee; // 가격 협의 가능
     private boolean loanFund; // 융자
+    private int generationCount;// 전체 세대수
+    private int year;// 준공년도
 
     @ToString.Exclude
     @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
@@ -94,7 +96,7 @@ public class Property extends BaseEntity {
 
 
 
-    public static Property of(CType transactionType, int price, int deposit, int monthlyRent, boolean management, int managementFee, Condominium condominium, int area, int wholeFloor, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction,boolean usageFee, boolean negotiationFee, boolean loanFund, Address address, User user) {
+    public static Property of(CType transactionType, int price, int deposit, int monthlyRent, boolean management, int managementFee, Condominium condominium, int area, int wholeFloor, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction,boolean usageFee, boolean negotiationFee, boolean loanFund, int year,int generationCount, Address address, User user) {
         Property property = new Property();
         property.setTransactionType(transactionType);
         property.setPrice(price);
@@ -114,6 +116,8 @@ public class Property extends BaseEntity {
         property.setUsageFee(usageFee);
         property.setNegotiationFee(negotiationFee);
         property.setLoanFund(loanFund);
+        property.setYear(year);
+        property.setGenerationCount(generationCount);
         property.setAddress(address);
         property.setUser(user);
         return property;

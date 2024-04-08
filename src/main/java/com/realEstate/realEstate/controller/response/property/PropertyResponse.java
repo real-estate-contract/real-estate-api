@@ -41,6 +41,8 @@ public class PropertyResponse {
     boolean UsageFee; // 개별 사용료
     boolean negotiationFee; // 가격 협의 가능
     boolean loanFund; // 융자
+    int year; // 준공년도
+    int generationCount; // 전체 세대수
     PropertyConditionResponse propertyCondition;
     AddressResponse address;
     UserResponse user;
@@ -71,6 +73,8 @@ public class PropertyResponse {
                 dto.isUsageFee(),
                 dto.isNegotiationFee(),
                 dto.isLoanFund(),
+                dto.getYear(),
+                dto.getGenerationCount(),
                 PropertyConditionResponse.fromDto(dto.getPropertyCondition()),
                 AddressResponse.fromDto(dto.getAddress()),
                 UserResponse.fromDto(dto.getUser()),
@@ -105,6 +109,8 @@ public class PropertyResponse {
                 dto.getProperty().isUsageFee(),
                 dto.getProperty().isNegotiationFee(),
                 dto.getProperty().isLoanFund(),
+                dto.getProperty().getYear(),
+                dto.getProperty().getGenerationCount(),
                 PropertyConditionResponse.fromDto(dto.getProperty().getPropertyCondition()),
                 AddressResponse.fromDto(dto.getProperty().getAddress()),
                 UserResponse.fromDto(dto.getUser()),

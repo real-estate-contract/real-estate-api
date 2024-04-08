@@ -43,6 +43,10 @@ public class PropertyDto implements Serializable {
     boolean UsageFee; // 개별 사용료
     boolean negotiationFee; // 가격 협의 가능
     boolean loanFund; // 융자
+    int year;
+    int generationCount; // 전체 세대수
+
+
     PropertyConditionDto propertyCondition;
     AddressDto address;
     UserDto user;
@@ -75,6 +79,8 @@ public class PropertyDto implements Serializable {
                 entity.isUsageFee(),
                 entity.isNegotiationFee(),
                 entity.isLoanFund(),
+                entity.getYear(),
+                entity.getGenerationCount(),
                 PropertyConditionDto.from(entity.getPropertyCondition()),
                 AddressDto.from(entity.getAddress()),
                 UserDto.from(entity.getUser()),

@@ -30,7 +30,7 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final NumberPath<Integer> area = createNumber("area", Integer.class);
 
-    public final BooleanPath condominium = createBoolean("condominium");
+    public final EnumPath<com.realEstate.realEstate.model.constant.Condominium> condominium = createEnum("condominium", com.realEstate.realEstate.model.constant.Condominium.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -43,13 +43,21 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final NumberPath<Integer> floor = createNumber("floor", Integer.class);
 
+    public final NumberPath<Integer> generationCount = createNumber("generationCount", Integer.class);
+
     public final BooleanPath hasElevator = createBoolean("hasElevator");
+
+    public final BooleanPath loanFund = createBoolean("loanFund");
+
+    public final BooleanPath management = createBoolean("management");
 
     public final NumberPath<Integer> managementFee = createNumber("managementFee", Integer.class);
 
     public final NumberPath<Integer> monthlyRent = createNumber("monthlyRent", Integer.class);
 
     public final DatePath<java.time.LocalDate> moveInDate = createDate("moveInDate", java.time.LocalDate.class);
+
+    public final BooleanPath negotiationFee = createBoolean("negotiationFee");
 
     public final QPropertyOption option;
 
@@ -70,9 +78,15 @@ public class QProperty extends EntityPathBase<Property> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
+    public final BooleanPath UsageFee = createBoolean("UsageFee");
+
     public final QUser user;
 
+    public final NumberPath<Integer> wholeFloor = createNumber("wholeFloor", Integer.class);
+
     public final ListPath<Wish, QWish> wishes = this.<Wish, QWish>createList("wishes", Wish.class, QWish.class, PathInits.DIRECT2);
+
+    public final NumberPath<Integer> year = createNumber("year", Integer.class);
 
     public QProperty(String variable) {
         this(Property.class, forVariable(variable), INITS);

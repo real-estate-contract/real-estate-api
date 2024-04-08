@@ -5,16 +5,16 @@ import com.realEstate.realEstate.model.constant.Structure;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class PropertySearchRequest {
     private CType transactionType;
     private Integer minPrice;
     private Integer maxPrice;
-    private Integer minArea;
-    private Integer maxArea;
-    private Integer minFloor;
-    private Integer maxFloor;
+    private List<String> areaOptions;
+    private List<String> floorOptions;
     private Structure structure;
     private Boolean parkingAvailable;
     private Boolean sink;
@@ -33,5 +33,8 @@ public class PropertySearchRequest {
     private Integer maxDeposit;
     private Integer minMonthlyRent;
     private Integer maxMonthlyRent;
+    private Integer yearOfCompletionOption;
+    private Integer totalUnitOption;
+    private Boolean includeManagementFee;
 
 }

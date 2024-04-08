@@ -22,6 +22,12 @@ public class QPropertyCondition extends EntityPathBase<PropertyCondition> {
 
     public static final QPropertyCondition propertyCondition = new QPropertyCondition("propertyCondition");
 
+    public final StringPath bank = createString("bank");
+
+    public final NumberPath<Integer> bankTime = createNumber("bankTime", Integer.class);
+
+    public final BooleanPath bankWalk = createBoolean("bankWalk");
+
     public final StringPath busStation = createString("busStation");
 
     public final NumberPath<Integer> busTime = createNumber("busTime", Integer.class);

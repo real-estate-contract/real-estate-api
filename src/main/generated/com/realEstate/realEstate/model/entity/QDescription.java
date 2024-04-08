@@ -24,6 +24,8 @@ public class QDescription extends EntityPathBase<Description> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath lineMemo = createString("lineMemo");
+
     public final BooleanPath loanAvailable = createBoolean("loanAvailable");
 
     public final StringPath memo = createString("memo");

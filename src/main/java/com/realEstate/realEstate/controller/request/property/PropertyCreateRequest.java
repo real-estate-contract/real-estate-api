@@ -37,6 +37,8 @@ public class PropertyCreateRequest {
     boolean UsageFee; // 개별 사용료
     boolean negotiationFee; // 가격 협의 가능
     boolean loanFund; // 융자
+    int year; // 준공년
+    int generationCount; // 전체 세대수
 
 
 
