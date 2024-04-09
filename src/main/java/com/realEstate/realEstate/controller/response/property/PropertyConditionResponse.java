@@ -40,6 +40,9 @@ public class PropertyConditionResponse {
     String hospitalStore;
     boolean hospitalWalk;
     int hospitalTime;
+    String bank;
+    boolean bankWalk;
+    int bankTime;
     boolean securityOffice;
     ManagementType managementType;
     boolean dispreferredFacilities;
@@ -76,6 +79,9 @@ public class PropertyConditionResponse {
                 dto.getHospitalStore(),
                 dto.isHospitalWalk(),
                 dto.getHospitalTime(),
+                dto.getBank(),
+                dto.isBankWalk(),
+                dto.getBankTime(),
                 dto.isSecurityOffice(),
                 dto.getManagementType(),
                 dto.isDispreferredFacilities(),

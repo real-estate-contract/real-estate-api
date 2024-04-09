@@ -21,10 +21,10 @@ public class DescriptionService {
     private final PropertyCacheRepository redisRepository;
 
     @Transactional
-    public void registerDescription(String memo, boolean loanAvailable, boolean petFriendly, Long propertyId) {
+    public void registerDescription(String lineMemo, String memo, boolean loanAvailable, boolean petFriendly, Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);
 
-        Description description = Description.of(memo, loanAvailable, petFriendly,property);
+        Description description = Description.of(lineMemo, memo, loanAvailable, petFriendly,property);
         property.setDescription(description);
 
         descriptionRepository.save(description);

@@ -36,13 +36,15 @@ public class Property extends BaseEntity {
     private int deposit;  // 보증금
     @Column(name = "monthly_rent")
     private int monthlyRent;  // 월세
+    private boolean management; // 관리비 여부
     @Column(name = "management_fee")
     private int managementFee; // 관리비
-    private boolean condominium; //공동주택 / 단독주택여부
+    private Condominium condominium; //공동주택 / 단독주택여부 /1종근린시설 / 2종 근린시설
     private int area; // 평형
+    private int wholeFloor; // 전체층
     private int floor; // 층수
     @Column(name = "parking_available")
-    private boolean parkingAvailable;
+    private boolean parkingAvailable; // 세대당주차가능여부
     @Column(name = "has_elevator")
     private boolean hasElevator;
     @JsonSerialize(using = LocalDateSerializer.class)
@@ -52,6 +54,11 @@ public class Property extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Structure structure;
     private String direction;
+    private boolean UsageFee; // 개별 사용료
+    private boolean negotiationFee; // 가격 협의 가능
+    private boolean loanFund; // 융자
+    private int generationCount;// 전체 세대수
+    private int year;// 준공년도
 
     @ToString.Exclude
     @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
@@ -89,21 +96,28 @@ public class Property extends BaseEntity {
 
 
 
-    public static Property of(CType transactionType, int price, int deposit, int monthlyRent, int managementFee, boolean condominium, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction, Address address, User user) {
+    public static Property of(CType transactionType, int price, int deposit, int monthlyRent, boolean management, int managementFee, Condominium condominium, int area, int wholeFloor, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction,boolean usageFee, boolean negotiationFee, boolean loanFund, int year,int generationCount, Address address, User user) {
         Property property = new Property();
         property.setTransactionType(transactionType);
         property.setPrice(price);
         property.setDeposit(deposit);
         property.setMonthlyRent(monthlyRent);
+        property.setManagement(management);
         property.setManagementFee(managementFee);
         property.setCondominium(condominium);
         property.setArea(area);
+        property.setWholeFloor(wholeFloor);
         property.setFloor(floor);
         property.setParkingAvailable(parkingAvailable);
         property.setHasElevator(hasElevator);
         property.setMoveInDate(moveInDate);
         property.setStructure(structure);
         property.setDirection(direction);
+        property.setUsageFee(usageFee);
+        property.setNegotiationFee(negotiationFee);
+        property.setLoanFund(loanFund);
+        property.setYear(year);
+        property.setGenerationCount(generationCount);
         property.setAddress(address);
         property.setUser(user);
         return property;

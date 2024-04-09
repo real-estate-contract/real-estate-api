@@ -60,6 +60,10 @@ public class PropertyCondition{
     private boolean hospitalWalk; // True : 도보 , False : 차량
     private int hospitalTime; // 학교 까지 소요 시간
 
+    private String bank; // 은행이름
+    private boolean bankWalk; // True : 도보 , False : 차량
+    private int bankTime; // 은행 까지 소요 시간
+
     //관리에 관한 사항
     private boolean securityOffice; // 경비실 유무 (True: 있음, False: 없음)
     @Enumerated(EnumType.STRING)
@@ -74,7 +78,7 @@ public class PropertyCondition{
     @JoinColumn(name = "property_id")
     private Property property;
 
-    public static PropertyCondition of(int streetL, int streetR, boolean streetPaving, boolean streetAccessibility, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo, String elementarySchool, boolean elementaryWalk, int elementaryTime, String middleSchool, boolean middleWalk, int middleTime, String highSchool, boolean highWalk, int highTime, String departmentStore, boolean departmentWalk, int departmentTime, String hospitalStore, boolean hospitalWalk, int hospitalTime, boolean securityOffice, ManagementType managementType, boolean dispreferredFacilities, String dispreferredFacilitiesMemo, Property property) {
+    public static PropertyCondition of(int streetL, int streetR, boolean streetPaving, boolean streetAccessibility, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo, String elementarySchool, boolean elementaryWalk, int elementaryTime, String middleSchool, boolean middleWalk, int middleTime, String highSchool, boolean highWalk, int highTime, String departmentStore, boolean departmentWalk, int departmentTime, String hospitalStore, boolean hospitalWalk, int hospitalTime, String bank, boolean bankWalk, int bankTime, boolean securityOffice, ManagementType managementType, boolean dispreferredFacilities, String dispreferredFacilitiesMemo, Property property) {
         PropertyCondition propertyCondition = new PropertyCondition();
         propertyCondition.setStreetL(streetL);
         propertyCondition.setStreetR(streetR);
@@ -103,6 +107,9 @@ public class PropertyCondition{
         propertyCondition.setHospitalStore(hospitalStore);
         propertyCondition.setHospitalWalk(hospitalWalk);
         propertyCondition.setHospitalTime(hospitalTime);
+        propertyCondition.setBank(bank);
+        propertyCondition.setBankWalk(bankWalk);
+        propertyCondition.setBankTime(bankTime);
         propertyCondition.setSecurityOffice(securityOffice);
         propertyCondition.setManagementType(managementType);
         propertyCondition.setDispreferredFacilities(dispreferredFacilities);

@@ -4,6 +4,7 @@ package com.realEstate.realEstate.service;
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.model.constant.CType;
+import com.realEstate.realEstate.model.constant.Condominium;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.model.dto.WishDto;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,15 +37,15 @@ public class PropertyService {
     private final WishRepository wishRepository;
 
     public Page<PropertyDto> searchProperties(CType transactionType, Integer minPrice, Integer maxPrice,
-                                              Integer minArea, Integer maxArea, Integer minFloor, Integer maxFloor,
-                                              Structure structure, Boolean sink, Boolean airConditioner, Boolean shoeRack,
+                                              List<String> areaOptions, List<String> floorOptions,
+                                              Structure structure, Boolean parkingAvailable, Boolean sink, Boolean airConditioner, Boolean shoeRack,
                                               Boolean washingMachine, Boolean refrigerator, Boolean wardrobe, Boolean gasRange,
                                               Boolean induction, Boolean bed, Boolean desk, Boolean microwave, Boolean bookshelf,
-                                              Integer minDeposit, Integer maxDeposit, Integer minMonthlyRent, Integer maxMonthlyRent,
+                                              Integer minDeposit, Integer maxDeposit, Integer minMonthlyRent, Integer maxMonthlyRent, Integer yearOfCompletionOption, Integer totalUnitOption, Boolean includeManagementFee,
                                               Pageable pageable){
         PropertySearchCriteria criteria = new PropertySearchCriteria(transactionType, minPrice, maxPrice,
-                minArea, maxArea, minFloor, maxFloor, structure, sink, airConditioner, shoeRack,
-                washingMachine, refrigerator, wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,minDeposit,maxDeposit,minMonthlyRent,maxMonthlyRent);
+                areaOptions, floorOptions, structure,parkingAvailable, sink, airConditioner, shoeRack,
+                washingMachine, refrigerator, wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,minDeposit,maxDeposit,minMonthlyRent,maxMonthlyRent, yearOfCompletionOption, totalUnitOption,includeManagementFee);
 
         return propertyRepository.findAll(criteria.getPredicate(), pageable).map(PropertyDto::from);
 
@@ -58,17 +60,17 @@ public class PropertyService {
 
     @Transactional
     // Create
-    public void create(CType transactionType, int price, int deposit,int monthlyRent,int managementFee, boolean condominium,int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction, Long addressId, String userName) {
+    public void create(CType transactionType, int price, int deposit, int monthlyRent, boolean management, int managementFee, Condominium condominium, int area, int wholeFloor, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction,boolean usageFee, boolean negotiationFee, boolean loanFund, int year,int generationCount, Long addressId, String userName) {
 
         //user exit
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
         //address exit
         Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
 
-        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, address, user));
+        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent,management, managementFee, condominium, area, wholeFloor, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, usageFee, negotiationFee, loanFund, year, generationCount,address, user));
 
 
-        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent, managementFee, condominium, area, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,address, user));
+        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent,management, managementFee, condominium, area, wholeFloor, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,usageFee, negotiationFee, loanFund, year, generationCount,address, user));
     }
 
     // ReadAll(페이징 처리)

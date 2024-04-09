@@ -59,7 +59,7 @@ public class PropertyController {
     public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
-        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.getManagementFee(), request.isCondominium(),request.getArea(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), addressId, user.getName());
+        propertyService.create(request.getTransactionType(),request.getPrice(), request.getDeposit(), request.getMonthlyRent(), request.isManagement(), request.getManagementFee(), request.getCondominium(),request.getArea(), request.getWholeFloor(), request.getFloor(), request.isParkingAvailable(), request.isHasElevator(), request.getMoveInDate(),request.getStructure(),request.getDirection(), request.isUsageFee(), request.isNegotiationFee(), request.isLoanFund(), request.getYear(), request.getGenerationCount(), addressId, user.getName());
         return Response.success();
     }
 
@@ -77,7 +77,7 @@ public class PropertyController {
 
     @PostMapping("step4/{propertyId}")
     public Response<Void> registerDescription(@RequestBody DescriptionCreateRequest request, @PathVariable Long propertyId) {
-        descriptionService.registerDescription(request.getMemo(), request.isLoanAvailable(), request.isPetFriendly(), propertyId);
+        descriptionService.registerDescription(request.getLineMemo(),request.getMemo(), request.isLoanAvailable(), request.isPetFriendly(), propertyId);
         return Response.success();
     }
 
@@ -89,7 +89,7 @@ public class PropertyController {
 
     @PostMapping("step6/{propertyId}")
     public Response<Void> registerCondition(@RequestBody ConditionRequest request, @PathVariable Long propertyId) {
-        propertyConditionService.createCondition(request.getStreetL(), request.getStreetR(), request.isStreetPaving(), request.isStreetAccessibility(), request.getBusStation(), request.isBusWalk(), request.getBusTime(), request.getSubwayStation(), request.isSubwayWalk(), request.getSubwayTime(), request.getParkingOption(), request.getParkingMemo(), request.getElementarySchool(), request.isElementaryWalk(), request.getElementaryTime(), request.getMiddleSchool(), request.isMiddleWalk(), request.getMiddleTime(), request.getHighSchool(), request.isHighWalk(), request.getHighTime(), request.getDepartmentStore(), request.isDepartmentWalk(), request.getDepartmentTime(), request.getHospitalStore(), request.isHospitalWalk(), request.getHospitalTime(), request.isSecurityOffice(), request.getManagementType(), request.isDispreferredFacilities(), request.getDispreferredFacilitiesMemo(), propertyId);
+        propertyConditionService.createCondition(request.getStreetL(), request.getStreetR(), request.isStreetPaving(), request.isStreetAccessibility(), request.getBusStation(), request.isBusWalk(), request.getBusTime(), request.getSubwayStation(), request.isSubwayWalk(), request.getSubwayTime(), request.getParkingOption(), request.getParkingMemo(), request.getElementarySchool(), request.isElementaryWalk(), request.getElementaryTime(), request.getMiddleSchool(), request.isMiddleWalk(), request.getMiddleTime(), request.getHighSchool(), request.isHighWalk(), request.getHighTime(), request.getDepartmentStore(), request.isDepartmentWalk(), request.getDepartmentTime(), request.getHospitalStore(), request.isHospitalWalk(), request.getHospitalTime(),request.getBank(), request.isBankWalk(), request.getBankTime(), request.isSecurityOffice(), request.getManagementType(), request.isDispreferredFacilities(), request.getDispreferredFacilitiesMemo(), propertyId);
         return Response.success();
     }
 
@@ -132,11 +132,10 @@ public class PropertyController {
         CType transactionType = request.getTransactionType();
         Integer minPrice = request.getMinPrice();
         Integer maxPrice = request.getMaxPrice();
-        Integer minArea = request.getMinArea();
-        Integer maxArea = request.getMaxArea();
-        Integer minFloor = request.getMinFloor();
-        Integer maxFloor = request.getMaxFloor();
+        List<String> areaOptions = request.getAreaOptions();
+        List<String> floorOptions = request.getFloorOptions();
         Structure structure = request.getStructure();
+        Boolean parkingAvailable = request.getParkingAvailable();
         Boolean sink = request.getSink();
         Boolean airConditioner = request.getAirConditioner();
         Boolean shoeRack = request.getShoeRack();
@@ -153,12 +152,15 @@ public class PropertyController {
         Integer maxDeposit = request.getMaxDeposit();
         Integer minMonthlyRent = request.getMinMonthlyRent();
         Integer maxMonthlyRent = request.getMaxMonthlyRent();
+        Integer yearOfCompletionOption = request.getYearOfCompletionOption();
+        Integer totalUnitOption = request.getTotalUnitOption();
+        Boolean includeManagementFee = request.getIncludeManagementFee();
 
         Page<PropertyResponse> properties = propertyService.searchProperties(
-                transactionType, minPrice, maxPrice, minArea, maxArea, minFloor, maxFloor,
-                structure, sink, airConditioner, shoeRack, washingMachine, refrigerator,
+                transactionType, minPrice, maxPrice, areaOptions, floorOptions,
+                structure,parkingAvailable, sink, airConditioner, shoeRack, washingMachine, refrigerator,
                 wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,
-                minDeposit, maxDeposit, minMonthlyRent, maxMonthlyRent, pageable).map(PropertyResponse::fromDto);
+                minDeposit, maxDeposit, minMonthlyRent, maxMonthlyRent, yearOfCompletionOption, totalUnitOption, includeManagementFee, pageable).map(PropertyResponse::fromDto);
 
         return Response.success(properties);
     }

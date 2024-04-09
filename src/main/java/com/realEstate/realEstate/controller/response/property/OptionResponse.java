@@ -9,18 +9,18 @@ import lombok.Getter;
 public class OptionResponse {
 
     Long optionId;
-    boolean sink;
-    boolean airConditioner;
-    boolean shoeRack;
-    boolean washingMachine;
-    boolean refrigerator;
-    boolean wardrobe;
-    boolean gasRange;
-    boolean induction;
-    boolean bed;
-    boolean desk;
-    boolean microwave;
-    boolean bookshelf;
+    boolean sink; //싱크대
+    boolean airConditioner; // 에어컨
+    boolean shoeRack; //신발장
+    boolean washingMachine; // 세탁기
+    boolean refrigerator; // 냉장고
+    boolean wardrobe; // 옷장
+    boolean gasRange; // 가스레인지
+    boolean induction; // 인덕션
+    boolean bed; // 침대
+    boolean desk; // 책상
+    boolean microwave; // 전자레인지
+    boolean bookshelf; // 책장
     Long propertyId;
 
     public static OptionResponse from(OptionDto dto) {
