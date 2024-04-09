@@ -10,9 +10,9 @@ import lombok.Getter;
 public class AddressResponse {
 
     Long addressId;
-    String streetAddress;
-    String city;
-    boolean owner;
+    String streetAddress; // 도로명 주소
+    String city; // 상세 주소
+    boolean owner; // 자가 여부
 
     public static AddressResponse fromDto(AddressDto dto) {
         return new AddressResponse(

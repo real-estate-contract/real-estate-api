@@ -22,22 +22,24 @@ import java.util.List;
 public class PropertyResponse {
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
-    Long propertyId;
-    CType transactionType;
-    int price;
-    int deposit;
-    int monthlyRent;
-    boolean management;
-    int managementFee;
+    Long propertyId; // 매물 id
+    CType transactionType; // 매물유형(SALE//매매, JEONSE // 전세, MONTH_RENT // 월세)
+    int price; //매매금
+    int deposit; // 보증금
+    int monthlyRent; //월세
+    boolean management; // 관리비 있(True)?없(False)?
+    int managementFee; // 관리비 가격
     Condominium condominium;
-    int area;
-    int wholeFloor;
-    int floor;
-    boolean parkingAvailable;
-    boolean hasElevator;
-    LocalDate moveInDate;
-    Structure structure;
-    String direction;
+    // 공동주택 여부(APARTMENT_BUILDING : 공동주택,DETACHED_HOUSED : 단독주택,
+    // TYPE1NEIGHBORHOODFACILITY : 1종 근린 시설,TYPE2NEIGHBORHOODFACILITY : 2종 근린 시설,)
+    int area; //평형수
+    int wholeFloor; //전체층
+    int floor; // 해당층
+    boolean parkingAvailable; // 개인주차 가능 여부(True/ False)
+    boolean hasElevator; //엘레베이터
+    LocalDate moveInDate; // 입주가능날짜
+    Structure structure; //구조 APART("아파트"),VILLA("빌라/투룸+"),ONE_ROOM("원룸"),OFFICETEL("오피스텔");
+    String direction; // 창문 방향
     boolean UsageFee; // 개별 사용료
     boolean negotiationFee; // 가격 협의 가능
     boolean loanFund; // 융자

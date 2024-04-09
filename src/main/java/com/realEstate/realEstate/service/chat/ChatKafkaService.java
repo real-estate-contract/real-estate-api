@@ -131,7 +131,7 @@ public class ChatKafkaService {
         Integer readCount = isConnectedAll ? 0 : 1;
 
         // message 객체에 보낸시간, 보낸사람 memberNo, 닉네임을 셋팅해준다.
-        message.setSendTimeAndSender(LocalDateTime.now(), findUser.getUserId(), findUser.getNickName(), readCount);
+        message.setSendTimeAndSender(LocalDateTime.now(), findUser.getUserId(), findUser.getNickName(), findUser.getEmail(), readCount);
 
         sender.send(ConstantUtil.KAFKA_TOPIC,message);
 
