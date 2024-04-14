@@ -103,6 +103,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
      * 또한, FormLogin과 동일하게 AuthenticationManager로는 구현체인 ProviderManager 사용(return ProviderManager)
      *
      */
+    //asdasdasfsafsa
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
