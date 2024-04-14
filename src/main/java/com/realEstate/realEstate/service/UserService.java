@@ -94,7 +94,7 @@ public class UserService implements UserDetailsService {
             throw new ApplicationException(ErrorCode.INVALID_PASSWORD);
         }
 
-        redisRepository.setUser(user);
+//        redisRepository.setUser(user);
 
         //토큰 생성
         String token = JwtTokenUtils.doGenerateToken(userName, user.getEmail(), secretKey,expiredTimeMs);
