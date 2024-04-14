@@ -84,9 +84,11 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public String login(String userName, String password) {
-        User user = redisRepository.getUser(userName).orElseGet(() ->userRepository.findByName(userName).orElseThrow(()->{
-            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName));
-        }));
+//        User user = redisRepository.getUser(userName).orElseGet(() ->userRepository.findByName(userName).orElseThrow(()->{
+//            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName));
+//        }));
+
+        User user = userRepository.findByName(userName).orElseThrow(() ->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");});
 
         if (!encoder.matches(password, user.getPassword())) {
             throw new ApplicationException(ErrorCode.INVALID_PASSWORD);
