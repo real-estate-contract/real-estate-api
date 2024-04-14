@@ -40,7 +40,7 @@ dependencies {
 	//AWS
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-//	implementation 'mysql:mysql-connector-java:8.0.35'
+	implementation 'mysql:mysql-connector-java:8.0.28'
 
 	//OPENAI
 	implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.4'
