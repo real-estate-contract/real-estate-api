@@ -8,4 +8,4 @@ WORKDIR /app
 COPY build/libs/*SNAPSHOT.jar app.jar
 
 # 애플리케이션을 실행합니다.
-ENTRYPOINT ["java","-Xmx2g","-jar","app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
