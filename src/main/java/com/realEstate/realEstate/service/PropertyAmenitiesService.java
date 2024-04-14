@@ -32,10 +32,8 @@ public class PropertyAmenitiesService {
     //TODO: 수정 부분을 한 번에 어떻게 처리할 것 인가에 대한 고민
 
     public Property loadPropertyByPropertyId(Long propertyId) {
-        return redisRepository.getProperty(propertyId).orElseGet(
-                ()-> propertyRepository.findById(propertyId).orElseThrow(()->
-                {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");
-                })
+        return propertyRepository.findById(propertyId).orElseThrow(()->
+                {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");}
         );
 
     }

@@ -67,7 +67,7 @@ public class PropertyService {
         //address exit
         Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
 
-        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent,management, managementFee, condominium, area, wholeFloor, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, usageFee, negotiationFee, loanFund, year, generationCount,address, user));
+//        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent,management, managementFee, condominium, area, wholeFloor, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, usageFee, negotiationFee, loanFund, year, generationCount,address, user));
 
 
         propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent,management, managementFee, condominium, area, wholeFloor, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,usageFee, negotiationFee, loanFund, year, generationCount,address, user));
@@ -159,10 +159,8 @@ public class PropertyService {
     }
 
     public Property loadPropertyByPropertyId(Long propertyId) {
-        return redisRepository.getProperty(propertyId).orElseGet(
-                ()-> propertyRepository.findById(propertyId).orElseThrow(()->
-                        {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");
-                        })
+        return propertyRepository.findById(propertyId).orElseThrow(()->
+                        {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");}
         );
 
     }

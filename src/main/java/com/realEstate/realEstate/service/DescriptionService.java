@@ -42,10 +42,8 @@ public class DescriptionService {
     }
 
     public Property loadPropertyByPropertyId(Long propertyId) {
-        return redisRepository.getProperty(propertyId).orElseGet(
-                ()-> propertyRepository.findById(propertyId).orElseThrow(()->
-                {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");
-                })
+        return propertyRepository.findById(propertyId).orElseThrow(()->
+                {throw new ApplicationException(ErrorCode.Property_NOT_FOUND, "매물 없음");}
         );
 
     }
