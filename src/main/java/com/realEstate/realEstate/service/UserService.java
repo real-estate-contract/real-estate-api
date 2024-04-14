@@ -2,6 +2,7 @@ package com.realEstate.realEstate.service;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
+import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.model.constant.Gender;
 import com.realEstate.realEstate.model.constant.UserRole;
 import com.realEstate.realEstate.model.dto.UserDto;
@@ -16,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +48,12 @@ public class UserService implements UserDetailsService {
         return UserDto.from(user);
     }
 
+    @Transactional(readOnly = true)
+    public boolean checkUserEmail(String email) {
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        return !existingUser.isPresent();
+    }
+
 
     @Transactional
     public UserDto join(String userName, String nickName, String password, String email, Gender gender, int age) {
@@ -61,7 +70,6 @@ public class UserService implements UserDetailsService {
         user.setRole(UserRole.USER);
         userRepository.save(user);
         return UserDto.from(user);
-
     }
 
 

@@ -6,10 +6,12 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
 @ToString
 @Table
+@AllArgsConstructor
 public class BuildingInfo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +31,7 @@ public class BuildingInfo extends BaseEntity {
     private String sigunguCode;
     private String bjdongCode;
 
-    @Builder.Default
-    private String pnu = ""; //고유번호 (토지대장)
+    private String pnu; //고유번호 (토지대장)
 
     public BuildingInfo() {
         // 기본 생성자에 초기화 로직 추가
