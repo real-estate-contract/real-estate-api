@@ -4,4 +4,5 @@ COPY ${JAR_FILE} app.jar
 ENV TZ=Asia/Seoul
 
 
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+
+ENTRYPOINT ["java","-Xmx2g",  "-jar", "./app.jar"]
