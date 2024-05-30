@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 
 import java.security.Principal;
 import java.util.List;
@@ -59,6 +60,14 @@ public class ContractController {
         return contractService.getContractItem(principal, contractId);
     }
 
-
-
+    /**
+     * 계약 한 개 삭제
+     * @param contractId
+     * @param principal
+     * @return
+     */
+    @DeleteMapping("/delete/{contractId}")
+    public Response<String> deleteContractItem(@PathVariable(value = "contractId") long contractId,Principal principal) {
+        return contractService.deleteContractItem(principal, contractId);
+    }
 }

@@ -121,4 +121,22 @@ public class ContractService {
             throw new RuntimeException("계약 조회에 실패했습니다.");
         }
     }
+
+    /**
+     * 계약 삭제
+     * @param principal
+     * @param contractId
+     * @return
+     */
+    public Response<String> deleteContractItem(Principal principal, long contractId) {
+        try {
+            //contract exit
+            Optional<Contract> contractItem = Optional.ofNullable(contractRepository.findById(contractId))
+                    .orElseThrow(() -> new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, String.format("%s is not founded", contractId)));
+            contractRepository.delete(contractItem.get());
+            return Response.success("계약 삭제 성공");
+        } catch (Exception e) {
+            throw new RuntimeException("계약 삭제에 실패했습니다.");
+        }
+    }
 }
