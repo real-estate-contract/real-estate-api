@@ -8,7 +8,7 @@ import com.realEstate.realEstate.model.constant.Condominium;
 import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.model.dto.WishDto;
-import com.realEstate.realEstate.model.dto.querydsl.PropertySearchCriteria;
+//import com.realEstate.realEstate.model.dto.querydsl.PropertySearchCriteria;
 import com.realEstate.realEstate.model.entity.*;
 import com.realEstate.realEstate.repository.AddressRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
@@ -36,21 +36,21 @@ public class PropertyService {
     private final UserCacheRepository userCacheRepository;
     private final WishRepository wishRepository;
 
-    public Page<PropertyDto> searchProperties(CType transactionType, Integer minPrice, Integer maxPrice,
-                                              List<String> areaOptions, List<String> floorOptions,
-                                              Structure structure, Boolean parkingAvailable, Boolean sink, Boolean airConditioner, Boolean shoeRack,
-                                              Boolean washingMachine, Boolean refrigerator, Boolean wardrobe, Boolean gasRange,
-                                              Boolean induction, Boolean bed, Boolean desk, Boolean microwave, Boolean bookshelf,
-                                              Integer minDeposit, Integer maxDeposit, Integer minMonthlyRent, Integer maxMonthlyRent, Integer yearOfCompletionOption, Integer totalUnitOption, Boolean includeManagementFee,
-                                              Pageable pageable){
-        PropertySearchCriteria criteria = new PropertySearchCriteria(transactionType, minPrice, maxPrice,
-                areaOptions, floorOptions, structure,parkingAvailable, sink, airConditioner, shoeRack,
-                washingMachine, refrigerator, wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,minDeposit,maxDeposit,minMonthlyRent,maxMonthlyRent, yearOfCompletionOption, totalUnitOption,includeManagementFee);
-
-        return propertyRepository.findAll(criteria.getPredicate(), pageable).map(PropertyDto::from);
-
-
-    }
+//    public Page<PropertyDto> searchProperties(CType transactionType, Integer minPrice, Integer maxPrice,
+//                                              List<String> areaOptions, List<String> floorOptions,
+//                                              Structure structure, Boolean parkingAvailable, Boolean sink, Boolean airConditioner, Boolean shoeRack,
+//                                              Boolean washingMachine, Boolean refrigerator, Boolean wardrobe, Boolean gasRange,
+//                                              Boolean induction, Boolean bed, Boolean desk, Boolean microwave, Boolean bookshelf,
+//                                              Integer minDeposit, Integer maxDeposit, Integer minMonthlyRent, Integer maxMonthlyRent, Integer yearOfCompletionOption, Integer totalUnitOption, Boolean includeManagementFee,
+//                                              Pageable pageable){
+//        PropertySearchCriteria criteria = new PropertySearchCriteria(transactionType, minPrice, maxPrice,
+//                areaOptions, floorOptions, structure,parkingAvailable, sink, airConditioner, shoeRack,
+//                washingMachine, refrigerator, wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,minDeposit,maxDeposit,minMonthlyRent,maxMonthlyRent, yearOfCompletionOption, totalUnitOption,includeManagementFee);
+//
+//        return propertyRepository.findAll(criteria.getPredicate(), pageable).map(PropertyDto::from);
+//
+//
+//    }
 
     public PropertyDto detail(Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);
@@ -60,7 +60,7 @@ public class PropertyService {
 
     @Transactional
     // Create
-    public void create(CType transactionType, int price, int deposit, int monthlyRent, boolean management, int managementFee, Condominium condominium, int area, int wholeFloor, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String direction,boolean usageFee, boolean negotiationFee, boolean loanFund, int year,int generationCount, Long addressId, String userName) {
+    public void create(String contractType, boolean paymentType,boolean management, int managementFee, int wholeFloor, int floor, boolean parkingAvailable,  LocalDate startDate,LocalDate endDate, Structure structure,boolean usageFee, boolean negotiationFee, boolean loanFund, int roomCount, int bathroomCount, int area1, int area2, Long addressId, String userName) {
 
         //user exit
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
@@ -70,7 +70,7 @@ public class PropertyService {
 //        redisRepository.setProperty(Property.of(transactionType, price, deposit, monthlyRent,management, managementFee, condominium, area, wholeFloor, floor, parkingAvailable, hasElevator,moveInDate,structure,direction, usageFee, negotiationFee, loanFund, year, generationCount,address, user));
 
 
-        propertyRepository.save(Property.of(transactionType, price, deposit, monthlyRent,management, managementFee, condominium, area, wholeFloor, floor, parkingAvailable, hasElevator,moveInDate,structure,direction,usageFee, negotiationFee, loanFund, year, generationCount,address, user));
+        propertyRepository.save(Property.of(contractType,paymentType,management, managementFee,wholeFloor, floor, parkingAvailable, startDate,endDate, structure, usageFee, negotiationFee, loanFund, roomCount, bathroomCount, area1, area2, address, user));
     }
 
     // ReadAll(페이징 처리)
@@ -87,36 +87,36 @@ public class PropertyService {
 
 
     // modify
-    @Transactional
-    public PropertyDto modify(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String userName, Long propertyId) {
-        User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
-
-        // property Exit
-        Property property = loadPropertyByPropertyId(propertyId);
-
-        // Address Exit
-
-        // 해당 유저가 적은게 맞는지
-        if (property.getUser() != user) {
-            throw new ApplicationException(ErrorCode.Invalid_Permission, String.format("%s has no permission", userName));
-        }
-
-        property.setTransactionType(transactionType);
-        property.setPrice(price);
-        property.setDeposit(deposit);
-        property.setMonthlyRent(monthlyRent);
-        property.setArea(area);
-        property.setFloor(floor);
-        property.setParkingAvailable(parkingAvailable);
-        property.setHasElevator(hasElevator);
-        property.setMoveInDate(moveInDate);
-        property.setStructure(structure);
-        property.setUser(user);
-
-
-        return PropertyDto.from(propertyRepository.saveAndFlush(property));
-    }
-    // Delete
+//    @Transactional
+//    public PropertyDto modify(CType transactionType, int price, int deposit, int monthlyRent, int area, int floor, boolean parkingAvailable, boolean hasElevator, LocalDate moveInDate, Structure structure, String userName, Long propertyId) {
+//        User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
+//
+//        // property Exit
+//        Property property = loadPropertyByPropertyId(propertyId);
+//
+//        // Address Exit
+//
+//        // 해당 유저가 적은게 맞는지
+//        if (property.getUser() != user) {
+//            throw new ApplicationException(ErrorCode.Invalid_Permission, String.format("%s has no permission", userName));
+//        }
+//
+//        property.setTransactionType(transactionType);
+//        property.setPrice(price);
+//        property.setDeposit(deposit);
+//        property.setMonthlyRent(monthlyRent);
+//        property.setArea(area);
+//        property.setFloor(floor);
+//        property.setParkingAvailable(parkingAvailable);
+//        property.setHasElevator(hasElevator);
+//        property.setMoveInDate(moveInDate);
+//        property.setStructure(structure);
+//        property.setUser(user);
+//
+//
+//        return PropertyDto.from(propertyRepository.saveAndFlush(property));
+//    }
+//    // Delete
 
 
     @Transactional

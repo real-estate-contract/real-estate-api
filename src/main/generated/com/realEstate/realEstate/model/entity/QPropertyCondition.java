@@ -22,12 +22,6 @@ public class QPropertyCondition extends EntityPathBase<PropertyCondition> {
 
     public static final QPropertyCondition propertyCondition = new QPropertyCondition("propertyCondition");
 
-    public final StringPath bank = createString("bank");
-
-    public final NumberPath<Integer> bankTime = createNumber("bankTime", Integer.class);
-
-    public final BooleanPath bankWalk = createBoolean("bankWalk");
-
     public final StringPath busStation = createString("busStation");
 
     public final NumberPath<Integer> busTime = createNumber("busTime", Integer.class);
@@ -40,22 +34,6 @@ public class QPropertyCondition extends EntityPathBase<PropertyCondition> {
 
     public final BooleanPath departmentWalk = createBoolean("departmentWalk");
 
-    public final BooleanPath dispreferredFacilities = createBoolean("dispreferredFacilities");
-
-    public final StringPath dispreferredFacilitiesMemo = createString("dispreferredFacilitiesMemo");
-
-    public final StringPath elementarySchool = createString("elementarySchool");
-
-    public final NumberPath<Integer> elementaryTime = createNumber("elementaryTime", Integer.class);
-
-    public final BooleanPath elementaryWalk = createBoolean("elementaryWalk");
-
-    public final StringPath highSchool = createString("highSchool");
-
-    public final NumberPath<Integer> highTime = createNumber("highTime", Integer.class);
-
-    public final BooleanPath highWalk = createBoolean("highWalk");
-
     public final StringPath hospitalStore = createString("hospitalStore");
 
     public final NumberPath<Integer> hospitalTime = createNumber("hospitalTime", Integer.class);
@@ -64,23 +42,15 @@ public class QPropertyCondition extends EntityPathBase<PropertyCondition> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final EnumPath<com.realEstate.realEstate.model.constant.ManagementType> managementType = createEnum("managementType", com.realEstate.realEstate.model.constant.ManagementType.class);
+    public final StringPath lineMemo = createString("lineMemo");
 
-    public final StringPath middleSchool = createString("middleSchool");
-
-    public final NumberPath<Integer> middleTime = createNumber("middleTime", Integer.class);
-
-    public final BooleanPath middleWalk = createBoolean("middleWalk");
+    public final StringPath memo = createString("memo");
 
     public final StringPath parkingMemo = createString("parkingMemo");
 
     public final EnumPath<com.realEstate.realEstate.model.constant.ParkingOption> parkingOption = createEnum("parkingOption", com.realEstate.realEstate.model.constant.ParkingOption.class);
 
     public final QProperty property;
-
-    public final BooleanPath securityOffice = createBoolean("securityOffice");
-
-    public final BooleanPath streetAccessibility = createBoolean("streetAccessibility");
 
     public final NumberPath<Integer> streetL = createNumber("streetL", Integer.class);
 
