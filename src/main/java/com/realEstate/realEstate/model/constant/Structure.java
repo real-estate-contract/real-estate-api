@@ -4,7 +4,9 @@ public enum Structure {
     APART("아파트"),
     VILLA("빌라/투룸+"),
     ONE_ROOM("원룸"),
-    OFFICETEL("오피스텔");
+    OFFICETEL("오피스텔"),
+
+    ETC("기타");
 
     private final String displayName;
 
