@@ -26,26 +26,20 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final QAddress address;
 
-    public final QPropertyAmenities amenities;
+    public final NumberPath<Integer> area1 = createNumber("area1", Integer.class);
 
-    public final NumberPath<Integer> area = createNumber("area", Integer.class);
+    public final NumberPath<Integer> area2 = createNumber("area2", Integer.class);
 
-    public final EnumPath<com.realEstate.realEstate.model.constant.Condominium> condominium = createEnum("condominium", com.realEstate.realEstate.model.constant.Condominium.class);
+    public final NumberPath<Integer> bathroomCount = createNumber("bathroomCount", Integer.class);
+
+    public final StringPath contractType = createString("contractType");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final NumberPath<Integer> deposit = createNumber("deposit", Integer.class);
-
-    public final QDescription description;
-
-    public final StringPath direction = createString("direction");
+    public final DatePath<java.time.LocalDate> endDate = createDate("endDate", java.time.LocalDate.class);
 
     public final NumberPath<Integer> floor = createNumber("floor", Integer.class);
-
-    public final NumberPath<Integer> generationCount = createNumber("generationCount", Integer.class);
-
-    public final BooleanPath hasElevator = createBoolean("hasElevator");
 
     public final BooleanPath loanFund = createBoolean("loanFund");
 
@@ -53,17 +47,11 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final NumberPath<Integer> managementFee = createNumber("managementFee", Integer.class);
 
-    public final NumberPath<Integer> monthlyRent = createNumber("monthlyRent", Integer.class);
-
-    public final DatePath<java.time.LocalDate> moveInDate = createDate("moveInDate", java.time.LocalDate.class);
-
     public final BooleanPath negotiationFee = createBoolean("negotiationFee");
-
-    public final QPropertyOption option;
 
     public final BooleanPath parkingAvailable = createBoolean("parkingAvailable");
 
-    public final NumberPath<Integer> price = createNumber("price", Integer.class);
+    public final BooleanPath paymentType = createBoolean("paymentType");
 
     public final QPropertyCondition propertyCondition;
 
@@ -71,9 +59,11 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final ListPath<PropertyImage, QPropertyImage> propertyImageList = this.<PropertyImage, QPropertyImage>createList("propertyImageList", PropertyImage.class, QPropertyImage.class, PathInits.DIRECT2);
 
-    public final EnumPath<com.realEstate.realEstate.model.constant.Structure> structure = createEnum("structure", com.realEstate.realEstate.model.constant.Structure.class);
+    public final NumberPath<Integer> roomCount = createNumber("roomCount", Integer.class);
 
-    public final EnumPath<com.realEstate.realEstate.model.constant.CType> transactionType = createEnum("transactionType", com.realEstate.realEstate.model.constant.CType.class);
+    public final DatePath<java.time.LocalDate> startDate = createDate("startDate", java.time.LocalDate.class);
+
+    public final EnumPath<com.realEstate.realEstate.model.constant.Structure> structure = createEnum("structure", com.realEstate.realEstate.model.constant.Structure.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
@@ -85,8 +75,6 @@ public class QProperty extends EntityPathBase<Property> {
     public final NumberPath<Integer> wholeFloor = createNumber("wholeFloor", Integer.class);
 
     public final ListPath<Wish, QWish> wishes = this.<Wish, QWish>createList("wishes", Wish.class, QWish.class, PathInits.DIRECT2);
-
-    public final NumberPath<Integer> year = createNumber("year", Integer.class);
 
     public QProperty(String variable) {
         this(Property.class, forVariable(variable), INITS);
@@ -107,9 +95,6 @@ public class QProperty extends EntityPathBase<Property> {
     public QProperty(Class<? extends Property> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.address = inits.isInitialized("address") ? new QAddress(forProperty("address")) : null;
-        this.amenities = inits.isInitialized("amenities") ? new QPropertyAmenities(forProperty("amenities"), inits.get("amenities")) : null;
-        this.description = inits.isInitialized("description") ? new QDescription(forProperty("description"), inits.get("description")) : null;
-        this.option = inits.isInitialized("option") ? new QPropertyOption(forProperty("option"), inits.get("option")) : null;
         this.propertyCondition = inits.isInitialized("propertyCondition") ? new QPropertyCondition(forProperty("propertyCondition"), inits.get("propertyCondition")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }

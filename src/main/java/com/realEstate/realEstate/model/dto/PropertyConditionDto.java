@@ -20,10 +20,11 @@ import java.time.LocalDateTime;
 @Getter
 public class PropertyConditionDto implements Serializable {
     Long id;
+    String lineMemo;
+    String memo;
     int streetL;
     int streetR;
     boolean streetPaving;
-    boolean streetAccessibility;
     String busStation;
     boolean busWalk;
     int busTime;
@@ -32,37 +33,22 @@ public class PropertyConditionDto implements Serializable {
     int subwayTime;
     ParkingOption parkingOption;
     String parkingMemo;
-    String elementarySchool;
-    boolean elementaryWalk;
-    int elementaryTime;
-    String middleSchool;
-    boolean middleWalk;
-    int middleTime;
-    String highSchool;
-    boolean highWalk;
-    int highTime;
     String departmentStore;
     boolean departmentWalk;
     int departmentTime;
     String hospitalStore;
     boolean hospitalWalk;
     int hospitalTime;
-    String bank;
-    boolean bankWalk;
-    int bankTime;
-    boolean securityOffice;
-    ManagementType managementType;
-    boolean dispreferredFacilities;
-    String dispreferredFacilitiesMemo;
     Long propertyId;
 
     public static PropertyConditionDto from(PropertyCondition entity) {
         return new PropertyConditionDto(
                 entity.getId(),
+                entity.getLineMemo(),
+                entity.getMemo(),
                 entity.getStreetL(),
                 entity.getStreetR(),
                 entity.isStreetPaving(),
-                entity.isStreetAccessibility(),
                 entity.getBusStation(),
                 entity.isBusWalk(),
                 entity.getBusTime(),
@@ -71,28 +57,12 @@ public class PropertyConditionDto implements Serializable {
                 entity.getSubwayTime(),
                 entity.getParkingOption(),
                 entity.getParkingMemo(),
-                entity.getElementarySchool(),
-                entity.isElementaryWalk(),
-                entity.getElementaryTime(),
-                entity.getMiddleSchool(),
-                entity.isMiddleWalk(),
-                entity.getMiddleTime(),
-                entity.getHighSchool(),
-                entity.isHighWalk(),
-                entity.getHighTime(),
                 entity.getDepartmentStore(),
                 entity.isDepartmentWalk(),
                 entity.getDepartmentTime(),
                 entity.getHospitalStore(),
                 entity.isHospitalWalk(),
                 entity.getHospitalTime(),
-                entity.getBank(),
-                entity.isBankWalk(),
-                entity.getBankTime(),
-                entity.isSecurityOffice(),
-                entity.getManagementType(),
-                entity.isDispreferredFacilities(),
-                entity.getDispreferredFacilitiesMemo(),
                 entity.getProperty().getPropertyId()
 
         );
