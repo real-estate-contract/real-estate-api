@@ -55,7 +55,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/realEstate/user/join", "/realEstate/user/login", "/login", "/realEstate/chat/**/send").permitAll()
                 .antMatchers("/chat/**","?", "app.js","main.css" ).permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login") // 커스텀 로그인 페이지 경로

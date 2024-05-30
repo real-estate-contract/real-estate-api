@@ -1,29 +1,17 @@
-package com.realEstate.realEstate.model.entity;
+package com.realEstate.realEstate.controller.request.contract;
 
-import com.realEstate.realEstate.model.BaseEntity;
-import com.realEstate.realEstate.model.constant.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-
-@Entity
 @Getter
-@ToString
 @Setter
-@Table
-public class Contract extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contractId;
-
+@NoArgsConstructor
+public class ContractRequest {
     // 임대할 부분
     private String section;
 
@@ -65,12 +53,4 @@ public class Contract extends BaseEntity {
     // 인터넷
     private boolean internet;
 
-
-    @ManyToOne // Contract는 여러 개의 계약이 하나의 부동산과 연결될 수 있음
-    @JoinColumn(name = "property_id")
-    private Property property;
-
-    @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
-    @JoinColumn(name = "user_id")
-    private User user;
 }
