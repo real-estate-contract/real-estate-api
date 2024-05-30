@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -37,5 +38,27 @@ public class ContractController {
                                                      @RequestBody ContractRequest request, Principal principal) {
         return contractService.createContract( request, propertyId, principal);
     }
+
+    /**
+     * 계약 리스트 조회
+     * @param principal
+     * @return
+     */
+    @GetMapping("/list")
+    public Response<List<ContractResponse>> getContractList(Principal principal) {
+        return contractService.getContractList(principal);
+    }
+
+    /**
+     * 계약 한 개 조회
+     * @param principal
+     * @return
+     */
+    @GetMapping("/item/{contractId}")
+    public Response<ContractResponse> getContractItem(@PathVariable(value = "contractId") long contractId,Principal principal) {
+        return contractService.getContractItem(principal, contractId);
+    }
+
+
 
 }

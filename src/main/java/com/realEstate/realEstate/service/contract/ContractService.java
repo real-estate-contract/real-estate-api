@@ -29,6 +29,9 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.sql.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.realEstate.realEstate.model.entity.QUser.user;
 
@@ -56,9 +59,9 @@ public class ContractService {
         try {
             //user exit
             User user = userRepository.findById(UserInfo.of(principal.getName()).getPrimaryKey()).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user is not founded")));
+
             //property exit
             Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", propertyId)));
-
 
             // DTO를 Contract 엔티티로 매핑
             Contract contract = modelMapper.map(contractRequest, Contract.class);
@@ -77,4 +80,45 @@ public class ContractService {
         }
     }
 
+    /**
+     * 계약 리스트 조회
+     * @param principal
+     * @return
+     */
+    public Response<List<ContractResponse>> getContractList(Principal principal) {
+        //user exit
+        User user = userRepository.findById(UserInfo.of(principal.getName()).getPrimaryKey()).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user is not founded")));
+        try {
+            List<Contract> contractList = contractRepository.findByUserId(user.getUserId());
+            List<ContractResponse> contractResponseList = contractList.stream()
+                    .map(ContractResponse::of)
+                    .collect(Collectors.toList());
+            return Response.success(contractResponseList);
+        } catch (NotFoundException e) {
+            throw new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, String.format("contract is not founded"));
+        } catch (Exception e) {
+            throw new RuntimeException("계약 리스트 조회에 실패했습니다.");
+        }
+    }
+
+    /**
+     * 계약 한 개 조회
+     * @param principal
+     * @param contractId
+     * @return
+     */
+    public Response<ContractResponse> getContractItem(Principal principal, long contractId) {
+        try{
+            //user exit
+            User user = userRepository.findById(UserInfo.of(principal.getName()).getPrimaryKey()).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user is not founded")));
+
+            Optional<Contract> contractItem = contractRepository.findById(contractId);
+            Contract contract = contractItem.orElseThrow(() -> new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, String.format("%s is not founded", contractId)));
+            return Response.success(ContractResponse.of(contract));
+        } catch (NotFoundException e) {
+            throw new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, String.format("contract is not founded"));
+        } catch (Exception e) {
+            throw new RuntimeException("계약 조회에 실패했습니다.");
+        }
+    }
 }
