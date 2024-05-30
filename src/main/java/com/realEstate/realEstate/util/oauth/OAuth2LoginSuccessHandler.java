@@ -48,7 +48,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 User user = userRepository.findByEmail(oAuth2User.getEmail()).orElseThrow(() ->
                 {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");
                 });
-                response.sendRedirect("realEstate/user/socialJoin/"+ user.getUserId()); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
+                response.sendRedirect("realEstate/user/socialJoin/"+ user.getId()); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
 
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
 //                User findUser = userRepository.findByEmail(oAuth2User.getEmail())

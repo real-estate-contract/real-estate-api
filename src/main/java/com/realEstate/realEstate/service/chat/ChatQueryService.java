@@ -42,7 +42,7 @@ public List<ChatRoomResponseDto> getChattingList(Long memberNo, Long saleNo) {
                     ExpressionUtils.as(
                             JPAExpressions.select(user.nickName)
                                     .from(user)
-                                    .where(user.userId.eq(
+                                    .where(user.id.eq(
                                             new CaseBuilder()
                                                     .when(chat.createMember.eq(memberNo)).then(chat.joinMember)
                                                     .otherwise(chat.createMember)
@@ -51,7 +51,7 @@ public List<ChatRoomResponseDto> getChattingList(Long memberNo, Long saleNo) {
                     ExpressionUtils.as(
                             JPAExpressions.select(user.imageUrl)
                                     .from(user)
-                                    .where(user.userId.eq(
+                                    .where(user.id.eq(
                                             new CaseBuilder()
                                                     .when(chat.createMember.eq(memberNo)).then(chat.joinMember)
                                                     .otherwise(chat.createMember)
