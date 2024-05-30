@@ -24,9 +24,9 @@ public class PropertyConditionService {
     private final PropertyConditionRepository propertyConditionRepository;
 
     @Transactional
-    public void createCondition(int streetL, int streetR, boolean streetPaving, boolean streetAccessibility, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo, String elementarySchool, boolean elementaryWalk, int elementaryTime, String middleSchool, boolean middleWalk, int middleTime, String highSchool, boolean highWalk, int highTime, String departmentStore, boolean departmentWalk, int departmentTime, String hospitalStore, boolean hospitalWalk, int hospitalTime, String bank, boolean bankWalk, int bankTime, boolean securityOffice, ManagementType managementType, boolean dispreferredFacilities, String dispreferredFacilitiesMemo, Long propertyId) {
+    public void createCondition(String limeMemo, String memo, int streetL, int streetR, boolean streetPaving, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo, String departmentStore, boolean departmentWalk, int departmentTime, String hospitalStore, boolean hospitalWalk, int hospitalTime,   Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);
-        PropertyCondition propertyCondition = PropertyCondition.of(streetL, streetR,streetPaving, streetAccessibility, busStation, busWalk, busTime, subwayStation, subwayWalk, subwayTime, parkingOption, parkingMemo, elementarySchool,  elementaryWalk, elementaryTime, middleSchool, middleWalk, middleTime, highSchool, highWalk, highTime, departmentStore, departmentWalk, departmentTime, hospitalStore,hospitalWalk, hospitalTime, bank, bankWalk, bankTime, securityOffice, managementType, dispreferredFacilities, dispreferredFacilitiesMemo, property);
+        PropertyCondition propertyCondition = PropertyCondition.of(limeMemo, memo, streetL, streetR,streetPaving,  busStation, busWalk, busTime, subwayStation, subwayWalk, subwayTime, parkingOption, parkingMemo, departmentStore, departmentWalk, departmentTime, hospitalStore,hospitalWalk, hospitalTime,  property);
         property.setPropertyCondition(propertyCondition);
         propertyConditionRepository.save(propertyCondition);
     }

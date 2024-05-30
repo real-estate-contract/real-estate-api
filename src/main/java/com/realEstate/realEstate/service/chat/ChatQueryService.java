@@ -38,7 +38,6 @@ public List<ChatRoomResponseDto> getChattingList(Long memberNo, Long saleNo) {
                     chat.createMember,
                     chat.joinMember,
                     chat.saleNo,
-                    property.direction,
                     chat.regDate,
                     ExpressionUtils.as(
                             JPAExpressions.select(user.nickName)
