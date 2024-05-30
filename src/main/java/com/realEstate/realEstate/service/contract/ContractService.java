@@ -89,7 +89,7 @@ public class ContractService {
         //user exit
         User user = userRepository.findById(UserInfo.of(principal.getName()).getPrimaryKey()).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user is not founded")));
         try {
-            List<Contract> contractList = contractRepository.findByUserId(user.getUserId());
+            List<Contract> contractList = contractRepository.findByUserId(user.getId());
             List<ContractResponse> contractResponseList = contractList.stream()
                     .map(ContractResponse::of)
                     .collect(Collectors.toList());

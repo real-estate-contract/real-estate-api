@@ -30,6 +30,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<com.realEstate.realEstate.model.constant.Gender> gender = createEnum("gender", com.realEstate.realEstate.model.constant.Gender.class);
 
+    public final NumberPath<Long> id = createNumber("id", Long.class);
+
     public final StringPath imageUrl = createString("imageUrl");
 
     public final StringPath name = createString("name");
@@ -48,8 +50,6 @@ public class QUser extends EntityPathBase<User> {
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
-
-    public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

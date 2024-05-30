@@ -33,7 +33,7 @@ public class UserDto implements UserDetails {
 
     public static UserDto from(User entity) {
         return new UserDto(
-                entity.getUserId(),
+                entity.getId(),
                 entity.getName(),
                 entity.getNickName(),
                 entity.getPassword(),
