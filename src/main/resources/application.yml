@@ -1,3 +1,9 @@
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          socket: DEBUG
 spring:
   data:
     mongodb:
@@ -12,15 +18,12 @@ spring:
     port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: 'jdbc:mysql://database-1.cdic8iso881z.ap-northeast-2.rds.amazonaws.com :3306/realEstate?serverTimezone=Asia/Seoul&characterEncoding=UTF-8'
-#    username: ${AWS.USERNAME}
-#    password: ${AWS.PASSWORD}
-    url: jdbc:mysql://localhost:3306/realEstate
-    username: root
-    password: 1107jkk!
+    url: 'jdbc:mysql://database-1.cdic8iso881z.ap-northeast-2.rds.amazonaws.com :3306/realEstate?serverTimezone=Asia/Seoul&characterEncoding=UTF-8'
+    username: ${AWS.USERNAME}
+    password: ${AWS.PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
@@ -75,6 +78,7 @@ jwt:
     header: Authorization
     expiration: 604800000
 
+
 cloud:
   aws:
     s3:
@@ -87,6 +91,7 @@ cloud:
       auto: false
     stack:
       auto: false
+
 
 chatgpt:
   api-key: ${CHATGPT_API_KEY}
@@ -102,4 +107,3 @@ image:
 api:
   building-key: ${GET_BUILDING_API_KEY}
   land-key: ${GET_LAND_API_KEY}
-
