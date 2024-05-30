@@ -26,79 +26,41 @@ public class QContract extends EntityPathBase<Contract> {
 
     public final NumberPath<java.math.BigDecimal> balance = createNumber("balance", java.math.BigDecimal.class);
 
-    public final DatePath<java.time.LocalDate> balancePaymentDate = createDate("balancePaymentDate", java.time.LocalDate.class);
+    public final DatePath<java.sql.Date> balanceDate = createDate("balanceDate", java.sql.Date.class);
 
-    public final QUser buyer;
+    public final StringPath contractDateFrom = createString("contractDateFrom");
 
-    public final DatePath<java.time.LocalDate> contractDate = createDate("contractDate", java.time.LocalDate.class);
+    public final StringPath contractDateTo = createString("contractDateTo");
 
     public final NumberPath<Long> contractId = createNumber("contractId", Long.class);
+
+    public final NumberPath<java.math.BigDecimal> contractPrice = createNumber("contractPrice", java.math.BigDecimal.class);
+
+    public final DatePath<java.sql.Date> contractPriceDate = createDate("contractPriceDate", java.sql.Date.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final DatePath<java.time.LocalDate> deliveryDate = createDate("deliveryDate", java.time.LocalDate.class);
+    public final NumberPath<java.math.BigDecimal> Installment = createNumber("Installment", java.math.BigDecimal.class);
 
-    public final BooleanPath drainage = createBoolean("drainage");
+    public final DatePath<java.sql.Date> InstallmentDate = createDate("InstallmentDate", java.sql.Date.class);
 
-    public final BooleanPath electricitySupplyStatus = createBoolean("electricitySupplyStatus");
-
-    public final EnumPath<com.realEstate.realEstate.model.constant.ElevatorStatus> elevatorStatus = createEnum("elevatorStatus", com.realEstate.realEstate.model.constant.ElevatorStatus.class);
-
-    public final BooleanPath fireSafety = createBoolean("fireSafety");
-
-    public final NumberPath<java.math.BigDecimal> firstInstallment = createNumber("firstInstallment", java.math.BigDecimal.class);
-
-    public final DatePath<java.time.LocalDate> firstPaymentDate = createDate("firstPaymentDate", java.time.LocalDate.class);
-
-    public final EnumPath<com.realEstate.realEstate.model.constant.FloorCondition> floorCondition = createEnum("floorCondition", com.realEstate.realEstate.model.constant.FloorCondition.class);
-
-    public final BooleanPath gasSupplyMethod = createBoolean("gasSupplyMethod");
-
-    public final EnumPath<com.realEstate.realEstate.model.constant.HeatingSupplyMethod> heatingSupplyMethod = createEnum("heatingSupplyMethod", com.realEstate.realEstate.model.constant.HeatingSupplyMethod.class);
-
-    public final BooleanPath heatingSystemOperation = createBoolean("heatingSystemOperation");
-
-    public final EnumPath<com.realEstate.realEstate.model.constant.HeatingType> heatingType = createEnum("heatingType", com.realEstate.realEstate.model.constant.HeatingType.class);
+    public final BooleanPath internet = createBoolean("internet");
 
     public final NumberPath<java.math.BigDecimal> loanAmount = createNumber("loanAmount", java.math.BigDecimal.class);
 
-    public final EnumPath<com.realEstate.realEstate.model.constant.NoiseLevel> noiseLevel = createEnum("noiseLevel", com.realEstate.realEstate.model.constant.NoiseLevel.class);
-
-    public final StringPath otherFacilities = createString("otherFacilities");
+    public final NumberPath<java.math.BigDecimal> parkFee = createNumber("parkFee", java.math.BigDecimal.class);
 
     public final QProperty property;
 
-    public final BooleanPath repairsNeeded = createBoolean("repairsNeeded");
-
-    public final StringPath rightsClaim = createString("rightsClaim");
-
-    public final NumberPath<java.math.BigDecimal> secondInstallment = createNumber("secondInstallment", java.math.BigDecimal.class);
-
-    public final DatePath<java.time.LocalDate> secondPaymentDate = createDate("secondPaymentDate", java.time.LocalDate.class);
-
-    public final StringPath specialAgreement = createString("specialAgreement");
-
-    public final StringPath succeedingBank = createString("succeedingBank");
-
-    public final BooleanPath sufficientWaterSupply = createBoolean("sufficientWaterSupply");
-
-    public final EnumPath<com.realEstate.realEstate.model.constant.SunlightAmount> sunlightAmount = createEnum("sunlightAmount", com.realEstate.realEstate.model.constant.SunlightAmount.class);
-
-    public final EnumPath<com.realEstate.realEstate.model.constant.TilingCondition> tilingCondition = createEnum("tilingCondition", com.realEstate.realEstate.model.constant.TilingCondition.class);
-
-    public final NumberPath<java.math.BigDecimal> transactionAmount = createNumber("transactionAmount", java.math.BigDecimal.class);
+    public final StringPath section = createString("section");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public final EnumPath<com.realEstate.realEstate.model.constant.VibrationLevel> vibrationLevel = createEnum("vibrationLevel", com.realEstate.realEstate.model.constant.VibrationLevel.class);
+    public final QUser user;
 
-    public final BooleanPath wallCracks = createBoolean("wallCracks");
-
-    public final BooleanPath wallLeakage = createBoolean("wallLeakage");
-
-    public final BooleanPath waterDamage = createBoolean("waterDamage");
+    public final BooleanPath utilities = createBoolean("utilities");
 
     public QContract(String variable) {
         this(Contract.class, forVariable(variable), INITS);
@@ -118,8 +80,8 @@ public class QContract extends EntityPathBase<Contract> {
 
     public QContract(Class<? extends Contract> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.buyer = inits.isInitialized("buyer") ? new QUser(forProperty("buyer")) : null;
         this.property = inits.isInitialized("property") ? new QProperty(forProperty("property"), inits.get("property")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

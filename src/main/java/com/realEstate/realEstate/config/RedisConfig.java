@@ -28,9 +28,9 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private int port;
 
-/*    redis 주의사항
-            - 자주 사용하는 데이터를 캐싱하면 좋음
-            - 변경이 너무 많은 데이터는 캐싱해봤자 소용이 없음*/
+    /*    redis 주의사항
+        - 자주 사용하는 데이터를 캐싱하면 좋음
+        - 변경이 너무 많은 데이터는 캐싱해봤자 소용이 없음 */
 
     @Bean
     public RedisTemplate<String, Property> propertyRedisTemplate(RedisConnectionFactory redisConnectionFactory) {

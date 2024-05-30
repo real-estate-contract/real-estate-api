@@ -15,7 +15,8 @@ public enum ErrorCode {
     Property_NOT_FOUND(HttpStatus.NOT_FOUND,"Property not founded"),
     Invalid_Permission(HttpStatus.UNAUTHORIZED, "User has invalid permission"),
     Address_NOT_FOUND(HttpStatus.NOT_FOUND, "Address not founded"),
-    IMAGE_SAVE_ERROR(HttpStatus.NOT_FOUND, "Image save Error")
+    IMAGE_SAVE_ERROR(HttpStatus.NOT_FOUND, "Image save Error"),
+    CONTRACT_NOT_FOUND(HttpStatus.NOT_FOUND, "Contract not founded"),
 
     ;
 

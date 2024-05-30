@@ -2,7 +2,8 @@ package com.realEstate.realEstate.util.jwt;
 
 import java.util.Random;
 
-public class PasswordUtil {
+public class
+PasswordUtil {
 
     public static String generateRandomPassword() {
         int index = 0;
