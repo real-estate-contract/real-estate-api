@@ -30,11 +30,10 @@ public class Property extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Structure structure; // 매물 유형
-
-    private String contractType = "단기";
-
-    private boolean paymentType; // true : 일시불 , False : 월세
-
+    private int price; // 매물가격
+    private int weeklyFee; // 주차임
+    private boolean deposit; // 보증금 여부
+    private int depositFee; // 보증금비용
     private boolean management; // 관리비 여부
     @Column(name = "management_fee")
     private int managementFee; // 관리비
@@ -47,6 +46,7 @@ public class Property extends BaseEntity {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate; // 계약 종료 날짜
+    private int minimum; // 최소 계약 기간
     private int roomCount; // 룸개수
     private int bathroomCount; // 욕실개수
     private int area1; // 공급면적(평)
@@ -54,6 +54,9 @@ public class Property extends BaseEntity {
     private int floor; // 해당층
     private int wholeFloor; // 전체층
     private boolean parkingAvailable; // 세대당 주차 가능 여부
+    private boolean washingmachine; // 세탁기
+    private boolean airconditioner; // 에어컨
+    private boolean refrigerator; // 냉장고
 
     @ToString.Exclude
     @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
@@ -78,11 +81,13 @@ public class Property extends BaseEntity {
 
 
 
-    public static Property of(String contractType, boolean paymentType,boolean management, int managementFee, int wholeFloor, int floor, boolean parkingAvailable,  LocalDate startDate,LocalDate endDate, Structure structure,boolean usageFee, boolean negotiationFee, boolean loanFund, int roomCount, int bathroomCount, int area1, int area2, Address address, User user) {
+    public static Property of(int weeklyFee, boolean deposit, int depositFee, int price, boolean management, int managementFee, int wholeFloor, int floor, boolean parkingAvailable,  LocalDate startDate,LocalDate endDate,int minimum, Structure structure,boolean usageFee, boolean negotiationFee, boolean loanFund, int roomCount, int bathroomCount, int area1, int area2,boolean washingmachine, boolean airconditioner, boolean refrigerator, Address address, User user) {
         Property property = new Property();
+        property.setPrice(price);
+        property.setWeeklyFee(weeklyFee);
+        property.setDeposit(deposit);
+        property.setDepositFee(depositFee);
         property.setStructure(structure);
-        property.setContractType(contractType);
-        property.setPaymentType(paymentType);
         property.setManagement(management);
         property.setManagementFee(managementFee);
         property.setUsageFee(usageFee);
@@ -90,6 +95,7 @@ public class Property extends BaseEntity {
         property.setLoanFund(loanFund);
         property.setStartDate(startDate);
         property.setEndDate(endDate);
+        property.setMinimum(minimum);
         property.setRoomCount(roomCount);
         property.setBathroomCount(bathroomCount);
         property.setArea1(area1);
@@ -97,6 +103,9 @@ public class Property extends BaseEntity {
         property.setWholeFloor(wholeFloor);
         property.setFloor(floor);
         property.setParkingAvailable(parkingAvailable);
+        property.setWashingmachine(washingmachine);
+        property.setAirconditioner(airconditioner);
+        property.setRefrigerator(refrigerator);
         property.setAddress(address);
         property.setUser(user);
         return property;

@@ -21,9 +21,11 @@ public class PropertyResponse {
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     Long propertyId;
+    int price;
     Structure structure;
-    String contractType = "단기";
-    boolean paymentType;
+    int weeklyFee;
+    boolean deposit;
+    int depositFee;
     boolean management;
     int managementFee;
     boolean UsageFee; // 개별 사용료
@@ -31,6 +33,7 @@ public class PropertyResponse {
     boolean loanFund; // 융자
     LocalDate startDate;
     LocalDate endDate;
+    int minimum;
     int roomCount;
     int bathroomCount;
     int area1;
@@ -38,6 +41,10 @@ public class PropertyResponse {
     int floor;
     int wholeFloor;
     boolean parkingAvailable;
+    boolean washingmachine;
+    boolean airconditioner;
+    boolean refrigerator;
+
     PropertyConditionResponse propertyCondition;
     AddressResponse address;
     UserResponse user;
@@ -47,9 +54,11 @@ public class PropertyResponse {
                 dto.getCreatedAt(),
                 dto.getUpdatedAt(),
                 dto.getPropertyId(),
+                dto.getPrice(),
                 dto.getStructure(),
-                dto.getContractType(),
-                dto.isPaymentType(),
+                dto.getWeeklyFee(),
+                dto.isDeposit(),
+                dto.getDepositFee(),
                 dto.isManagement(),
                 dto.getManagementFee(),
                 dto.isUsageFee(),
@@ -57,6 +66,7 @@ public class PropertyResponse {
                 dto.isLoanFund(),
                 dto.getStartDate(),
                 dto.getEndDate(),
+                dto.getMinimum(),
                 dto.getRoomCount(),
                 dto.getBathroomCount(),
                 dto.getArea1(),
@@ -64,6 +74,9 @@ public class PropertyResponse {
                 dto.getFloor(),
                 dto.getWholeFloor(),
                 dto.isParkingAvailable(),
+                dto.isWashingmachine(),
+                dto.isAirconditioner(),
+                dto.isRefrigerator(),
                 PropertyConditionResponse.fromDto(dto.getPropertyCondition()),
                 AddressResponse.fromDto(dto.getAddress()),
                 UserResponse.fromDto(dto.getUser()),
@@ -77,9 +90,11 @@ public class PropertyResponse {
                 dto.getProperty().getCreatedAt(),
                 dto.getProperty().getUpdatedAt(),
                 dto.getProperty().getPropertyId(),
+                dto.getProperty().getPrice(),
                 dto.getProperty().getStructure(),
-                dto.getProperty().getContractType(),
-                dto.getProperty().isPaymentType(),
+                dto.getProperty().getWeeklyFee(),
+                dto.getProperty().isDeposit(),
+                dto.getProperty().getDepositFee(),
                 dto.getProperty().isManagement(),
                 dto.getProperty().getManagementFee(),
                 dto.getProperty().isUsageFee(),
@@ -87,6 +102,7 @@ public class PropertyResponse {
                 dto.getProperty().isLoanFund(),
                 dto.getProperty().getStartDate(),
                 dto.getProperty().getEndDate(),
+                dto.getProperty().getMinimum(),
                 dto.getProperty().getRoomCount(),
                 dto.getProperty().getBathroomCount(),
                 dto.getProperty().getArea1(),
@@ -94,6 +110,9 @@ public class PropertyResponse {
                 dto.getProperty().getFloor(),
                 dto.getProperty().getWholeFloor(),
                 dto.getProperty().isParkingAvailable(),
+                dto.getProperty().isWashingmachine(),
+                dto.getProperty().isAirconditioner(),
+                dto.getProperty().isRefrigerator(),
                 PropertyConditionResponse.fromDto(dto.getProperty().getPropertyCondition()),
                 AddressResponse.fromDto(dto.getProperty().getAddress()),
                 UserResponse.fromDto(dto.getUser()),

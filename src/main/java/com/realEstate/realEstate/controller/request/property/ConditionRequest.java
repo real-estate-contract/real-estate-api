@@ -25,12 +25,6 @@ public class ConditionRequest {
     int subwayTime;
     ParkingOption parkingOption;
     String parkingMemo;
-    String departmentStore;
-    boolean departmentWalk;
-    int departmentTime;
-    String hospitalStore;
-    boolean hospitalWalk;
-    int hospitalTime;
 
 
 }
