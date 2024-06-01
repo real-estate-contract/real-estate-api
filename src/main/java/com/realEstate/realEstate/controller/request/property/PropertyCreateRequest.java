@@ -21,10 +21,11 @@ import java.util.List;
 public class PropertyCreateRequest {
 
 
-
+    int price;
+    int weeklyFee;
+    boolean deposit;
+    int depositFee;
     Structure structure;
-    String contractType = "단기";
-    boolean paymentType;
     boolean management;
     int managementFee;
     boolean UsageFee; // 개별 사용료
@@ -32,6 +33,7 @@ public class PropertyCreateRequest {
     boolean loanFund; // 융자
     LocalDate startDate;
     LocalDate endDate;
+    int minimum;
     int roomCount;
     int bathroomCount;
     int area1;
@@ -39,6 +41,9 @@ public class PropertyCreateRequest {
     int floor;
     int wholeFloor;
     boolean parkingAvailable;
+    boolean washingmachine;
+    boolean airconditioner;
+    boolean refrigerator;
 
 
 

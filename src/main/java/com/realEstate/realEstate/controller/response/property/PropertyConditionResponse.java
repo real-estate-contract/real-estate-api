@@ -26,12 +26,6 @@ public class PropertyConditionResponse {
     int subwayTime;
     ParkingOption parkingOption;
     String parkingMemo;
-    String departmentStore;
-    boolean departmentWalk;
-    int departmentTime;
-    String hospitalStore;
-    boolean hospitalWalk;
-    int hospitalTime;
     Long propertyId;
 
     public static PropertyConditionResponse fromDto(PropertyConditionDto dto) {
@@ -50,12 +44,6 @@ public class PropertyConditionResponse {
                 dto.getSubwayTime(),
                 dto.getParkingOption(),
                 dto.getParkingMemo(),
-                dto.getDepartmentStore(),
-                dto.isDepartmentWalk(),
-                dto.getDepartmentTime(),
-                dto.getHospitalStore(),
-                dto.isHospitalWalk(),
-                dto.getHospitalTime(),
                 dto.getPropertyId()
 
         );

@@ -39,14 +39,14 @@ public class PropertyCondition{
     private String parkingMemo; // 그밖의 주차 시설 상세 입력
 
 
-    //판매 및 편의 시설
-    private String departmentStore; // 백화점 및 할인 매장
-    private boolean departmentWalk; // True : 도보 , False : 차량
-    private int departmentTime; // 백화점 까지 소요 시간
-
-    private String hospitalStore; // 병원 이름
-    private boolean hospitalWalk; // True : 도보 , False : 차량
-    private int hospitalTime; // 학교 까지 소요 시간
+//    //판매 및 편의 시설
+//    private String departmentStore; // 백화점 및 할인 매장
+//    private boolean departmentWalk; // True : 도보 , False : 차량
+//    private int departmentTime; // 백화점 까지 소요 시간
+//
+//    private String hospitalStore; // 병원 이름
+//    private boolean hospitalWalk; // True : 도보 , False : 차량
+//    private int hospitalTime; // 학교 까지 소요 시간
 
 
     @ToString.Exclude
@@ -54,7 +54,7 @@ public class PropertyCondition{
     @JoinColumn(name = "property_id")
     private Property property;
 
-    public static PropertyCondition of(String lineMemo, String memo, int streetL, int streetR, boolean streetPaving, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo,  String departmentStore, boolean departmentWalk, int departmentTime, String hospitalStore, boolean hospitalWalk, int hospitalTime,  Property property) {
+    public static PropertyCondition of(String lineMemo, String memo, int streetL, int streetR, boolean streetPaving, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo,  Property property) {
         PropertyCondition propertyCondition = new PropertyCondition();
         propertyCondition.setLineMemo(lineMemo);
         propertyCondition.setMemo(memo);
@@ -69,12 +69,6 @@ public class PropertyCondition{
         propertyCondition.setSubwayTime(subwayTime);
         propertyCondition.setParkingOption(parkingOption);
         propertyCondition.setParkingMemo(parkingMemo);
-        propertyCondition.setDepartmentStore(departmentStore);
-        propertyCondition.setDepartmentWalk(departmentWalk);
-        propertyCondition.setDepartmentTime(departmentTime);
-        propertyCondition.setHospitalStore(hospitalStore);
-        propertyCondition.setHospitalWalk(hospitalWalk);
-        propertyCondition.setHospitalTime(hospitalTime);
         propertyCondition.setProperty(property);
 
         return propertyCondition;

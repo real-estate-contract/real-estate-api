@@ -33,12 +33,6 @@ public class PropertyConditionDto implements Serializable {
     int subwayTime;
     ParkingOption parkingOption;
     String parkingMemo;
-    String departmentStore;
-    boolean departmentWalk;
-    int departmentTime;
-    String hospitalStore;
-    boolean hospitalWalk;
-    int hospitalTime;
     Long propertyId;
 
     public static PropertyConditionDto from(PropertyCondition entity) {
@@ -57,12 +51,6 @@ public class PropertyConditionDto implements Serializable {
                 entity.getSubwayTime(),
                 entity.getParkingOption(),
                 entity.getParkingMemo(),
-                entity.getDepartmentStore(),
-                entity.isDepartmentWalk(),
-                entity.getDepartmentTime(),
-                entity.getHospitalStore(),
-                entity.isHospitalWalk(),
-                entity.getHospitalTime(),
                 entity.getProperty().getPropertyId()
 
         );

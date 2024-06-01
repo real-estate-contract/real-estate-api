@@ -24,9 +24,9 @@ public class PropertyConditionService {
     private final PropertyConditionRepository propertyConditionRepository;
 
     @Transactional
-    public void createCondition(String limeMemo, String memo, int streetL, int streetR, boolean streetPaving, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo, String departmentStore, boolean departmentWalk, int departmentTime, String hospitalStore, boolean hospitalWalk, int hospitalTime,   Long propertyId) {
+    public void createCondition(String limeMemo, String memo, int streetL, int streetR, boolean streetPaving, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo,  Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);
-        PropertyCondition propertyCondition = PropertyCondition.of(limeMemo, memo, streetL, streetR,streetPaving,  busStation, busWalk, busTime, subwayStation, subwayWalk, subwayTime, parkingOption, parkingMemo, departmentStore, departmentWalk, departmentTime, hospitalStore,hospitalWalk, hospitalTime,  property);
+        PropertyCondition propertyCondition = PropertyCondition.of(limeMemo, memo, streetL, streetR,streetPaving,  busStation, busWalk, busTime, subwayStation, subwayWalk, subwayTime, parkingOption, parkingMemo, property);
         property.setPropertyCondition(propertyCondition);
         propertyConditionRepository.save(propertyCondition);
     }

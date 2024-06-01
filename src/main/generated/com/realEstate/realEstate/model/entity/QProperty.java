@@ -53,6 +53,8 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final BooleanPath paymentType = createBoolean("paymentType");
 
+    public final NumberPath<Integer> price = createNumber("price", Integer.class);
+
     public final QPropertyCondition propertyCondition;
 
     public final NumberPath<Long> propertyId = createNumber("propertyId", Long.class);
