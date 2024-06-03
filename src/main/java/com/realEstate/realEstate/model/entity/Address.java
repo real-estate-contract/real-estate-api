@@ -20,17 +20,17 @@ public class Address {
     @Column(nullable = false, name = "street_address")
     private String streetAddress; // 도로명 주소
 
-    @Column(nullable = false)
-    private String city; // 상세 주소
+////    @Column(nullable = false)
+//    private String city; // 상세 주소
+//
+////    @Column(nullable = false)
+//    private boolean owner;
 
-    @Column(nullable = false)
-    private boolean owner;
-
-    public static Address of(String streetAddress, String city, boolean owner) {
+    public static Address of(String streetAddress) {
         Address address = new Address();
         address.setStreetAddress(streetAddress);
-        address.setCity(city);
-        address.setOwner(owner);
+//        address.setCity(city);
+//        address.setOwner(owner);
         return address;
     }
 }

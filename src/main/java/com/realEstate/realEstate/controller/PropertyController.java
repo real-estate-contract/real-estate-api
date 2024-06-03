@@ -49,7 +49,7 @@ public class PropertyController {
 
     @PostMapping("/step1")
     public Response<AddressResponse> registerAddress(@RequestBody AddressCreateRequest request) {
-        return Response.success(AddressResponse.fromDto(addressService.registerAddress(request.getStreetAddress(),request.getCity(), request.isOwner())));
+        return Response.success(AddressResponse.fromDto(addressService.registerAddress(request.getStreetAddress())));
     }
 
     @PostMapping("/step2/{addressId}")
