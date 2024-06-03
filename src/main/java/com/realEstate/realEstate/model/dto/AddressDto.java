@@ -17,15 +17,15 @@ import java.io.Serializable;
 public class AddressDto {
     Long addressId;
     String streetAddress;
-    String city;
-    boolean owner;
+//    String city;
+//    boolean owner;
 
     public static AddressDto from(Address entity) {
         return new AddressDto(
                 entity.getAddressId(),
-                entity.getStreetAddress(),
-                entity.getCity(),
-                entity.isOwner()
+                entity.getStreetAddress()
+//                entity.getCity(),
+//                entity.isOwner()
         );
     }
 }

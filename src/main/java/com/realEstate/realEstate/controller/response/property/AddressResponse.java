@@ -11,15 +11,15 @@ public class AddressResponse {
 
     Long addressId;
     String streetAddress; // 도로명 주소
-    String city; // 상세 주소
-    boolean owner; // 자가 여부
+//    String city; // 상세 주소
+//    boolean owner; // 자가 여부
 
     public static AddressResponse fromDto(AddressDto dto) {
         return new AddressResponse(
                 dto.getAddressId(),
-                dto.getStreetAddress(),
-                dto.getCity(),
-                dto.isOwner()
+                dto.getStreetAddress()
+//                dto.getCity(),
+//                dto.isOwner()
         );
     }
 }

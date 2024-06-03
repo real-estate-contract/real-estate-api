@@ -22,18 +22,18 @@ public class PropertyResponse {
     LocalDateTime updatedAt;
     Long propertyId;
     int price;
-    Structure structure;
-    int weeklyFee;
-    boolean deposit;
-    int depositFee;
-    boolean management;
-    int managementFee;
+    Structure structure; // 매물유형
+    int weeklyFee; // 주차금
+    boolean deposit; // 보증금여부
+    int depositFee; // 보증금
+    boolean management; // 관리비여부
+    int managementFee; // 관리비
     boolean UsageFee; // 개별 사용료
     boolean negotiationFee; // 가격 협의 가능
     boolean loanFund; // 융자
-    LocalDate startDate;
-    LocalDate endDate;
-    int minimum;
+    LocalDate startDate; // 계약시작날짜
+    LocalDate endDate; // 계약종료날짜
+    int minimum; // 최소
     int roomCount;
     int bathroomCount;
     int area1;

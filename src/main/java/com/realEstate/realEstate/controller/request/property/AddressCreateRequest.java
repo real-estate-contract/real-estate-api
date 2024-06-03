@@ -9,6 +9,6 @@ import lombok.Getter;
 public class AddressCreateRequest {
 
     String streetAddress;
-    String city;
-    boolean owner;
+//    boolean owner;
+//    String city;
 }
