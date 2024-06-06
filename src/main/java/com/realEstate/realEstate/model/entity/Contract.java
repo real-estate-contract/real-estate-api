@@ -22,7 +22,7 @@ public class Contract extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contractId;
+    private Long id;
 
     // 임대할 부분
     private String section;

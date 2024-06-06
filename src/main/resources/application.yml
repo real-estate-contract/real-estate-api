@@ -21,6 +21,9 @@ spring:
     url: 'jdbc:mysql://database-1.cdic8iso881z.ap-northeast-2.rds.amazonaws.com :3306/realEstate?serverTimezone=Asia/Seoul&characterEncoding=UTF-8'
     username: ${AWS.USERNAME}
     password: ${AWS.PASSWORD}
+#    url: 'jdbc:mysql://localhost:3306/realEstate'
+#    username: root
+#    password: 1107jkk!
   jpa:
     hibernate:
       ddl-auto: update
