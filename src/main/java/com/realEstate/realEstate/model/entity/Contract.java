@@ -72,4 +72,9 @@ public class Contract extends BaseEntity {
 
     @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
     private User user;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }
