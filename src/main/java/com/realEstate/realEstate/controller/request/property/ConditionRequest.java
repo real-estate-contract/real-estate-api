@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ConditionRequest {
 
-    String limeMemo;
-    String memo;
-    int streetL;
-    int streetR;
-    boolean streetPaving;
+    String limeMemo; // 한문장
+    String memo; // 상세설명
+    int streetL; //왼
+    int streetR; //오
+    boolean streetPaving; // 포 /비
     String busStation;
     boolean busWalk;
     int busTime;
@@ -25,12 +25,6 @@ public class ConditionRequest {
     int subwayTime;
     ParkingOption parkingOption;
     String parkingMemo;
-    String departmentStore;
-    boolean departmentWalk;
-    int departmentTime;
-    String hospitalStore;
-    boolean hospitalWalk;
-    int hospitalTime;
 
 
 }

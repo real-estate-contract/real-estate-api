@@ -26,16 +26,20 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final QAddress address;
 
+    public final BooleanPath airconditioner = createBoolean("airconditioner");
+
     public final NumberPath<Integer> area1 = createNumber("area1", Integer.class);
 
     public final NumberPath<Integer> area2 = createNumber("area2", Integer.class);
 
     public final NumberPath<Integer> bathroomCount = createNumber("bathroomCount", Integer.class);
 
-    public final StringPath contractType = createString("contractType");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    public final BooleanPath deposit = createBoolean("deposit");
+
+    public final NumberPath<Integer> depositFee = createNumber("depositFee", Integer.class);
 
     public final DatePath<java.time.LocalDate> endDate = createDate("endDate", java.time.LocalDate.class);
 
@@ -47,17 +51,21 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final NumberPath<Integer> managementFee = createNumber("managementFee", Integer.class);
 
+    public final NumberPath<Integer> minimum = createNumber("minimum", Integer.class);
+
     public final BooleanPath negotiationFee = createBoolean("negotiationFee");
 
     public final BooleanPath parkingAvailable = createBoolean("parkingAvailable");
 
-    public final BooleanPath paymentType = createBoolean("paymentType");
+    public final NumberPath<Integer> price = createNumber("price", Integer.class);
 
     public final QPropertyCondition propertyCondition;
 
     public final NumberPath<Long> propertyId = createNumber("propertyId", Long.class);
 
     public final ListPath<PropertyImage, QPropertyImage> propertyImageList = this.<PropertyImage, QPropertyImage>createList("propertyImageList", PropertyImage.class, QPropertyImage.class, PathInits.DIRECT2);
+
+    public final BooleanPath refrigerator = createBoolean("refrigerator");
 
     public final NumberPath<Integer> roomCount = createNumber("roomCount", Integer.class);
 
@@ -71,6 +79,10 @@ public class QProperty extends EntityPathBase<Property> {
     public final BooleanPath UsageFee = createBoolean("UsageFee");
 
     public final QUser user;
+
+    public final BooleanPath washingmachine = createBoolean("washingmachine");
+
+    public final NumberPath<Integer> weeklyFee = createNumber("weeklyFee", Integer.class);
 
     public final NumberPath<Integer> wholeFloor = createNumber("wholeFloor", Integer.class);
 

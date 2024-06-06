@@ -15,20 +15,20 @@ public class AddressService {
     private final AddressRepository addressRepository;
 
     @Transactional
-    public AddressDto registerAddress(String streetAddress, String city, boolean owner) {
+    public AddressDto registerAddress(String streetAddress) {
 
-        Address address = addressRepository.save(Address.of(streetAddress, city, owner));
-
-        return AddressDto.from(address);
-    }
-
-    public AddressDto modifyAddress(Long addressId, String streetAddress, String city, boolean owner) {
-        Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
-
-        address.setStreetAddress(streetAddress);
-        address.setCity(city);
-        address.setOwner(owner);
+        Address address = addressRepository.save(Address.of(streetAddress));
 
         return AddressDto.from(address);
     }
+
+//    public AddressDto modifyAddress(Long addressId, String streetAddress, String city, boolean owner) {
+//        Address address = addressRepository.findById(addressId).orElseThrow(() -> new ApplicationException(ErrorCode.Address_NOT_FOUND, String.format("%s is not founded", addressId)));
+//
+//        address.setStreetAddress(streetAddress);
+//        address.setCity(city);
+//        address.setOwner(owner);
+//
+//        return AddressDto.from(address);
+//    }
 }

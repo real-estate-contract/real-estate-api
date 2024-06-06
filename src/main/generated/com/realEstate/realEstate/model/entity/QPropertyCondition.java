@@ -28,18 +28,6 @@ public class QPropertyCondition extends EntityPathBase<PropertyCondition> {
 
     public final BooleanPath busWalk = createBoolean("busWalk");
 
-    public final StringPath departmentStore = createString("departmentStore");
-
-    public final NumberPath<Integer> departmentTime = createNumber("departmentTime", Integer.class);
-
-    public final BooleanPath departmentWalk = createBoolean("departmentWalk");
-
-    public final StringPath hospitalStore = createString("hospitalStore");
-
-    public final NumberPath<Integer> hospitalTime = createNumber("hospitalTime", Integer.class);
-
-    public final BooleanPath hospitalWalk = createBoolean("hospitalWalk");
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath lineMemo = createString("lineMemo");

@@ -26,8 +26,10 @@ public class PropertyDto implements Serializable {
     LocalDateTime updatedAt;
     Long propertyId;
     Structure structure;
-    String contractType = "단기";
-    boolean paymentType;
+    int price;
+    private int weeklyFee;
+    private boolean deposit;
+    private int depositFee;
     boolean management;
     int managementFee;
     boolean UsageFee; // 개별 사용료
@@ -35,6 +37,7 @@ public class PropertyDto implements Serializable {
     boolean loanFund; // 융자
     LocalDate startDate;
     LocalDate endDate;
+    int minimum;
     int roomCount;
     int bathroomCount;
     int area1;
@@ -42,6 +45,11 @@ public class PropertyDto implements Serializable {
     int floor;
     int wholeFloor;
     boolean parkingAvailable;
+    boolean washingmachine;
+    boolean airconditioner;
+    boolean refrigerator;
+
+
     PropertyConditionDto propertyCondition;
     AddressDto address;
     UserDto user;
@@ -54,8 +62,10 @@ public class PropertyDto implements Serializable {
                 entity.getUpdatedAt(),
                 entity.getPropertyId(),
                 entity.getStructure(),
-                entity.getContractType(),
-                entity.isPaymentType(),
+                entity.getPrice(),
+                entity.getWeeklyFee(),
+                entity.isDeposit(),
+                entity.getDepositFee(),
                 entity.isManagement(),
                 entity.getManagementFee(),
                 entity.isUsageFee(),
@@ -63,6 +73,7 @@ public class PropertyDto implements Serializable {
                 entity.isLoanFund(),
                 entity.getStartDate(),
                 entity.getEndDate(),
+                entity.getMinimum(),
                 entity.getRoomCount(),
                 entity.getBathroomCount(),
                 entity.getArea1(),
@@ -70,6 +81,9 @@ public class PropertyDto implements Serializable {
                 entity.getFloor(),
                 entity.getWholeFloor(),
                 entity.isParkingAvailable(),
+                entity.isWashingmachine(),
+                entity.isAirconditioner(),
+                entity.isRefrigerator(),
                 PropertyConditionDto.from(entity.getPropertyCondition()),
                 AddressDto.from(entity.getAddress()),
                 UserDto.from(entity.getUser()),
