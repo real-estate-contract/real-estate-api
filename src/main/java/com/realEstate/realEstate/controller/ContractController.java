@@ -31,44 +31,44 @@ public class ContractController {
     /**
      * 계약 생성
      * @param propertyId
-     * @param request
+     * @param contractRequest
      * @return
      */
     @PostMapping("/create/{propertyId}")
-    public Response<ContractResponse> createContract(@PathVariable Long propertyId,
-                                                     @RequestBody ContractRequest request, Principal principal) {
-        return contractService.createContract( request, propertyId, principal);
+    public Response<ContractResponse> createContract(@PathVariable(value = "propertyId") long propertyId,
+                                                     @RequestBody ContractRequest contractRequest, Authentication authentication) {
+        return contractService.createContract( contractRequest, propertyId, authentication);
     }
 
     /**
      * 계약 리스트 조회
-     * @param principal
+     * @param authentication
      * @return
      */
     @GetMapping("/list")
-    public Response<List<ContractResponse>> getContractList(Principal principal) {
-        return contractService.getContractList(principal);
+    public Response<List<ContractResponse>> getContractList(Authentication authentication) {
+        return contractService.getContractList(authentication);
     }
 
     /**
      * 계약 한 개 조회
-     * @param principal
+     * @param authentication
      * @return
      */
     @GetMapping("/item/{contractId}")
-    public Response<ContractResponse> getContractItem(@PathVariable(value = "contractId") long contractId,Principal principal) {
-        return contractService.getContractItem(principal, contractId);
+    public Response<ContractResponse> getContractItem(@PathVariable(value = "contractId") long contractId, Authentication authentication) {
+        return contractService.getContractItem(authentication, contractId);
     }
 
     /**
      * 계약 한 개 삭제
      * @param contractId
-     * @param principal
+     * @param authentication
      * @return
      */
     @DeleteMapping("/delete/{contractId}")
-    public Response<String> deleteContractItem(@PathVariable(value = "contractId") long contractId,Principal principal) {
-        return contractService.deleteContractItem(principal, contractId);
+    public Response<String> deleteContractItem(@PathVariable(value = "contractId") long contractId, Authentication authentication) {
+        return contractService.deleteContractItem(authentication, contractId);
     }
 
 

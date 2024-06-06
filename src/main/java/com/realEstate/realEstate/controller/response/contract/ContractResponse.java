@@ -12,8 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public class ContractResponse {
-    // id
-    private final Long contractId;
 
     // 임대할 부분
     private final String section;
@@ -59,7 +57,6 @@ public class ContractResponse {
     public static ContractResponse of(Contract contract){
 
         return new ContractResponse(
-                contract.getContractId(),
                 contract.getSection(),
                 contract.getContractDateFrom(),
                 contract.getContractDateTo(),

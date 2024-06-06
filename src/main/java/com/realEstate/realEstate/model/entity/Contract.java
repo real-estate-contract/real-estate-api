@@ -22,7 +22,7 @@ public class Contract extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contractId;
+    private Long id;
 
     // 임대할 부분
     private String section;
@@ -72,4 +72,9 @@ public class Contract extends BaseEntity {
 
     @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
     private User user;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

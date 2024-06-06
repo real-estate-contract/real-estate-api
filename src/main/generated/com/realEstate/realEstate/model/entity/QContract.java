@@ -32,14 +32,14 @@ public class QContract extends EntityPathBase<Contract> {
 
     public final StringPath contractDateTo = createString("contractDateTo");
 
-    public final NumberPath<Long> contractId = createNumber("contractId", Long.class);
-
     public final NumberPath<java.math.BigDecimal> contractPrice = createNumber("contractPrice", java.math.BigDecimal.class);
 
     public final DatePath<java.sql.Date> contractPriceDate = createDate("contractPriceDate", java.sql.Date.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<java.math.BigDecimal> Installment = createNumber("Installment", java.math.BigDecimal.class);
 
