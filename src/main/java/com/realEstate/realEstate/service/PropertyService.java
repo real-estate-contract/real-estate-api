@@ -60,7 +60,7 @@ public class PropertyService {
 
     @Transactional
     // Create
-    public PropertyDto create(int weeklyFee, boolean deposit, int depositFee, int minimum,boolean washingmachine, boolean airconditioner, boolean refrigerator, int price, boolean management, int managementFee, int wholeFloor, int floor, boolean parkingAvailable,  LocalDate startDate,LocalDate endDate, Structure structure,boolean usageFee, boolean negotiationFee, boolean loanFund, int roomCount, int bathroomCount, int area1, int area2, Long addressId, String userName) {
+    public Long create(int weeklyFee, boolean deposit, int depositFee, int minimum,boolean washingmachine, boolean airconditioner, boolean refrigerator, int price, boolean management, int managementFee, int wholeFloor, int floor, boolean parkingAvailable,  LocalDate startDate,LocalDate endDate, Structure structure,boolean usageFee, boolean negotiationFee, boolean loanFund, int roomCount, int bathroomCount, int area1, int area2, Long addressId, String userName) {
 
         //user exit
         User user = userRepository.findByName(userName).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", userName)));
@@ -72,7 +72,7 @@ public class PropertyService {
 
         Property property  = propertyRepository.save(Property.of(weeklyFee, deposit, depositFee, price, management, managementFee,wholeFloor, floor, parkingAvailable, startDate,endDate,minimum, structure, usageFee, negotiationFee, loanFund, roomCount, bathroomCount, area1, area2, washingmachine, airconditioner, refrigerator,address, user));
 
-        return PropertyDto.from(property);
+        return property.getPropertyId();
     }
 
     // ReadAll(페이징 처리)
