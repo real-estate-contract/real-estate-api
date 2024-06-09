@@ -53,11 +53,10 @@ public class PropertyController {
     }
 
     @PostMapping("/step2/{addressId}")
-    public Response<Void> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
+    public Response<PropertyResponse> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
-        propertyService.create(request.getWeeklyFee(), request.isDeposit(),request.getDepositFee(), request.getMinimum(), request.isWashingmachine(), request.isAirconditioner(), request.isRefrigerator(), request.getPrice(), request.isManagement(), request.getManagementFee(), request.getWholeFloor(), request.getFloor(), request.isParkingAvailable(), request.getStartDate(),request.getEndDate(),request.getStructure(), request.isUsageFee(), request.isNegotiationFee(), request.isLoanFund(), request.getRoomCount(), request.getBathroomCount(), request.getArea1(), request.getArea2(),addressId, user.getName());
-        return Response.success();
+        return Response.success(PropertyResponse.fromDto(propertyService.create(request.getWeeklyFee(), request.isDeposit(),request.getDepositFee(), request.getMinimum(), request.isWashingmachine(), request.isAirconditioner(), request.isRefrigerator(), request.getPrice(), request.isManagement(), request.getManagementFee(), request.getWholeFloor(), request.getFloor(), request.isParkingAvailable(), request.getStartDate(),request.getEndDate(),request.getStructure(), request.isUsageFee(), request.isNegotiationFee(), request.isLoanFund(), request.getRoomCount(), request.getBathroomCount(), request.getArea1(), request.getArea2(),addressId, user.getName())));
     }
 
     @DeleteMapping("/{propertyId}")
