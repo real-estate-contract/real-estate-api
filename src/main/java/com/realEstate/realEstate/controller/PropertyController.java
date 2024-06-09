@@ -5,6 +5,8 @@ import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.controller.request.property.*;
 import com.realEstate.realEstate.controller.response.property.AddressResponse;
+import com.realEstate.realEstate.controller.response.property.PropertyConditionResponse;
+import com.realEstate.realEstate.controller.response.property.PropertyCreateResponse;
 import com.realEstate.realEstate.controller.response.property.PropertyResponse;
 import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.model.constant.CType;
@@ -53,10 +55,10 @@ public class PropertyController {
     }
 
     @PostMapping("/step2/{addressId}")
-    public Response<PropertyResponse> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
+    public Response<PropertyCreateResponse> createProperty(@RequestBody PropertyCreateRequest request, @PathVariable Long addressId, Authentication authentication) {
         User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");
         });
-        return Response.success(PropertyResponse.fromDto(propertyService.create(request.getWeeklyFee(), request.isDeposit(),request.getDepositFee(), request.getMinimum(), request.isWashingmachine(), request.isAirconditioner(), request.isRefrigerator(), request.getPrice(), request.isManagement(), request.getManagementFee(), request.getWholeFloor(), request.getFloor(), request.isParkingAvailable(), request.getStartDate(),request.getEndDate(),request.getStructure(), request.isUsageFee(), request.isNegotiationFee(), request.isLoanFund(), request.getRoomCount(), request.getBathroomCount(), request.getArea1(), request.getArea2(),addressId, user.getName())));
+        return Response.success(PropertyCreateResponse.fromDto(propertyService.create(request.getWeeklyFee(), request.isDeposit(),request.getDepositFee(), request.getMinimum(), request.isWashingmachine(), request.isAirconditioner(), request.isRefrigerator(), request.getPrice(), request.isManagement(), request.getManagementFee(), request.getWholeFloor(), request.getFloor(), request.isParkingAvailable(), request.getStartDate(),request.getEndDate(),request.getStructure(), request.isUsageFee(), request.isNegotiationFee(), request.isLoanFund(), request.getRoomCount(), request.getBathroomCount(), request.getArea1(), request.getArea2(),addressId, user.getName())));
     }
 
     @DeleteMapping("/{propertyId}")
@@ -84,9 +86,9 @@ public class PropertyController {
 //    }
 
     @PostMapping("step3/{propertyId}")
-    public Response<Void> registerCondition(@RequestBody ConditionRequest request, @PathVariable Long propertyId) {
-        propertyConditionService.createCondition(request.getLimeMemo(), request.getMemo(), request.getStreetL(), request.getStreetR(), request.isStreetPaving(), request.getBusStation(), request.isBusWalk(), request.getBusTime(), request.getSubwayStation(), request.isSubwayWalk(), request.getSubwayTime(), request.getParkingOption(), request.getParkingMemo(),  propertyId);
-        return Response.success();
+    public Response<PropertyConditionResponse> registerCondition(@RequestBody ConditionRequest request, @PathVariable Long propertyId) {
+
+        return Response.success(PropertyConditionResponse.fromDto(propertyConditionService.createCondition(request.getLimeMemo(), request.getMemo(), request.getStreetL(), request.getStreetR(), request.isStreetPaving(), request.getBusStation(), request.isBusWalk(), request.getBusTime(), request.getSubwayStation(), request.isSubwayWalk(), request.getSubwayTime(), request.getParkingOption(), request.getParkingMemo(),  propertyId)));
     }
 
 

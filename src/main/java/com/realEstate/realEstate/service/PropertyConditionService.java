@@ -2,8 +2,10 @@ package com.realEstate.realEstate.service;
 
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
+import com.realEstate.realEstate.controller.request.property.ConditionRequest;
 import com.realEstate.realEstate.model.constant.ManagementType;
 import com.realEstate.realEstate.model.constant.ParkingOption;
+import com.realEstate.realEstate.model.dto.PropertyConditionDto;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.PropertyCondition;
 import com.realEstate.realEstate.repository.PropertyConditionRepository;
@@ -24,11 +26,12 @@ public class PropertyConditionService {
     private final PropertyConditionRepository propertyConditionRepository;
 
     @Transactional
-    public void createCondition(String limeMemo, String memo, int streetL, int streetR, boolean streetPaving, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo,  Long propertyId) {
+    public PropertyConditionDto createCondition(String limeMemo, String memo, int streetL, int streetR, boolean streetPaving, String busStation, boolean busWalk, int busTime, String subwayStation, boolean subwayWalk, int subwayTime, ParkingOption parkingOption, String parkingMemo, Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);
         PropertyCondition propertyCondition = PropertyCondition.of(limeMemo, memo, streetL, streetR,streetPaving,  busStation, busWalk, busTime, subwayStation, subwayWalk, subwayTime, parkingOption, parkingMemo, property);
         property.setPropertyCondition(propertyCondition);
-        propertyConditionRepository.save(propertyCondition);
+        PropertyCondition condition = propertyConditionRepository.save(propertyCondition);
+        return PropertyConditionDto.from(condition);
     }
 
 
