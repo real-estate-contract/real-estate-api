@@ -47,17 +47,16 @@ public class BuildingInfo extends BaseEntity {
     }
 
     @Builder
-    public BuildingInfo(String mainPurpsCdNm, String etcRoof, String useAprDay, String newPlatPlc,
-                        int archArea, int bcRat, int vlRat, String strctCdNm, String pnu) {
+    public BuildingInfo(String mainPurpsCdNm) {
         this.mainPurpsCdNm = mainPurpsCdNm;
-        this.etcRoof = etcRoof;
-        this.useAprDay = useAprDay;
-        this.newPlatPlc = newPlatPlc;
-        this.archArea = archArea;
-        this.bcRat = bcRat;
-        this.vlRat = vlRat;
-        this.strctCdNm = strctCdNm;
-        this.pnu = pnu;
+//        this.etcRoof = etcRoof;
+//        this.useAprDay = useAprDay;
+//        this.newPlatPlc = newPlatPlc;
+//        this.archArea = archArea;
+//        this.bcRat = bcRat;
+//        this.vlRat = vlRat;
+//        this.strctCdNm = strctCdNm;
+//        this.pnu = pnu;
 
     }
 
