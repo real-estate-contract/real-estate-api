@@ -5,36 +5,23 @@ import com.realEstate.realEstate.model.constant.Structure;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
 public class PropertySearchRequest {
-    private CType transactionType;
-    private Integer minPrice;
-    private Integer maxPrice;
-    private List<String> areaOptions;
-    private List<String> floorOptions;
-    private Structure structure;
-    private Boolean parkingAvailable;
-    private Boolean sink;
-    private Boolean airConditioner;
-    private Boolean shoeRack;
-    private Boolean washingMachine;
-    private Boolean refrigerator;
-    private Boolean wardrobe;
-    private Boolean gasRange;
-    private Boolean induction;
-    private Boolean bed;
-    private Boolean desk;
-    private Boolean microwave;
-    private Boolean bookshelf;
-    private Integer minDeposit;
-    private Integer maxDeposit;
-    private Integer minMonthlyRent;
-    private Integer maxMonthlyRent;
-    private Integer yearOfCompletionOption;
-    private Integer totalUnitOption;
-    private Boolean includeManagementFee;
+    private Integer minPrice;                // 최소 매물 가격
+    private Integer maxPrice;                // 최대 매물 가격
+    private Integer minWeeklyFee;            // 최소 주차 임대료
+    private Integer maxWeeklyFee;            // 최대 주차 임대료
+    private Boolean parkingAvailable;        // 주차 가능 여부
+    private Boolean airConditioner;          // 에어컨 여부
+    private Boolean washingMachine;          // 세탁기 여부
+    private Boolean refrigerator;            // 냉장고 여부
+    private Boolean includeManagementFee;    // 관리비 포함 여부
+    private LocalDate contractStartDate;     // 계약 시작 날짜
+    private LocalDate contractEndDate;       // 계약 종료 날짜
+    private List<String> areaOptions;        // 평형수
 
 }

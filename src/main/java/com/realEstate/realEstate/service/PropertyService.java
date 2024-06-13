@@ -9,6 +9,7 @@ import com.realEstate.realEstate.model.constant.Structure;
 import com.realEstate.realEstate.model.dto.PropertyDto;
 import com.realEstate.realEstate.model.dto.WishDto;
 //import com.realEstate.realEstate.model.dto.querydsl.PropertySearchCriteria;
+import com.realEstate.realEstate.model.dto.querydsl.PropertySearchCriteria;
 import com.realEstate.realEstate.model.entity.*;
 import com.realEstate.realEstate.repository.AddressRepository;
 import com.realEstate.realEstate.repository.PropertyRepository;
@@ -36,21 +37,20 @@ public class PropertyService {
     private final UserCacheRepository userCacheRepository;
     private final WishRepository wishRepository;
 
-//    public Page<PropertyDto> searchProperties(CType transactionType, Integer minPrice, Integer maxPrice,
-//                                              List<String> areaOptions, List<String> floorOptions,
-//                                              Structure structure, Boolean parkingAvailable, Boolean sink, Boolean airConditioner, Boolean shoeRack,
-//                                              Boolean washingMachine, Boolean refrigerator, Boolean wardrobe, Boolean gasRange,
-//                                              Boolean induction, Boolean bed, Boolean desk, Boolean microwave, Boolean bookshelf,
-//                                              Integer minDeposit, Integer maxDeposit, Integer minMonthlyRent, Integer maxMonthlyRent, Integer yearOfCompletionOption, Integer totalUnitOption, Boolean includeManagementFee,
-//                                              Pageable pageable){
-//        PropertySearchCriteria criteria = new PropertySearchCriteria(transactionType, minPrice, maxPrice,
-//                areaOptions, floorOptions, structure,parkingAvailable, sink, airConditioner, shoeRack,
-//                washingMachine, refrigerator, wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,minDeposit,maxDeposit,minMonthlyRent,maxMonthlyRent, yearOfCompletionOption, totalUnitOption,includeManagementFee);
-//
-//        return propertyRepository.findAll(criteria.getPredicate(), pageable).map(PropertyDto::from);
-//
-//
-//    }
+
+    public Page<PropertyDto> searchProperties(Integer minPrice, Integer maxPrice, List<String> areaOptions, Integer minWeeklyFee,
+                                              Integer maxWeeklyFee,
+                                              Boolean parkingAvailable, Boolean airConditioner, Boolean washingMachine,
+                                              Boolean refrigerator, Boolean includeManagementFee, LocalDate contractStartDate,
+                                              LocalDate contractEndDate, Pageable pageable) {
+        PropertySearchCriteria criteria = new PropertySearchCriteria(minPrice, maxPrice, areaOptions,
+                minWeeklyFee, maxWeeklyFee, parkingAvailable, airConditioner, washingMachine, refrigerator,
+                includeManagementFee, contractStartDate, contractEndDate);
+
+        return propertyRepository.findAll(criteria.getPredicate(), pageable)
+                .map(PropertyDto::from);
+    }
+
 
     public PropertyDto detail(Long propertyId) {
         Property property = loadPropertyByPropertyId(propertyId);

@@ -24,6 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -66,24 +67,7 @@ public class PropertyController {
         propertyService.delete(authentication.getName(), propertyId);
         return Response.success();
     }
-//
-//    @PostMapping("/step3/{propertyId}")
-//    public Response<Void> registerOption(@RequestBody OptionCreateRequest request, @PathVariable Long propertyId) {
-//        optionService.registerOption(request.isSink(), request.isAirConditioner(), request.isShoeRack(), request.isWashingMachine(), request.isRefrigerator(), request.isWardrobe(), request.isGasRange(), request.isInduction(), request.isBed(), request.isDesk(), request.isMicrowave(), request.isBookshelf(), propertyId);
-//        return Response.success();
-//    }
-//
-//    @PostMapping("step4/{propertyId}")
-//    public Response<Void> registerDescription(@RequestBody DescriptionCreateRequest request, @PathVariable Long propertyId) {
-//        descriptionService.registerDescription(request.getLineMemo(),request.getMemo(), request.isLoanAvailable(), request.isPetFriendly(), propertyId);
-//        return Response.success();
-//    }
-//
-//    @PostMapping("step5/{propertyId}")
-//    public Response<Void> registerAmenities(@RequestBody AmenitiesCreateRequest request, @PathVariable Long propertyId) {
-//        amenitiesService.createAmenities(request.getSubway(), request.getBus(), request.getMart(), request.getCafe(), request.getLaundry(), request.getHospital(), request.getBank(), propertyId);
-//        return Response.success();
-//    }
+
 
     @PostMapping("step3/{propertyId}")
     public Response<PropertyConditionResponse> registerCondition(@RequestBody ConditionRequest request, @PathVariable Long propertyId) {
@@ -125,43 +109,29 @@ public class PropertyController {
         return Response.success(propertyService.myList(authentication.getName(), pageable).map(PropertyResponse::fromDto));
     }
 
-//    @GetMapping("/search")
-//    public Response<Page<PropertyResponse>> searchProperties(PropertySearchRequest request, Pageable pageable) {
-//        CType transactionType = request.getTransactionType();
-//        Integer minPrice = request.getMinPrice();
-//        Integer maxPrice = request.getMaxPrice();
-//        List<String> areaOptions = request.getAreaOptions();
-//        List<String> floorOptions = request.getFloorOptions();
-//        Structure structure = request.getStructure();
-//        Boolean parkingAvailable = request.getParkingAvailable();
-//        Boolean sink = request.getSink();
-//        Boolean airConditioner = request.getAirConditioner();
-//        Boolean shoeRack = request.getShoeRack();
-//        Boolean washingMachine = request.getWashingMachine();
-//        Boolean refrigerator = request.getRefrigerator();
-//        Boolean wardrobe = request.getWardrobe();
-//        Boolean gasRange = request.getGasRange();
-//        Boolean induction = request.getInduction();
-//        Boolean bed = request.getBed();
-//        Boolean desk = request.getDesk();
-//        Boolean microwave = request.getMicrowave();
-//        Boolean bookshelf = request.getBookshelf();
-//        Integer minDeposit = request.getMinDeposit();
-//        Integer maxDeposit = request.getMaxDeposit();
-//        Integer minMonthlyRent = request.getMinMonthlyRent();
-//        Integer maxMonthlyRent = request.getMaxMonthlyRent();
-//        Integer yearOfCompletionOption = request.getYearOfCompletionOption();
-//        Integer totalUnitOption = request.getTotalUnitOption();
-//        Boolean includeManagementFee = request.getIncludeManagementFee();
-//
-//        Page<PropertyResponse> properties = propertyService.searchProperties(
-//                transactionType, minPrice, maxPrice, areaOptions, floorOptions,
-//                structure,parkingAvailable, sink, airConditioner, shoeRack, washingMachine, refrigerator,
-//                wardrobe, gasRange, induction, bed, desk, microwave, bookshelf,
-//                minDeposit, maxDeposit, minMonthlyRent, maxMonthlyRent, yearOfCompletionOption, totalUnitOption, includeManagementFee, pageable).map(PropertyResponse::fromDto);
-//
-//        return Response.success(properties);
-//    }
 
+    @GetMapping("/search")
+    public Response<Page<PropertyResponse>> searchProperties(PropertySearchRequest request, Pageable pageable) {
+        Integer minPrice = request.getMinPrice();
+        Integer maxPrice = request.getMaxPrice();
+        List<String> areaOptions = request.getAreaOptions();
+        Integer minWeeklyFee = request.getMinWeeklyFee();
+        Integer maxWeeklyFee = request.getMaxWeeklyFee();
+        Boolean parkingAvailable = request.getParkingAvailable();
+        Boolean airConditioner = request.getAirConditioner();
+        Boolean washingMachine = request.getWashingMachine();
+        Boolean refrigerator = request.getRefrigerator();
+        Boolean includeManagementFee = request.getIncludeManagementFee();
+        LocalDate contractStartDate = request.getContractStartDate();
+        LocalDate contractEndDate = request.getContractEndDate();
+
+        Page<PropertyResponse> properties = propertyService.searchProperties(
+                        minPrice, maxPrice, areaOptions, minWeeklyFee, maxWeeklyFee, parkingAvailable,
+                        airConditioner, washingMachine, refrigerator, includeManagementFee,
+                        contractStartDate, contractEndDate, pageable)
+                .map(PropertyResponse::fromDto);
+
+        return Response.success(properties);
+    }
 
 }
