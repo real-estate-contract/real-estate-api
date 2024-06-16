@@ -29,7 +29,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 @Slf4j
 public class JwtService {
 
-    @Value("${jwt.secretKey}")
+    @Value("${jwt.secret-key}")
     private String secretKey;
 
     @Value("${jwt.access.expiration}")

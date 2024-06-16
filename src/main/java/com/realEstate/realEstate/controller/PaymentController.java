@@ -4,20 +4,29 @@ import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
-@Controller
+@RestController
 public class PaymentController {
-    private final IamportClient iamportClient;
 
-    public PaymentController() {
-        this.iamportClient = new IamportClient("REST_API_KEY",
-                "REST_API_SECRET");
+    @Value("${iamport.key}")
+    private String restApiKey;
+    @Value("${iamport.secret}")
+    private String restApiSecret;
+
+    private IamportClient iamportClient;
+
+    @PostConstruct
+    public void init() {
+        this.iamportClient = new IamportClient(restApiKey, restApiSecret);
     }
 
     @ResponseBody
