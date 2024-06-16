@@ -7,6 +7,8 @@ import java.time.ZoneId;
 
 @Getter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChatRoomResponseDto {
 
     private Integer chatNo;
@@ -40,6 +42,7 @@ public class ChatRoomResponseDto {
 
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     @ToString
     public static class Participant {
         private String username;
@@ -48,6 +51,8 @@ public class ChatRoomResponseDto {
 
     @Getter
     @ToString
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class LatestMessage {
         private String context;
         private Long sendAt;
