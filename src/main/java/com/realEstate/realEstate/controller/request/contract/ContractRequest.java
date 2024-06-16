@@ -16,18 +16,12 @@ public class ContractRequest {
     private String section;
 
     // 주택 유형
-    //TODO 외부 API
+    private String propertyType;
 
     // 사용 기간
     private String contractDateFrom;
 
     private String contractDateTo;
-
-    // 보증금
-    private BigDecimal loanAmount;
-
-    // 주차임
-    private BigDecimal parkFee;
 
     // 계약금
     private BigDecimal contractPrice;
@@ -47,10 +41,17 @@ public class ContractRequest {
     // 잔금 지불일
     private Date balanceDate;
 
+    // 주차임 지불일
+    private Date parkFeeDate;
+
+    // 관리비 지불일
+    private Date loanAmountDate;
+
     // 공과금
     private boolean utilities;
 
     // 인터넷
     private boolean internet;
+
 
 }

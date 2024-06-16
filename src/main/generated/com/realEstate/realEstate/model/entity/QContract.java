@@ -47,11 +47,13 @@ public class QContract extends EntityPathBase<Contract> {
 
     public final BooleanPath internet = createBoolean("internet");
 
-    public final NumberPath<java.math.BigDecimal> loanAmount = createNumber("loanAmount", java.math.BigDecimal.class);
+    public final DatePath<java.sql.Date> loanAmountDate = createDate("loanAmountDate", java.sql.Date.class);
 
-    public final NumberPath<java.math.BigDecimal> parkFee = createNumber("parkFee", java.math.BigDecimal.class);
+    public final DatePath<java.sql.Date> parkFeeDate = createDate("parkFeeDate", java.sql.Date.class);
 
     public final QProperty property;
+
+    public final StringPath propertyType = createString("propertyType");
 
     public final StringPath section = createString("section");
 

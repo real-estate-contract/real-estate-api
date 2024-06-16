@@ -12,23 +12,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public class ContractResponse {
+    // 계약 아이디
+    private final Long id;
 
     // 임대할 부분
     private final String section;
 
     // 주택 유형
-    //TODO 외부 API
+    private final String propertyType;
 
     // 사용 기간
     private final String contractDateFrom;
 
     private final String contractDateTo;
-
-    // 보증금
-    private final BigDecimal loanAmount;
-
-    // 주차임
-    private final BigDecimal parkFee;
 
     // 계약금
     private final BigDecimal contractPrice;
@@ -48,26 +44,35 @@ public class ContractResponse {
     // 잔금 지불일
     private final Date balanceDate;
 
+    // 주차임 지불일
+    private final Date parkFeeDate;
+
+    // 관리비 지불일
+    private final Date loanAmountDate;
+
     // 공과금
     private final boolean utilities;
 
     // 인터넷
     private final boolean internet;
 
+
     public static ContractResponse of(Contract contract){
 
         return new ContractResponse(
+                contract.getId(),
                 contract.getSection(),
+                contract.getPropertyType(),
                 contract.getContractDateFrom(),
                 contract.getContractDateTo(),
-                contract.getLoanAmount(),
-                contract.getParkFee(),
                 contract.getContractPrice(),
                 contract.getContractPriceDate(),
                 contract.getInstallment(),
                 contract.getInstallmentDate(),
                 contract.getBalance(),
                 contract.getBalanceDate(),
+                contract.getParkFeeDate(),
+                contract.getLoanAmountDate(),
                 contract.isUtilities(),
                 contract.isInternet()
         );
