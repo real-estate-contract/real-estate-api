@@ -69,7 +69,7 @@ spring:
       default-topic: realestate
 
 jwt:
-  secret-key: fast-campus.simple_sns_2022_secret_key
+  secret-key: ${JWT_SECRET}
   # 30 days
   token:
     expired-time-ms: 2592000000
