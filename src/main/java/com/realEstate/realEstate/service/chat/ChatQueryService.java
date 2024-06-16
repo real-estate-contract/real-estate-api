@@ -62,6 +62,7 @@ public class ChatQueryService {
                 .join(property).on(property.propertyId.eq(chat.saleNo))
                 .where(chat.createMember.eq(memberNo).or(chat.joinMember.eq(memberNo)))
                 .fetch();
+
     }
 
 
