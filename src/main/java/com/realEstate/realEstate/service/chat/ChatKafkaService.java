@@ -94,27 +94,25 @@ public class ChatKafkaService {
     }
 
 
-    public List<ChatRoomResponseDto> getChatList(UserDto userDto, Long saleNo) {
-        List<ChatRoomResponseDto> chatRoomList = chatQueryService.getChattingList(userDto.getUserId(), saleNo);
+    public List<ChatRoomResponseDto> getChatList(UserDto userDto) {
+        List<ChatRoomResponseDto> chatRoomList = chatQueryService.getChattingList(userDto.getUserId());
 
-        chatRoomList
-                .forEach(chatRoomDto -> {
-                    // 채팅방별로 읽지 않은 메시지 개수를 셋팅
-                    long unReadCount = countUnReadMessages(chatRoomDto.getChatNo(), userDto.getUserId());
-                    chatRoomDto.setUnReadCount(unReadCount);
+        chatRoomList.forEach(chatRoomDto -> {
+            // 채팅방별로 읽지 않은 메시지 개수를 셋팅
+            long unReadCount = countUnReadMessages(chatRoomDto.getChatNo(), userDto.getUserId());
+            chatRoomDto.setUnReadCount(unReadCount);
 
-                    // 채팅방별로 마지막 채팅내용과 시간을 셋팅
-                    Page<Chatting> chatting =
-                            mongoChatRepository.findByChatRoomNoOrderBySendDateDesc(chatRoomDto.getChatNo(), PageRequest.of(0, 1));
-                    if (chatting.hasContent()) {
-                        Chatting chat = chatting.getContent().get(0);
-                        ChatRoomResponseDto.LatestMessage latestMessage = ChatRoomResponseDto.LatestMessage.builder()
-                                .context(chat.getContent())
-                                .sendAt(chat.getSendDate())
-                                .build();
-                        chatRoomDto.setLatestMessage(latestMessage);
-                    }
-                });
+            // 채팅방별로 마지막 채팅내용과 시간을 셋팅
+            Page<Chatting> chatting = mongoChatRepository.findByChatRoomNoOrderBySendDateDesc(chatRoomDto.getChatNo(), PageRequest.of(0, 1));
+            if (chatting.hasContent()) {
+                Chatting chat = chatting.getContent().get(0);
+                ChatRoomResponseDto.LatestMessage latestMessage = ChatRoomResponseDto.LatestMessage.builder()
+                        .context(chat.getContent())
+                        .sendAt(chat.getSendDate())
+                        .build();
+                chatRoomDto.setLatestMessage(latestMessage);
+            }
+        });
 
         return chatRoomList;
     }

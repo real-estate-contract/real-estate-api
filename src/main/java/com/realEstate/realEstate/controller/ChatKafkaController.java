@@ -58,12 +58,14 @@ public class ChatKafkaController {
     }
 
     // 채팅방 리스트 조회
+    // 채팅방 리스트 조회
     @GetMapping("/chatroom")
-    public ResponseEntity<List<ChatRoomResponseDto>> chatRoomList(@RequestParam(value = "saleNo", required = false) final Long saleNo, Authentication authentication) {
-        User user = userRepository.findByName(authentication.getName()).orElseThrow(()-> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "없음");
+    public ResponseEntity<List<ChatRoomResponseDto>> chatRoomList(Authentication authentication) {
+        User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {
+            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "사용자를 찾을 수 없습니다");
         });
 
-        List<ChatRoomResponseDto> chatList = chatService.getChatList(UserDto.from(user), saleNo);
+        List<ChatRoomResponseDto> chatList = chatService.getChatList(UserDto.from(user));
         return ResponseEntity.ok(chatList);
     }
 
