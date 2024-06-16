@@ -25,13 +25,13 @@ public class ChatRoomResponseDto {
         this.unReadCount = unReadCount;
     }
 
-    public ChatRoomResponseDto(Integer chatNo, Long createMember, Long joinMember, Long saleNo, String saleTitle,
-                               LocalDateTime regDate, String username, String profile) {
+    public ChatRoomResponseDto(Integer chatNo, Long createMember, Long joinMember, Long saleNo, LocalDateTime regDate,
+                               String username, String profile) {
         this.chatNo = chatNo;
         this.createMember = createMember;
         this.joinMember = joinMember;
         this.saleNo = saleNo;
-        this.saleTitle = saleTitle;
+        this.saleTitle = null; // 이 필드는 QueryDSL에서 사용되지 않으므로 null로 설정
         this.regDate = regDate.atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli();
         this.participant = new Participant(username, profile);
     }
