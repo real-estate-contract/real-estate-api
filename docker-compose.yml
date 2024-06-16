@@ -1,37 +1,51 @@
-# compose 파일 버전
 version: '3'
 services:
+  web:
+    image: harin1212/real-estate-backend:latest
+    container_name: real-estate-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - kafka
+    env_file: .env
+    networks:
+      - real-estate-network
+
   redis:
-    image: redis:latest
-    container_name: redis
+    image: redis:alpine
+    container_name: real-estate-redis
+    command: redis-server --port 6379
+    hostname: real-estate-redis
     ports:
       - "6379:6379"
-      # 서비스 명
+    networks:
+      - real-estate-network
+
   zookeeper:
-    # 사용할 이미지
-    image: wurstmeister/zookeeper
-    # 컨테이너명 설정
+    image: harin1212/zookeeper
     container_name: zookeeper
-    # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
     ports:
       - "2181:2181"
-  # 서비스 명
+    networks:
+      - real-estate-network
+
   kafka:
-    # 사용할 이미지
-    image: wurstmeister/kafka
-    # 컨테이너명 설정
-    container_name: kafka
-    # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
+    image: harin1212/kafka
+    container_name: localhost
     ports:
       - "9092:9092"
-    # 환경 변수 설정
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_CREATE_TOPICS: "realestate:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    # 볼륨 설정
     volumes:
-      - /var/run/docker.sock
-    # 의존 관계 설정
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - zookeeper
+    networks:
+      - real-estate-network
+
+networks:
+  real-estate-network:
+    driver: bridge
