@@ -58,6 +58,8 @@ public class Property extends BaseEntity {
     private boolean airconditioner; // 에어컨
     private boolean refrigerator; // 냉장고
 
+    private int propertyState; // 계약 상태
+
     @ToString.Exclude
     @OneToOne(mappedBy = "property", cascade = CascadeType.ALL)
     private PropertyCondition propertyCondition;
@@ -81,7 +83,11 @@ public class Property extends BaseEntity {
 
 
 
-    public static Property of(int weeklyFee, boolean deposit, int depositFee, int price, boolean management, int managementFee, int wholeFloor, int floor, boolean parkingAvailable,  LocalDate startDate,LocalDate endDate,int minimum, Structure structure,boolean usageFee, boolean negotiationFee, boolean loanFund, int roomCount, int bathroomCount, int area1, int area2,boolean washingmachine, boolean airconditioner, boolean refrigerator, Address address, User user) {
+    public static Property of(int weeklyFee, boolean deposit, int depositFee, int price, boolean management, int managementFee,
+                              int wholeFloor, int floor, boolean parkingAvailable,  LocalDate startDate,LocalDate endDate,
+                              int minimum, Structure structure,boolean usageFee, boolean negotiationFee, boolean loanFund,
+                              int roomCount, int bathroomCount, int area1, int area2,boolean washingmachine, boolean airconditioner,
+                              boolean refrigerator, Address address, User user) {
         Property property = new Property();
         property.setPrice(price);
         property.setWeeklyFee(weeklyFee);

@@ -44,6 +44,7 @@ public class PropertyResponse {
     boolean washingmachine;
     boolean airconditioner;
     boolean refrigerator;
+    int propertyState;
 
     PropertyConditionResponse propertyCondition;
     AddressResponse address;
@@ -77,6 +78,7 @@ public class PropertyResponse {
                 dto.isWashingmachine(),
                 dto.isAirconditioner(),
                 dto.isRefrigerator(),
+                dto.getPropertyState(),
                 PropertyConditionResponse.fromDto(dto.getPropertyCondition()),
                 AddressResponse.fromDto(dto.getAddress()),
                 UserResponse.fromDto(dto.getUser()),
@@ -113,6 +115,7 @@ public class PropertyResponse {
                 dto.getProperty().isWashingmachine(),
                 dto.getProperty().isAirconditioner(),
                 dto.getProperty().isRefrigerator(),
+                dto.getProperty().getPropertyState(),
                 PropertyConditionResponse.fromDto(dto.getProperty().getPropertyCondition()),
                 AddressResponse.fromDto(dto.getProperty().getAddress()),
                 UserResponse.fromDto(dto.getUser()),

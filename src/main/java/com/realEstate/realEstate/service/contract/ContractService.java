@@ -49,11 +49,17 @@ public class ContractService {
         try {
             //user exit
             User user = userRepository.findByName(authentication.getName()).orElseThrow(() -> {throw new ApplicationException(ErrorCode.USER_NOT_FOUND,"없음");});
-//            log.info("principal Id ={}",UserInfo.of(principal.getName()).getPrimaryKey());
-//            User user = userRepository.findById(UserInfo.of(principal.getName()).getPrimaryKey()).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user is not founded")));
 
             //property exit
             Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not founded", propertyId)));
+
+            // 본인 매물 거래 예외
+            if (property.getUser().getId() == user.getId()) {
+                throw new ApplicationException(ErrorCode.BAD_REQUEST, "본인 매물에는 본인이 계약할 수 없습니다.");
+            }
+
+            // 매물 상태 1로 변경 (계약 완료)
+            property.setPropertyState(1);
 
             // DTO를 Contract 엔티티로 매핑
             Contract contract = modelMapper.map(contractRequest, Contract.class);
@@ -63,7 +69,6 @@ public class ContractService {
 
             // Contract 저장
             Contract savedContract = contractRepository.save(contract);
-
 
             return Response.success(ContractResponse.of(savedContract));
         } catch (JsonParseException e) {
