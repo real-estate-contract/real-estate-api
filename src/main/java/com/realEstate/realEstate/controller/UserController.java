@@ -1,6 +1,6 @@
 package com.realEstate.realEstate.controller;
 
-import com.realEstate.exception.ErrorCode;
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.realEstate.realEstate.controller.request.UserJoinRequest;
 import com.realEstate.realEstate.controller.request.UserLoginRequest;
 import com.realEstate.realEstate.controller.request.UserSocialJoinRequest;
@@ -9,16 +9,11 @@ import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.controller.response.UserJoinResponse;
 import com.realEstate.realEstate.controller.response.UserLoginResponse;
 import com.realEstate.realEstate.model.dto.UserDto;
-import com.realEstate.realEstate.model.entity.User;
 import com.realEstate.realEstate.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -36,16 +31,13 @@ public class UserController {
 
     // 이메일 체크
     @PostMapping("/emailcheck")
-    public ResponseEntity<?> checkUserEmail(@RequestBody Map<String, String> emailMap) {
-        String email = emailMap.get("email");
+    public Response<String> checkUserEmail(@RequestBody String email) {
         boolean isEmailAvailable = userService.checkUserEmail(email);
 
         if (isEmailAvailable) {
-            return ResponseEntity.ok()
-                    .body(Map.of("statusCode", 200, "message", "이메일이 중복되지 않습니다."));
+            return Response.success("사용 가능한 이메일입니다.");
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("statusCode", 500, "message", "이메일이 중복됩니다."));
+           throw new NotFoundException("중복된 이메일 입니다.");
         }
     }
 

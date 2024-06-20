@@ -53,7 +53,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/realEstate/user/join", "/realEstate/user/login", "/login", "/realEstate/chat/**/send").permitAll()
+                .antMatchers("/realEstate/user/*", "/realEstate/chat/**/send").permitAll()
                 .antMatchers("/chat/**","?", "app.js","main.css" ).permitAll()
                 .anyRequest().authenticated()
                 .and()
