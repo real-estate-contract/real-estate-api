@@ -39,7 +39,7 @@ public class ListenerConfiguration {
         // Kafka Consumer 구성을 위한 설정값들을 설정 -> 변하지 않는 값이므로 ImmutableMap을 이용하여 설정
         Map<String, Object> consumerConfigurations =
                 ImmutableMap.<String, Object>builder()
-                        .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
+                        .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092")
                         .put(ConsumerConfig.GROUP_ID_CONFIG, "realEstate")
                         .put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class)
                         .put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer)
