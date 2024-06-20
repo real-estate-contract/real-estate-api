@@ -65,6 +65,8 @@ public class QProperty extends EntityPathBase<Property> {
 
     public final ListPath<PropertyImage, QPropertyImage> propertyImageList = this.<PropertyImage, QPropertyImage>createList("propertyImageList", PropertyImage.class, QPropertyImage.class, PathInits.DIRECT2);
 
+    public final NumberPath<Integer> propertyState = createNumber("propertyState", Integer.class);
+
     public final BooleanPath refrigerator = createBoolean("refrigerator");
 
     public final NumberPath<Integer> roomCount = createNumber("roomCount", Integer.class);
