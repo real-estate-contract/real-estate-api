@@ -4,6 +4,7 @@ import com.realEstate.realEstate.model.constant.CType;
 import com.realEstate.realEstate.model.constant.Structure;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +21,9 @@ public class PropertySearchRequest {
     private Boolean washingMachine;          // 세탁기 여부
     private Boolean refrigerator;            // 냉장고 여부
     private Boolean includeManagementFee;    // 관리비 포함 여부
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate contractStartDate;     // 계약 시작 날짜
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate contractEndDate;       // 계약 종료 날짜
     private List<String> areaOptions;        // 평형수
 
