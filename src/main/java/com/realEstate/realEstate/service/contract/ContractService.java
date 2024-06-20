@@ -58,11 +58,12 @@ public class ContractService {
             // DTO를 Contract 엔티티로 매핑
             Contract contract = modelMapper.map(contractRequest, Contract.class);
             log.error("{}",contract);
+            contract.setUser(user);
+            contract.setProperty(property);
 
             // Contract 저장
             Contract savedContract = contractRepository.save(contract);
-            contract.setUser(user);
-            contract.setProperty(property);
+
 
             return Response.success(ContractResponse.of(savedContract));
         } catch (JsonParseException e) {
