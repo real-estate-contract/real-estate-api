@@ -17,8 +17,7 @@ public enum ErrorCode {
     Address_NOT_FOUND(HttpStatus.NOT_FOUND, "Address not founded"),
     IMAGE_SAVE_ERROR(HttpStatus.NOT_FOUND, "Image save Error"),
     CONTRACT_NOT_FOUND(HttpStatus.NOT_FOUND, "Contract not founded"),
-
-    ;
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, "Bad Request");
 
 
     private final HttpStatus status;
