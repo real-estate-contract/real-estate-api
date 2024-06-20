@@ -66,6 +66,23 @@ public class ChatKafkaController {
         });
 
         List<ChatRoomResponseDto> chatList = chatService.getChatList(UserDto.from(user));
+
+        for (ChatRoomResponseDto chatRoom : chatList) {
+            User user2 = userRepository.findById(chatRoom.getJoinMember()).orElseThrow(() -> {
+                throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "사용자를 찾을 수 없습니다");
+            });
+            User user3 = userRepository.findById(chatRoom.getCreateMember()).orElseThrow(() -> {
+                throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "사용자를 찾을 수 없습니다");
+            });
+            // chatRoom을 이용한 설정 작업 수행
+            if (chatRoom.getCreateMember() == user.getId()){
+                chatRoom.setSaleTitle(user2.getName());
+            }
+            else {
+                chatRoom.setSaleTitle(user3.getName());
+            }
+            // 필요한 설정 작업 추가
+        }
         return ResponseEntity.ok(chatList);
     }
 
