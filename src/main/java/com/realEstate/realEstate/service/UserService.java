@@ -124,4 +124,12 @@ public class UserService implements UserDetailsService {
         return UserDto.from(user);
 
     }
+
+    /**
+     * 로그아웃 기능
+     * @param email
+     */
+    public void logout(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() ->{throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "존재하지 않는 사용자");});
+    }
 }

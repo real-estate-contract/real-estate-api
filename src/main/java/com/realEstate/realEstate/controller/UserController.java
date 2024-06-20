@@ -29,7 +29,11 @@ public class UserController {
         return Response.success();
     }
 
-    // 이메일 체크
+    /**
+     * 이메일 중복체크
+     * @param email
+     * @return
+     */
     @PostMapping("/emailcheck")
     public Response<String> checkUserEmail(@RequestBody String email) {
         boolean isEmailAvailable = userService.checkUserEmail(email);
@@ -41,6 +45,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 회원가입
+     * @param request
+     * @return
+     */
 
     @PostMapping("/join")
     public Response<UserJoinResponse> join(@RequestBody UserJoinRequest request) {
@@ -49,6 +58,11 @@ public class UserController {
         return Response.success(UserJoinResponse.fromDTO(dto));
     }
 
+    /**
+     * 로그인
+     * @param request
+     * @return
+     */
     @PostMapping("/login")
     public Response<UserLoginResponse> login(@RequestBody UserLoginRequest request) {
         String token = userService.login(request.getEmail(), request.getPassword());
@@ -56,11 +70,23 @@ public class UserController {
         return Response.success(new UserLoginResponse(token));
     }
 
+    /**
+     * 소셜 회원가입
+     * @param userId
+     * @param request
+     * @return
+     */
     @PostMapping("/socialJoin/{userId}")
     public Response<UserJoinResponse> socialJoin(@PathVariable Long userId, @RequestBody UserSocialJoinRequest request){
         UserDto dto = userService.socialJoin(userId, request.getNickName(),  request.getGender(), request.getAge());
 
         return Response.success(UserJoinResponse.fromDTO(dto));
 
+    }
+
+    @PostMapping("/logout")
+    public Response<String> logout(@RequestBody String email){
+        userService.logout(email);
+        return Response.success("로그아웃 성공.");
     }
 }
