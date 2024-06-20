@@ -1,5 +1,9 @@
 package com.realEstate.realEstate.controller.response.contract;
 
+import com.realEstate.realEstate.controller.response.UserResponse;
+import com.realEstate.realEstate.controller.response.property.PropertyResponse;
+import com.realEstate.realEstate.model.dto.PropertyDto;
+import com.realEstate.realEstate.model.dto.UserDto;
 import com.realEstate.realEstate.model.entity.Contract;
 import com.realEstate.realEstate.model.entity.Property;
 import com.realEstate.realEstate.model.entity.User;
@@ -59,10 +63,10 @@ public class ContractResponse {
     private final boolean internet;
 
     // 사용자
-    private final User user;
+    private final UserResponse user;
 
     // 매물
-    private final Property property;
+    private final PropertyResponse property;
 
 
     public static ContractResponse of(Contract contract){
@@ -83,8 +87,8 @@ public class ContractResponse {
                 contract.getLoanAmountDate(),
                 contract.isUtilities(),
                 contract.isInternet(),
-                contract.getUser(),
-                contract.getProperty()
+                UserResponse.fromDto(UserDto.from(contract.getUser())),
+                PropertyResponse.fromDto(PropertyDto.from(contract.getProperty()))
         );
     }
 }
