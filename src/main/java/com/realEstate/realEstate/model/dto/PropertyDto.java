@@ -48,6 +48,7 @@ public class PropertyDto implements Serializable {
     boolean washingmachine;
     boolean airconditioner;
     boolean refrigerator;
+    int propertyState;
 
 
     PropertyConditionDto propertyCondition;
@@ -84,6 +85,7 @@ public class PropertyDto implements Serializable {
                 entity.isWashingmachine(),
                 entity.isAirconditioner(),
                 entity.isRefrigerator(),
+                entity.getPropertyState(),
                 PropertyConditionDto.from(entity.getPropertyCondition()),
                 AddressDto.from(entity.getAddress()),
                 UserDto.from(entity.getUser()),
