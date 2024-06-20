@@ -1,6 +1,8 @@
 package com.realEstate.realEstate.controller.response.contract;
 
 import com.realEstate.realEstate.model.entity.Contract;
+import com.realEstate.realEstate.model.entity.Property;
+import com.realEstate.realEstate.model.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -56,6 +58,12 @@ public class ContractResponse {
     // 인터넷
     private final boolean internet;
 
+    // 사용자
+    private final User user;
+
+    // 매물
+    private final Property property;
+
 
     public static ContractResponse of(Contract contract){
 
@@ -74,7 +82,9 @@ public class ContractResponse {
                 contract.getParkFeeDate(),
                 contract.getLoanAmountDate(),
                 contract.isUtilities(),
-                contract.isInternet()
+                contract.isInternet(),
+                contract.getUser(),
+                contract.getProperty()
         );
     }
 }
