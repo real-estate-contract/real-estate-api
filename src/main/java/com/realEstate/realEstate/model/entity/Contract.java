@@ -70,6 +70,8 @@ public class Contract extends BaseEntity {
     @JoinColumn(name = "property_id")
     private Property property;
 
+
+
     @ManyToOne // 여러 개의 계약이 하나의 구매자와 연결될 수 있음
     private User user;
 

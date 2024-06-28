@@ -9,6 +9,7 @@ import com.realEstate.realEstate.controller.request.contract.ContractRequest;
 import com.realEstate.realEstate.controller.request.contract.SignatureRequest;
 import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.controller.response.contract.ContractResponse;
+import com.realEstate.realEstate.controller.response.contract.SignatureResponse;
 import com.realEstate.realEstate.model.entity.*;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
@@ -154,6 +155,7 @@ public class ContractService {
      * @param contractId
      * @param signatureDto
      */
+    @Transactional
     public void uploadSignature(Long contractId, SignatureRequest signatureDto) {
         Contract contract = contractRepository.findById(contractId).orElseThrow(()-> {throw new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, "계약서 없음");});
         List<SignatureImage> signatureImages = signatureDto.getImages().stream()
@@ -183,4 +185,15 @@ public class ContractService {
     }
 
 
+    /**
+     * 서명 조회
+     * @param contractId
+     * @return
+     */
+
+    public Response<SignatureResponse> getSignature(Long contractId) {
+        Contract contract = contractRepository.findById(contractId).orElseThrow(()-> {throw new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, "계약서 없음");});
+        List<SignatureImage> signatureImages = signatureRepository.findByContractId(contractId);
+        return Response.success(SignatureResponse.of(signatureImages));
+    }
 }

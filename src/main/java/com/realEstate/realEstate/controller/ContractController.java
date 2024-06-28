@@ -5,6 +5,7 @@ import com.realEstate.realEstate.controller.request.contract.SignatureRequest;
 import com.realEstate.realEstate.controller.response.Response;
 
 import com.realEstate.realEstate.controller.response.contract.ContractResponse;
+import com.realEstate.realEstate.controller.response.contract.SignatureResponse;
 import com.realEstate.realEstate.model.dto.ContractDto;
 
 import com.realEstate.realEstate.model.dto.PropertyImageDto;
@@ -84,6 +85,15 @@ public class ContractController {
         signatureDto.setImages(images);
         contractService.uploadSignature(contractId, signatureDto);
         return Response.success();
+    }
+
+    /**
+     * 서명 조회
+     */
+    @GetMapping("/signature/{contractId}")
+    public Response<SignatureResponse> getSignature(@PathVariable Long contractId){
+
+        return contractService.getSignature(contractId);
     }
 
 

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Setter
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "signature_image")
 public class SignatureImage extends BaseEntity {
     @Id
@@ -23,8 +23,9 @@ public class SignatureImage extends BaseEntity {
     @ManyToOne
     private Contract contract;
 
-    public SignatureImage(Contract contract, String s) {
-        super();
+    public SignatureImage(Contract contract, String imageUrl) {
+        this.contract = contract;
+        this.imageUrl = imageUrl;
     }
 
     @PrePersist

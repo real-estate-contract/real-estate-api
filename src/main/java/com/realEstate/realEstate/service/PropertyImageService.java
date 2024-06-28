@@ -36,17 +36,17 @@ public class PropertyImageService {
     private String bucket;
 
 
-        public void uploadImage(Long propertyID, PropertyImageDto propertyImageDto) {
-            Property property = loadPropertyByPropertyId(propertyID);
+    public void uploadImage(Long propertyID, PropertyImageDto propertyImageDto) {
+        Property property = loadPropertyByPropertyId(propertyID);
 
-            List<PropertyImage> propertyImages = propertyImageDto.getImages().stream()
-                    .map(image -> new PropertyImage(property, saveImage(image)))
-                    .collect(Collectors.toList());
+        List<PropertyImage> propertyImages = propertyImageDto.getImages().stream()
+                .map(image -> new PropertyImage(property, saveImage(image)))
+                .collect(Collectors.toList());
 
-            propertyImageRepository.saveAll(propertyImages);
-        }
+        propertyImageRepository.saveAll(propertyImages);
+    }
 
-        private String saveImage(MultipartFile image) {
+    private String saveImage(MultipartFile image) {
 
         String fileName = "image_" + UUID.randomUUID() + "." + getFileExtension(image.getOriginalFilename());
 
