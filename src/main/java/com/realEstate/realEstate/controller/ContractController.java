@@ -1,11 +1,14 @@
 package com.realEstate.realEstate.controller;
 
 import com.realEstate.realEstate.controller.request.contract.ContractRequest;
+import com.realEstate.realEstate.controller.request.contract.SignatureRequest;
 import com.realEstate.realEstate.controller.response.Response;
 
 import com.realEstate.realEstate.controller.response.contract.ContractResponse;
+import com.realEstate.realEstate.controller.response.contract.SignatureResponse;
 import com.realEstate.realEstate.model.dto.ContractDto;
 
+import com.realEstate.realEstate.model.dto.PropertyImageDto;
 import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.service.contract.ContractService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import retrofit2.http.Path;
 
 import java.security.Principal;
@@ -69,6 +73,27 @@ public class ContractController {
     @DeleteMapping("/delete/{contractId}")
     public Response<String> deleteContractItem(@PathVariable(value = "contractId") long contractId, Authentication authentication) {
         return contractService.deleteContractItem(authentication, contractId);
+    }
+
+    /**
+     * 서명 저장
+     */
+    @PostMapping("/signature/{contractId}")
+    public Response<Void> uploadSignature(@PathVariable Long contractId, @RequestParam("images") List<MultipartFile> images) {
+
+        SignatureRequest signatureDto = new SignatureRequest();
+        signatureDto.setImages(images);
+        contractService.uploadSignature(contractId, signatureDto);
+        return Response.success();
+    }
+
+    /**
+     * 서명 조회
+     */
+    @GetMapping("/signature/{contractId}")
+    public Response<SignatureResponse> getSignature(@PathVariable Long contractId){
+
+        return contractService.getSignature(contractId);
     }
 
 

@@ -29,6 +29,13 @@ public class PaymentController {
         this.iamportClient = new IamportClient(restApiKey, restApiSecret);
     }
 
+    /**
+     * 결제 생성
+     * @param imp_uid
+     * @return
+     * @throws IamportResponseException
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping("/verify/{imp_uid}")
     public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)

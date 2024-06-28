@@ -1,27 +1,34 @@
 package com.realEstate.realEstate.service.contract;
 
 import com.amazonaws.services.kms.model.NotFoundException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.realEstate.exception.ApplicationException;
 import com.realEstate.exception.ErrorCode;
 import com.realEstate.realEstate.controller.request.contract.ContractRequest;
+import com.realEstate.realEstate.controller.request.contract.SignatureRequest;
 import com.realEstate.realEstate.controller.response.Response;
 import com.realEstate.realEstate.controller.response.contract.ContractResponse;
-import com.realEstate.realEstate.model.entity.Contract;
-import com.realEstate.realEstate.model.entity.Property;
-import com.realEstate.realEstate.model.entity.User;
+import com.realEstate.realEstate.controller.response.contract.SignatureResponse;
+import com.realEstate.realEstate.model.entity.*;
 import com.realEstate.realEstate.repository.PropertyRepository;
 import com.realEstate.realEstate.repository.UserRepository;
 import com.realEstate.realEstate.repository.contract.ContractRepository;
+import com.realEstate.realEstate.repository.contract.SignatureRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.json.JsonParseException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.realEstate.realEstate.model.entity.QUser.user;
@@ -34,8 +41,11 @@ public class ContractService {
     private final ContractRepository contractRepository;
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
+    private final SignatureRepository signatureRepository;
     private final ModelMapper modelMapper = new ModelMapper();
-    private Contract save;
+    private final AmazonS3 amazonS3;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
 
     /**
@@ -138,5 +148,52 @@ public class ContractService {
         } catch (Exception e) {
             throw new RuntimeException("계약 삭제에 실패했습니다.");
         }
+    }
+
+    /**
+     * 서명 저장
+     * @param contractId
+     * @param signatureDto
+     */
+    @Transactional
+    public void uploadSignature(Long contractId, SignatureRequest signatureDto) {
+        Contract contract = contractRepository.findById(contractId).orElseThrow(()-> {throw new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, "계약서 없음");});
+        List<SignatureImage> signatureImages = signatureDto.getImages().stream()
+                .map(image -> new SignatureImage(contract, saveImage(image)))
+                .collect(Collectors.toList());
+        signatureRepository.saveAll(signatureImages);
+    }
+    private String saveImage(MultipartFile image) {
+
+        String fileName = "signature_" + UUID.randomUUID() + "." + getFileExtension(image.getOriginalFilename());
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(image.getSize());
+        metadata.setContentType(image.getContentType());
+        try {
+            amazonS3.putObject(bucket, fileName, image.getInputStream(),metadata);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ApplicationException(ErrorCode.IMAGE_SAVE_ERROR, "이미지 저장 실패");
+        }
+
+        return amazonS3.getUrl(bucket,fileName).toString();
+    }
+
+    private String getFileExtension(String filename) {
+        return filename.substring(filename.lastIndexOf(".")+1);
+    }
+
+
+    /**
+     * 서명 조회
+     * @param contractId
+     * @return
+     */
+
+    public Response<SignatureResponse> getSignature(Long contractId) {
+        Contract contract = contractRepository.findById(contractId).orElseThrow(()-> {throw new ApplicationException(ErrorCode.CONTRACT_NOT_FOUND, "계약서 없음");});
+        List<SignatureImage> signatureImages = signatureRepository.findByContractId(contractId);
+        return Response.success(SignatureResponse.of(signatureImages));
     }
 }
