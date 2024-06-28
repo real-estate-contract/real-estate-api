@@ -13,7 +13,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedOrigins("http://localhost:3000","http://3.34.191.254", "http://budong.kr.s3-website.ap-northeast-2.amazonaws.com",
-                        "http://budong.kr", "https://budong.kr")
+                        "http://budong.kr", "https://budong.kr", "https://www.budong.kr/", "https://*.budong.kr/")
                 .allowCredentials(true)
                 .maxAge(3600);
     }
