@@ -1,7 +1,7 @@
 logging:
   discord:
     webhook-uri: ${DISCORD_WEBHOOK_URL}
-  config: classpath:logback.xml
+  config: classpath:logback-spring.xml
   level:
     org:
       springframework:

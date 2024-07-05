@@ -16,7 +16,7 @@
     </appender>
 
     <!-- Spring Profile: default 및 dev -->
-    <springProfile name="default, dev">
+    <springProfile name="dev">
         <!-- Discord Appender 설정 -->
         <appender name="DISCORD" class="com.github.napstr.logback.DiscordAppender">
             <webhookUri>${DISCORD_WEBHOOK_URL}</webhookUri>
